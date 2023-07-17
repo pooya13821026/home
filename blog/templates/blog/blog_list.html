@@ -1,0 +1,81 @@
+{% extends 'shared/_main.html' %}
+{% load thumbnail %}
+{% load poll_extars %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% block title %}وبلاگ{% endblock %}
+</head>
+<body>
+{% block main %}
+    <main class="page-wrapper">
+        <div class="container mt-5 mb-md-4 py-5">
+            <nav class="mb-3 pt-md-3" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'home' %}">خانه</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">مقالات</li>
+                </ol>
+            </nav>
+            <h1 class="h3 d-flex align-items-end justify-content-between mb-4 font-vazir">اخبار املاک</h1>
+            <div class="row gy-3 mb-4 pb-2">
+                <div class="col-lg-6 col-md-8 offset-lg-2 order-md-2 order-1">
+                    <div class="row gy-3">
+                        <div class="col-6 d-flex flex-sm-row flex-column align-items-sm-center">
+                            <label class="d-inline-block m-sm-2 mb-sm-0 mb-2 text-nowrap" for="sortby"><i
+                                    class="fi-arrows-sort mt-n1 me-2 align-middle opacity-70"></i>مرتب سازی براساس:
+                            </label>
+                            <select class="form-select" id="sortby">
+                                <option>جدیدترین</option>
+                                <option>قدیمی ترین</option>
+                                <option>پربازدید</option>
+                                <option>اسپانسری</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row row-cols-md-2 row-cols-1 gy-md-5 gy-4 mb-lg-5 mb-4 blog-list">
+                {% for blog in blog_list %}
+                    <article class="col pb-2 pb-md-1"><a class="d-block position-relative mb-3"
+                                                         href="{{ blog.get_absolute_url }}">
+                        {% thumbnail blog.img "434x205" crop="center" as im %}
+                            <img class="d-block rounded-3" src="{{ im.url }}"
+                                 alt="{{ blog.title }}">
+                        {% endthumbnail %}</a>
+                        <h3 class="h5 mb-2 pt-1"><a class="nav-link"
+                                                    href="{{ blog.get_absolute_url }}">{{ blog.title }}</a></h3>
+                        <p class="mb-3">{{ blog.short_description }}</p><a
+                                class="d-flex align-items-center text-decoration-none"><img
+                                class="rounded-circle"
+                                src="../../static/img/avatars/07.jpg"
+                                width="48"
+                                alt="Cody Fisher">
+                            <div class="pe-2">
+                                <h6 class="fs-base text-nav lh-base mb-1">{{ blog.author }}</h6>
+                                <div class="d-flex text-body fs-sm"><span class="me-2 pe-1"><i
+                                        class="fi-calendar-alt opacity-70 mt-n1 ms-1 align-middle"></i>{{ blog.create_time | persian_deta }}</span><span><i
+                                </div>
+                            </div>
+                        </a>
+                    </article>
+                {% endfor %}
+            </div>
+            <nav class="pt-4 pb-2 border-top" aria-label="Blog pagination">
+                <ul class="pagination mb-0">
+                    <li class="page-item d-sm-none"><span class="page-link page-link-static">1 / 8</span></li>
+                    <li class="page-item active d-none d-sm-block" aria-current="page"><span class="page-link">1<span
+                            class="visually-hidden">(current)</span></span></li>
+                    <li class="page-item d-none d-sm-block"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item d-none d-sm-block"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item d-none d-sm-block">...</li>
+                    <li class="page-item d-none d-sm-block"><a class="page-link" href="#">8</a></li>
+                    <li class="page-item"><a class="page-link" href="#" aria-label="Next"><i
+                            class="fi-chevron-right"></i></a></li>
+                </ul>
+            </nav>
+        </div>
+    </main>
+{% endblock %}
+</body>
+</html>

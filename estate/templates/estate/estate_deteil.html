@@ -1,0 +1,1206 @@
+{% extends 'shared/_main.html' %}
+{% load thumbnail %}
+{% load poll_extars %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% block title %}جزییات ملک{% endblock %}
+</head>
+<body>
+{% block main %}
+    <main class="page-wrapper">
+        <div class="modal fade" id="modal-review" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header d-block position-relative border-0 pb-0 px-sm-5 px-4">
+                        <h4 class="modal-title mt-4 text-center font-vazir">ثبت نظر برای ملک</h4>
+                        <button class="btn-close position-absolute top-0 end-0 mt-3 me-3" type="button"
+                                data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body px-sm-5 px-4">
+                        <form class="needs-validation" novalidate="">
+                            <div class="mb-3">
+                                <label class="form-label" for="review-name">نام <span
+                                        class="text-danger">*</span></label>
+                                <input class="form-control" type="text" id="review-name"
+                                       placeholder="نام و نام خانوادگی" required="">
+                                <div class="invalid-feedback">لطفا نام خود را وارد کنید</div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="review-email">پست الکترونیکی <span
+                                        class="text-danger">*</span></label>
+                                <input class="form-control" type="email" id="review-email" placeholder="ایمیل"
+                                       required="">
+                                <div class="invalid-feedback">لطفا یک ایمیل معتبر وارد کنید</div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="review-rating">امتیازدهی <span
+                                        class="text-danger">*</span></label>
+                                <select class="form-control form-select" id="review-rating" required="">
+                                    <option value="" selected="" disabled="" hidden="">امتیاز</option>
+                                    <option value="5 stars">5 ستاره</option>
+                                    <option value="4 stars">4 ستاره</option>
+                                    <option value="3 stars">3 ستاره</option>
+                                    <option value="2 stars">2 ستاره</option>
+                                    <option value="1 star">1 ستاره</option>
+                                </select>
+                                <div class="invalid-feedback">لطفاً به ملک امتیاز دهید.</div>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label" for="review-text">ثبت نظر <span
+                                        class="text-danger">*</span></label>
+                                <textarea class="form-control" id="review-text" rows="5" placeholder="توضیحات"
+                                          required=""></textarea>
+                                <div class="invalid-feedback">نظر خود را ثبت کنید</div>
+                            </div>
+                            <button class="btn btn-primary d-block w-100 mb-4" type="submit">ثبت نظر</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% for estate in estate_list %}
+            <section class="container pt-5 mt-5">
+                <nav class="mb-3 pt-md-3" aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'home' %}">خانه</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'estate_list' %}">املاک</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">جزییات ملک</li>
+                    </ol>
+                </nav>
+                <h1 class="h2 mb-2 font-vazir">{{ estate.Meterage }} متر مربع | {{ estate.title }}</h1>
+                <p class="mb-2 pb-1 fs-md">{{ estate.state }}، میدان آزادی</p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <ul class="d-flex mb-4 list-unstyled">
+                        <li class="me-3 ps-3 border-end"><b class="ms-1">4</b><i
+                                class="fi-bed mt-n1 lead align-middle text-muted"></i></li>
+                        <li class="me-3 ps-3 border-end"><b class="ms-1">2</b><i
+                                class="fi-bath mt-n1 lead align-middle text-muted"></i></li>
+                        <li class="me-3 ps-3 border-end"><b class="ms-1">2</b><i
+                                class="fi-car mt-n1 lead align-middle text-muted"></i></li>
+                        <li><b>{{ estate.Meterage }}</b> مترمربع</li>
+                    </ul>
+                    <div class="text-nowrap">
+                        <button class="btn btn-icon btn-light-primary btn-xs shadow-sm rounded-circle ms-2 mb-2"
+                                type="button" data-bs-toggle="tooltip" title="" data-bs-original-title="نشان کردن"
+                                aria-label="نشان کردن"><i class="fi-heart"></i></button>
+                        <div class="dropdown d-inline-block" data-bs-toggle="tooltip" title=""
+                             data-bs-original-title="اشتراک گذاری">
+                            <button class="btn btn-icon btn-light-primary btn-xs shadow-sm rounded-circle ms-2 mb-2"
+                                    type="button" data-bs-toggle="dropdown"><i class="fi-share"></i></button>
+                            <div class="dropdown-menu dropdown-menu-end my-1">
+                                <button class="dropdown-item" type="button"><i
+                                        class="fi-facebook fs-base opacity-75 me-2"></i> فیسبوک
+                                </button>
+                                <button class="dropdown-item" type="button"><i
+                                        class="fi-twitter fs-base opacity-75 me-2"></i>توییتر
+                                </button>
+                                <button class="dropdown-item" type="button"><i
+                                        class="fi-instagram fs-base opacity-75 me-2"></i>اینستاگرام
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="container overflow-auto mb-4 pb-3" data-simplebar="init">
+                <div class="simplebar-wrapper" style="margin: 0px -12px -16px;">
+                    <div class="simplebar-height-auto-observer-wrapper">
+                        <div class="simplebar-height-auto-observer"></div>
+                    </div>
+                    <div class="simplebar-mask">
+                        <div class="simplebar-offset" style="left: 0px; bottom: 0px;">
+                            <div class="simplebar-content-wrapper" style="height: auto; overflow: hidden;">
+                                <div class="simplebar-content" style="padding: 0px 12px 16px;">
+                                    <div class="row g-2 g-md-3 gallery" data-thumbnails="true" style="min-width: 30rem;"
+                                         lg-uid="lg0">
+                                        <div class="col-8"><a class="gallery-item rounded rounded-md-3"
+                                                              href=""
+                                                              data-sub-html="<h6 class=&quot;fs-sm text-light&quot;>سرویس بهداشتی</h6>">
+                                            {% thumbnail estate.image "1000x708" crop="center" as im %}
+                                                <img src="{{ im.url }}"
+                                                     alt="{{ estate.title }}">
+                                            {% endthumbnail %}</a></div>
+                                        <div class="col-4"><a class="gallery-item rounded rounded-md-3 mb-2 mb-md-3"
+                                                              href="../../static/img/real-estate/single/02.jpg"
+                                                              data-sub-html="<h6 class=&quot;fs-sm text-light&quot;>اتاق خواب</h6>"><img
+                                                src="../../static/img/real-estate/single/02.jpg"
+                                                alt="Gallery thumbnail"></a><a
+                                                class="gallery-item rounded rounded-md-3"
+                                                href="../../static/img/real-estate/single/03.jpg"
+                                                data-sub-html="<h6 class=&quot;fs-sm text-light&quot;>پذیرایی</h6>"><img
+                                                src="../../static/img/real-estate/single/03.jpg"
+                                                alt="Gallery thumbnail"></a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="simplebar-placeholder" style="width: auto; height: 587px;"></div>
+                </div>
+                <div class="simplebar-track simplebar-horizontal" style="visibility: hidden;">
+                    <div class="simplebar-scrollbar" style="width: 0px; display: none;"></div>
+                </div>
+                <div class="simplebar-track simplebar-vertical" style="visibility: hidden;">
+                    <div class="simplebar-scrollbar" style="height: 0px; display: none;"></div>
+                </div>
+            </section>
+            <section class="container mb-5 pb-1">
+                <div class="row">
+                    <div class="col-md-7 mb-md-0 mb-4">
+                        <h2 class="h4 mb-4 pb-4 border-bottom">{{ estate.price }} تومان<span
+                                class="d-inline-block ms-1 fs-base fw-normal text-body"></span></h2>
+                        <div class="mb-4 pb-md-3">
+                            <h3 class="h5">توضیحات</h3>
+                            <p class="mb-1 line-h18">{{ estate.description }}</p>
+                        </div>
+                        <div class="mb-4 pb-md-3">
+                            <h3 class="h5">مشخصات</h3>
+                            <ul class="list-unstyled mb-0">
+                                <li>نوع ملک: {{ estate.property_type }}</li>
+                                <li>متراژ (مترمربع): {{ estate.Meterage }} مترمربع</li>
+                                <li>سال ساخت: {{ estate.year_of_construction }}</li>
+                                <li>تعداد اتاق: 4</li>
+                                <li>سرویس بهداشتی: 2</li>
+                                <li>پارکینگ: دارد</li>
+                            </ul>
+                        </div>
+                        <div class="mb-sm-3">
+                            <h3 class="h5">امکانات رفاهی</h3>
+                            <ul class="list-unstyled row row-cols-lg-3 row-cols-md-2 row-cols-1 gy-1 mb-1 text-nowrap">
+                                <li class="col"><i class="fi-wifi mt-n1 me-2 fs-lg align-middle"></i>وای فای</li>
+                                <li class="col"><i class="fi-thermometer mt-n1 me-2 fs-lg align-middle"></i>سیستم
+                                    گرمایشی
+                                </li>
+                                <li class="col"><i class="fi-dish mt-n1 me-2 fs-lg align-middle"></i>استخر</li>
+                                <li class="col"><i class="fi-parking mt-n1 me-2 fs-lg align-middle"></i>پارکینگ</li>
+                                <li class="col"><i class="fi-snowflake mt-n1 me-2 fs-lg align-middle"></i>تهویه هوا</li>
+                                <li class="col"><i class="fi-iron mt-n1 me-2 fs-lg align-middle"></i>گاز رومیزی</li>
+                                <li class="col"><i class="fi-tv mt-n1 me-2 fs-lg align-middle"></i>تلویزیون</li>
+                                <li class="col"><i class="fi-laundry mt-n1 me-2 fs-lg align-middle"></i>ماشین لباسشویی
+                                </li>
+                                <li class="col"><i class="fi-cctv mt-n1 me-2 fs-lg align-middle"></i>دوربین مداربسته
+                                </li>
+                            </ul>
+                            <div class="collapse" id="seeMoreAmenities">
+                                <ul class="list-unstyled row row-cols-lg-3 row-cols-md-2 row-cols-1 gy-1 mb-1 text-nowrap">
+                                    <li class="col"><i class="fi-no-smoke mt-n1 me-2 fs-lg align-middle"></i>سیگار ممنوع
+                                    </li>
+                                    <li class="col"><i class="fi-pet mt-n1 me-2 fs-lg align-middle"></i>گربه</li>
+                                    <li class="col"><i class="fi-swimming-pool mt-n1 me-2 fs-lg align-middle"></i>استخر
+                                    </li>
+                                    <li class="col"><i class="fi-double-bed mt-n1 me-2 fs-lg align-middle"></i>2 خواب
+                                    </li>
+                                    <li class="col"><i class="fi-bed mt-n1 me-2 fs-lg align-middle"></i>1 خواب</li>
+                                </ul>
+                            </div>
+                            <a class="collapse-label collapsed" href="#seeMoreAmenities" data-bs-toggle="collapse"
+                               data-bs-label-collapsed="مشاهده بیشتر" data-bs-label-expanded="بستن" role="button"
+                               aria-expanded="false" aria-controls="seeMoreAmenities"></a>
+                        </div>
+                        <div class="mb-lg-5 mb-md-4 pb-lg-2 py-4 border-top">
+                            <ul class="d-flex mb-4 list-unstyled fs-sm">
+                                <li class="me-3 ps-3 border-end">تاریخ انتشار:
+                                    <b>{{ estate.create_time | persian_deta }}</b></li>
+                                <li class="me-3 ps-3 border-end">شماره آگهی: <b>681013232</b></li>
+                                <li class="me-3 ps-3">بازدید: <b>48 نفر</b></li>
+                            </ul>
+                        </div>
+                        <div class="mb-4 pb-4 border-bottom">
+                            <h3 class="h5 pb-3 font-vazir"><i
+                                    class="fi-star-filled mt-n1 me-2 lead align-middle text-warning"></i>4,9 (32 نظر ثبت
+                                شده)</h3>
+                            <div class="d-flex flex-sm-row flex-column align-items-sm-center align-items-stretch justify-content-between">
+                                <a class="btn btn-outline-primary mb-sm-0 mb-3" href="#modal-review"
+                                   data-bs-toggle="modal"><i
+                                        class="fi-edit ms-1"></i>ثبت نظر </a>
+                                <div class="d-flex align-items-center ms-sm-4">
+                                    <label class="me-2 pe-1 text-nowrap" for="reviews-sorting"><i
+                                            class="fi-arrows-sort text-muted mt-n1 me-2"></i>مرتب سازی براساس : </label>
+                                    <select class="form-select" id="reviews-sorting">
+                                        <option>جدیدترین</option>
+                                        <option>قدیمی ترین</option>
+                                        <option>پربازدید</option>
+                                        <option>امتیاز بالا</option>
+                                        <option>امتیاز پایین</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Review-->
+                        <div class="mb-4 pb-4 border-bottom">
+                            <div class="d-flex justify-content-between mb-3">
+                                <div class="d-flex align-items-center pe-2"><img class="rounded-circle ms-1"
+                                                                                 src="../../static/img/avatars/03.jpg"
+                                                                                 width="48"
+                                                                                 alt="Avatar">
+                                    <div class="pe-2">
+                                        <h6 class="fs-base mb-0">آنت بلک</h6><span class="star-rating"><i
+                                            class="star-rating-icon fi-star-filled active"></i><i
+                                            class="star-rating-icon fi-star-filled active"></i><i
+                                            class="star-rating-icon fi-star-filled active"></i><i
+                                            class="star-rating-icon fi-star-filled active"></i><i
+                                            class="star-rating-icon fi-star-filled active"></i></span>
+                                    </div>
+                                </div>
+                                <span class="text-muted fs-sm">14 شهریور , 1400</span>
+                            </div>
+                            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک
+                                است.
+                                چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی
+                                تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. </p>
+                            <div class="d-flex align-items-center">
+                                <button class="btn-like" type="button"><i class="fi-like"></i><span>(3)</span></button>
+                                <div class="border-end me-1">&nbsp;</div>
+                                <button class="btn-dislike" type="button"><i class="fi-dislike"></i><span>(0)</span>
+                                </button>
+                            </div>
+                        </div>
+                        <!-- Review-->
+                        <div class="mb-4 pb-4 border-bottom">
+                            <div class="d-flex justify-content-between mb-3">
+                                <div class="d-flex align-items-center pe-2"><img class="rounded-circle ms-1"
+                                                                                 src="../../static/img/avatars/13.png"
+                                                                                 width="48"
+                                                                                 alt="Avatar">
+                                    <div class="pe-2">
+                                        <h6 class="fs-base mb-0">دارل استیوارد</h6><span class="star-rating"><i
+                                            class="star-rating-icon fi-star-filled active"></i><i
+                                            class="star-rating-icon fi-star-filled active"></i><i
+                                            class="star-rating-icon fi-star-filled active"></i><i
+                                            class="star-rating-icon fi-star"></i><i
+                                            class="star-rating-icon fi-star"></i></span>
+                                    </div>
+                                </div>
+                                <span class="text-muted fs-sm">14 شهریور , 1400</span>
+                            </div>
+                            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک
+                                است. </p>
+                            <div class="d-flex align-items-center">
+                                <button class="btn-like" type="button"><i class="fi-like"></i><span>(0)</span></button>
+                                <div class="border-end me-1">&nbsp;</div>
+                                <button class="btn-dislike" type="button"><i class="fi-dislike"></i><span>(1)</span>
+                                </button>
+                            </div>
+                        </div>
+                        <!-- Review-->
+                        <div class="mb-4 pb-4 border-bottom">
+                            <div class="d-flex justify-content-between mb-3">
+                                <div class="d-flex align-items-center pe-2"><img class="rounded-circle ms-1"
+                                                                                 src="../../static/img/avatars/05.jpg"
+                                                                                 width="48"
+                                                                                 alt="Avatar">
+                                    <div class="pe-2">
+                                        <h6 class="fs-base mb-0">فلوید مایلز</h6><span class="star-rating"><i
+                                            class="star-rating-icon fi-star-filled active"></i><i
+                                            class="star-rating-icon fi-star-filled active"></i><i
+                                            class="star-rating-icon fi-star-filled active"></i><i
+                                            class="star-rating-icon fi-star-filled active"></i><i
+                                            class="star-rating-icon fi-star-filled active"></i></span>
+                                    </div>
+                                </div>
+                                <span class="text-muted fs-sm">14 شهریور , 1399</span>
+                            </div>
+                            <p>رکتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می
+                                طلبد تا
+                                با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ
+                                پیشرو
+                                در زبان فارسی ایجاد کرد. در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه
+                                راهکارها و شرایط سخت تایپ به پایان رسد</p>
+                            <div class="d-flex align-items-center">
+                                <button class="btn-like" type="button"><i class="fi-like"></i><span>(2)</span></button>
+                                <div class="border-end me-1">&nbsp;</div>
+                                <button class="btn-dislike" type="button"><i class="fi-dislike"></i><span>(1)</span>
+                                </button>
+                            </div>
+                        </div>
+                        <!-- Review-->
+                        <div class="mb-4 pb-4 border-bottom">
+                            <div class="d-flex justify-content-between mb-3">
+                                <div class="d-flex align-items-center pe-2"><img class="rounded-circle ms-1"
+                                                                                 src="../../static/img/avatars/04.jpg"
+                                                                                 width="48"
+                                                                                 alt="Avatar">
+                                    <div class="pe-2">
+                                        <h6 class="fs-base mb-0">رالف ادواردز</h6><span class="star-rating"><i
+                                            class="star-rating-icon fi-star-filled active"></i><i
+                                            class="star-rating-icon fi-star-filled active"></i><i
+                                            class="star-rating-icon fi-star-filled active"></i><i
+                                            class="star-rating-icon fi-star-filled active"></i><i
+                                            class="star-rating-icon fi-star"></i></span>
+                                    </div>
+                                </div>
+                                <span class="text-muted fs-sm">14 شهریور , 1398</span>
+                            </div>
+                            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک
+                                است. </p>
+                            <div class="d-flex align-items-center">
+                                <button class="btn-like" type="button"><i class="fi-like"></i><span>(0)</span></button>
+                                <div class="border-end me-1">&nbsp;</div>
+                                <button class="btn-dislike" type="button"><i class="fi-dislike"></i><span>(0)</span>
+                                </button>
+                            </div>
+                        </div>
+                        <!-- Pagination-->
+                        <nav class="mt-2 mb-4" aria-label="Reviews pagination">
+                            <ul class="pagination">
+                                <li class="page-item d-sm-none"><span class="page-link page-link-static">1 / 5</span>
+                                </li>
+                                <li class="page-item active d-none d-sm-block" aria-current="page"><span
+                                        class="page-link">1<span
+                                        class="visually-hidden">صفحه جاری</span></span></li>
+                                <li class="page-item d-none d-sm-block"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item d-none d-sm-block"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item d-none d-sm-block">...</li>
+                                <li class="page-item d-none d-sm-block"><a class="page-link" href="#">8</a></li>
+                                <li class="page-item"><a class="page-link" href="#" aria-label="Next"><i
+                                        class="fi-chevron-right"></i></a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <!-- Sidebar-->
+                    <aside class="col-lg-4 col-md-5 ms-lg-auto pb-1">
+                        <!-- Contact card-->
+                        <div class="card shadow-sm mb-4">
+                            <div class="card-body">
+                                <div class="d-flex align-items-start justify-content-between">
+                                    <a class="text-decoration-none">
+                                        <img class="rounded-circle mb-2" src="../../static/img/avatars/22.jpg"
+                                             width="60"
+                                             alt="Avatar">
+                                        <h5 class="mb-1">{{ user }}</h5></a>
+                                    <div class="me-4 flex-shrink-0"><a
+                                            class="btn btn-icon btn-light-primary btn-xs shadow-sm rounded-circle ms-2 mb-2"
+                                            href="#"><i class="fi-instagram"></i></a><a
+                                            class="btn btn-icon btn-light-primary btn-xs shadow-sm rounded-circle ms-2 mb-2"
+                                            href="#"><i class="fi-telegram"></i></a></div>
+                                </div>
+                                <ul class="list-unstyled border-bottom mb-4 pb-4">
+                                    <li><a class="nav-link fw-normal p-0" href="tel:{{ user.mobile }}"><i
+                                            class="fi-phone mt-n1 me-2 align-middle opacity-60"></i>{{ user.mobile }}</a>
+                                    </li>
+                                    <li><a class="nav-link fw-normal p-0" href="mailto:{{ user.email }}"><i
+                                            class="fi-mail mt-n1 me-2 align-middle opacity-60"></i>{{ user.email }}</a>
+                                    </li>
+                                </ul>
+                                <!-- Contact form-->
+                                <form class="needs-validation" novalidate="">
+                                    <div class="mb-3">
+                                        <input class="form-control" type="text" placeholder="نام شما*" required="">
+                                        <div class="invalid-feedback">نام خود را وارد کنید</div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <input class="form-control" type="email" placeholder="پست الکترونیکی*"
+                                               required="">
+                                        <div class="invalid-feedback">یک ایمیل معتبر وارد کنید</div>
+                                    </div>
+                                    <input class="form-control mb-3" type="tel" placeholder="شماره تماس">
+                                    <div class="input-group mb-3">
+                                        <input class="form-control rounded ps-5 pwt-datepicker-input-element"
+                                               type="date"
+                                               id="real-estate-date"><i
+                                            class="fi-calendar position-absolute top-50 end-0 translate-middle-y me-3"></i>
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <input class="form-control rounded ps-5 pwt-datepicker-input-element"
+                                               type="time"
+                                               id="real-estate-date"><i
+                                            class="fi-calendar position-absolute top-50 end-0 translate-middle-y me-3"></i>
+                                    </div>
+                                    <textarea class="form-control mb-3" rows="3" placeholder="پیام"
+                                              style="resize: none;"></textarea>
+                                    <div class="form-check mb-4">
+                                        <input class="form-check-input" id="form-submit" type="checkbox" checked="">
+                                        <label class="form-check-label fs-sm" for="form-submit">ارسال اخبار ، نکات و
+                                            تبلیغات
+                                            از سایت به ایمیل من</label>
+                                    </div>
+                                    <button class="btn btn-lg btn-primary d-block w-100" type="submit">ارسال درخواست
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+            </section>
+        {% endfor %}
+
+        <section class="container mb-5 pb-2 pb-lg-4">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+                <h2 class="h3 mb-0 font-vazir">بازدیدهای اخیر</h2><a class="btn btn-link fw-normal p-0"
+                                                                     href="real-estate-catalog-rent.html">مشاهده همه<i
+                    class="fi-arrow-long-left ms-2"></i></a>
+            </div>
+            <div class="tns-carousel-wrapper tns-controls-outside-xxl tns-nav-outside tns-nav-outside-flush mx-n2"
+                 dir="ltr">
+                <div class="tns-outer" id="tns1-ow">
+                    <div class="tns-controls" aria-label="Carousel Navigation" tabindex="0">
+                        <button type="button" data-controls="prev" tabindex="-1" aria-controls="tns1"><i
+                                class="fi-chevron-right"></i></button>
+                        <button type="button" data-controls="next" tabindex="-1" aria-controls="tns1"><i
+                                class="fi-chevron-left"></i></button>
+                    </div>
+                    <div class="tns-liveregion tns-visually-hidden" aria-live="polite" aria-atomic="true">slide <span
+                            class="current">9 to 12</span> of 5
+                    </div>
+                    <div id="tns1-mw" class="tns-ovh">
+                        <div class="tns-inner" id="tns1-iw">
+                            <div class="tns-carousel-inner row gx-4 mx-0 pt-3 pb-4  tns-slider tns-carousel tns-subpixel tns-calc tns-horizontal"
+                                 data-carousel-options="{&quot;items&quot;: 4, &quot;responsive&quot;: {&quot;0&quot;:{&quot;items&quot;:1},&quot;500&quot;:{&quot;items&quot;:2},&quot;768&quot;:{&quot;items&quot;:3},&quot;992&quot;:{&quot;items&quot;:4}}}"
+                                 id="tns1"
+                                 style="transition-duration: 0s; transform: translate3d(-38.0952%, 0px, 0px);">
+                                <div class="col tns-item tns-slide-cloned" aria-hidden="true" tabindex="-1">
+                                    <div class="card shadow-sm card-hover border-0 h-100">
+                                        <div class="card-img-top card-img-hover"><a class="img-overlay"
+                                                                                    href="real-estate-single-v1.html"></a>
+                                            <div class="position-absolute start-0 top-0 pt-3 pe-3"><span
+                                                    class="d-table badge bg-success">تایید</span></div>
+                                            <div class="content-overlay end-0 top-0 pt-3 ps-3">
+                                                <button class="btn btn-icon btn-light btn-xs text-primary rounded-circle"
+                                                        type="button" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                        title="" data-bs-original-title="نشان کردن"
+                                                        aria-label="نشان کردن"><i class="fi-heart"></i></button>
+                                            </div>
+                                            <img src="../../static/img/real-estate/catalog/03.jpg" alt="Image">
+                                        </div>
+                                        <div class="card-body position-relative pb-3">
+                                            <h4 class="mb-1 fs-xs fw-normal text-uppercase text-primary">اجاره</h4>
+                                            <h3 class="h6 mb-2 fs-base"><a class="nav-link stretched-link"
+                                                                           href="real-estate-single-v1.html">اقامتگاه
+                                                ویلایی | 200 متر مربع</a></h3>
+                                            <p class="mb-2 fs-sm text-muted">ایران، تهران ، خیابان آزادی</p>
+                                            <div class="fw-bold"><i
+                                                    class="fi-cash mt-n1 me-2 lead align-middle opacity-70"></i>133000
+                                                تومان
+                                            </div>
+                                        </div>
+                                        <div class="card-footer d-flex align-items-center justify-content-center mx-3 pt-3 text-nowrap">
+                                            <span class="d-inline-block mx-1 px-2 fs-sm">1<i
+                                                    class="fi-bed me-1 mt-n1 fs-lg text-muted"></i></span><span
+                                                class="d-inline-block mx-1 px-2 fs-sm">1<i
+                                                class="fi-bath me-1 mt-n1 fs-lg text-muted"></i></span><span
+                                                class="d-inline-block mx-1 px-2 fs-sm">1<i
+                                                class="fi-car me-1 mt-n1 fs-lg text-muted"></i></span></div>
+                                    </div>
+                                </div>
+                                <div class="col tns-item tns-slide-cloned" aria-hidden="true" tabindex="-1">
+                                    <div class="card shadow-sm card-hover border-0 h-100">
+                                        <div class="card-img-top card-img-hover"><a class="img-overlay"
+                                                                                    href="real-estate-single-v1.html"></a>
+                                            <div class="position-absolute start-0 top-0 pt-3 pe-3"><span
+                                                    class="d-table badge bg-success mb-1">تایید</span><span
+                                                    class="d-table badge bg-info">جدید</span></div>
+                                            <div class="content-overlay end-0 top-0 pt-3 ps-3">
+                                                <button class="btn btn-icon btn-light btn-xs text-primary rounded-circle"
+                                                        type="button" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                        title="" data-bs-original-title="نشان کردن"
+                                                        aria-label="نشان کردن"><i class="fi-heart"></i></button>
+                                            </div>
+                                            <img src="../../static/img/real-estate/catalog/04.jpg" alt="Image">
+                                        </div>
+                                        <div class="card-body position-relative pb-3">
+                                            <h4 class="mb-1 fs-xs fw-normal text-uppercase text-primary">فروش</h4>
+                                            <h3 class="h6 mb-2 fs-base"><a class="nav-link stretched-link"
+                                                                           href="real-estate-single-v1.html">ویلا بلوک
+                                                آبشار | 250 متر مربع</a></h3>
+                                            <p class="mb-2 fs-sm text-muted">ایران، تهران ، خیابان آزادی</p>
+                                            <div class="fw-bold"><i
+                                                    class="fi-cash mt-n1 me-2 lead align-middle opacity-70"></i>658000
+                                                تومان
+                                            </div>
+                                        </div>
+                                        <div class="card-footer d-flex align-items-center justify-content-center mx-3 pt-3 text-nowrap">
+                                            <span class="d-inline-block mx-1 px-2 fs-sm">1<i
+                                                    class="fi-bed me-1 mt-n1 fs-lg text-muted"></i></span><span
+                                                class="d-inline-block mx-1 px-2 fs-sm">1<i
+                                                class="fi-bath me-1 mt-n1 fs-lg text-muted"></i></span><span
+                                                class="d-inline-block mx-1 px-2 fs-sm">2<i
+                                                class="fi-car me-1 mt-n1 fs-lg text-muted"></i></span></div>
+                                    </div>
+                                </div>
+                                <div class="col tns-item tns-slide-cloned" aria-hidden="true" tabindex="-1">
+                                    <div class="card shadow-sm card-hover border-0 h-100">
+                                        <div class="card-img-top card-img-hover"><a class="img-overlay"
+                                                                                    href="real-estate-single-v1.html"></a>
+                                            <div class="position-absolute start-0 top-0 pt-3 pe-3"><span
+                                                    class="d-table badge bg-success mb-1">تایید</span></div>
+                                            <div class="content-overlay end-0 top-0 pt-3 ps-3">
+                                                <button class="btn btn-icon btn-light btn-xs text-primary rounded-circle"
+                                                        type="button" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                        title="" data-bs-original-title="نشان کردن"
+                                                        aria-label="نشان کردن"><i class="fi-heart"></i></button>
+                                            </div>
+                                            <img src="../../static/img/real-estate/catalog/05.jpg" alt="Image">
+                                        </div>
+                                        <div class="card-body position-relative pb-3">
+                                            <h4 class="mb-1 fs-xs fw-normal text-uppercase text-primary">فروش</h4>
+                                            <h3 class="h6 mb-2 fs-base"><a class="nav-link stretched-link"
+                                                                           href="real-estate-single-v1.html">ویلا بلوک
+                                                آبشار | 140 متر مربع</a></h3>
+                                            <p class="mb-2 fs-sm text-muted">ایران، تهران ، خیابان آزادی</p>
+                                            <div class="fw-bold"><i
+                                                    class="fi-cash mt-n1 me-2 lead align-middle opacity-70"></i>187000
+                                                تومان
+                                            </div>
+                                        </div>
+                                        <div class="card-footer d-flex align-items-center justify-content-center mx-3 pt-3 text-nowrap">
+                                            <span class="d-inline-block mx-1 px-2 fs-sm">4<i
+                                                    class="fi-bed me-1 mt-n1 fs-lg text-muted"></i></span><span
+                                                class="d-inline-block mx-1 px-2 fs-sm">2<i
+                                                class="fi-bath me-1 mt-n1 fs-lg text-muted"></i></span><span
+                                                class="d-inline-block mx-1 px-2 fs-sm">1<i
+                                                class="fi-car me-1 mt-n1 fs-lg text-muted"></i></span></div>
+                                    </div>
+                                </div>
+                                <div class="col tns-item tns-slide-cloned" aria-hidden="true" tabindex="-1">
+                                    <div class="card shadow-sm card-hover border-0 h-100">
+                                        <div class="card-img-top card-img-hover"><a class="img-overlay"
+                                                                                    href="real-estate-single-v1.html"></a>
+                                            <div class="position-absolute start-0 top-0 pt-3 pe-3"><span
+                                                    class="d-table badge bg-success mb-1">تایید</span><span
+                                                    class="d-table badge bg-info">جدید</span></div>
+                                            <div class="content-overlay end-0 top-0 pt-3 ps-3">
+                                                <button class="btn btn-icon btn-light btn-xs text-primary rounded-circle"
+                                                        type="button" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                        title="" data-bs-original-title="نشان کردن"
+                                                        aria-label="نشان کردن"><i class="fi-heart"></i></button>
+                                            </div>
+                                            <img src="../../static/img/real-estate/catalog/01.jpg" alt="Image">
+                                        </div>
+                                        <div class="card-body position-relative pb-3">
+                                            <h4 class="mb-1 fs-xs fw-normal text-uppercase text-primary">اجاره</h4>
+                                            <h3 class="h6 mb-2 fs-base"><a class="nav-link stretched-link"
+                                                                           href="real-estate-single-v1.html">ویلا بلوک
+                                                آبشار | 140 متر مربع</a></h3>
+                                            <p class="mb-2 fs-sm text-muted">ایران، تهران ، خیابان آزادی</p>
+                                            <div class="fw-bold"><i
+                                                    class="fi-cash mt-n1 me-2 lead align-middle opacity-70"></i>2560000
+                                                تومان
+                                            </div>
+                                        </div>
+                                        <div class="card-footer d-flex align-items-center justify-content-center mx-3 pt-3 text-nowrap">
+                                            <span class="d-inline-block mx-1 px-2 fs-sm">3<i
+                                                    class="fi-bed me-1 mt-n1 fs-lg text-muted"></i></span><span
+                                                class="d-inline-block mx-1 px-2 fs-sm">2<i
+                                                class="fi-bath me-1 mt-n1 fs-lg text-muted"></i></span><span
+                                                class="d-inline-block mx-1 px-2 fs-sm">2<i
+                                                class="fi-car me-1 mt-n1 fs-lg text-muted"></i></span></div>
+                                    </div>
+                                </div>
+                                <div class="col tns-item tns-slide-cloned" aria-hidden="true" tabindex="-1">
+                                    <div class="card shadow-sm card-hover border-0 h-100">
+                                        <div class="card-img-top card-img-hover"><a class="img-overlay"
+                                                                                    href="real-estate-single-v1.html"></a>
+                                            <div class="position-absolute start-0 top-0 pt-3 pe-3"><span
+                                                    class="d-table badge bg-success mb-1">تایید</span><span
+                                                    class="d-table badge bg-danger">ویژه</span></div>
+                                            <div class="content-overlay end-0 top-0 pt-3 ps-3">
+                                                <button class="btn btn-icon btn-light btn-xs text-primary rounded-circle"
+                                                        type="button" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                        title="" data-bs-original-title="نشان کردن"
+                                                        aria-label="نشان کردن"><i class="fi-heart"></i></button>
+                                            </div>
+                                            <img src="../../static/img/real-estate/catalog/02.jpg" alt="Image">
+                                        </div>
+                                        <div class="card-body position-relative pb-3">
+                                            <h4 class="mb-1 fs-xs fw-normal text-uppercase text-primary">فروش</h4>
+                                            <h3 class="h6 mb-2 fs-base"><a class="nav-link stretched-link"
+                                                                           href="real-estate-single-v1.html">آپارتمان 2
+                                                خواب | 85 متر مربع</a></h3>
+                                            <p class="mb-2 fs-sm text-muted">ایران، تهران ، خیابان آزادی</p>
+                                            <div class="fw-bold"><i
+                                                    class="fi-cash mt-n1 me-2 lead align-middle opacity-70"></i>854000
+                                                تومان
+                                            </div>
+                                        </div>
+                                        <div class="card-footer d-flex align-items-center justify-content-center mx-3 pt-3 text-nowrap">
+                                            <span class="d-inline-block mx-1 px-2 fs-sm">4<i
+                                                    class="fi-bed me-1 mt-n1 fs-lg text-muted"></i></span><span
+                                                class="d-inline-block mx-1 px-2 fs-sm">2<i
+                                                class="fi-bath me-1 mt-n1 fs-lg text-muted"></i></span><span
+                                                class="d-inline-block mx-1 px-2 fs-sm">2<i
+                                                class="fi-car me-1 mt-n1 fs-lg text-muted"></i></span></div>
+                                    </div>
+                                </div>
+                                <div class="col tns-item tns-slide-cloned" aria-hidden="true" tabindex="-1">
+                                    <div class="card shadow-sm card-hover border-0 h-100">
+                                        <div class="card-img-top card-img-hover"><a class="img-overlay"
+                                                                                    href="real-estate-single-v1.html"></a>
+                                            <div class="position-absolute start-0 top-0 pt-3 pe-3"><span
+                                                    class="d-table badge bg-success">تایید</span></div>
+                                            <div class="content-overlay end-0 top-0 pt-3 ps-3">
+                                                <button class="btn btn-icon btn-light btn-xs text-primary rounded-circle"
+                                                        type="button" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                        title="" data-bs-original-title="نشان کردن"
+                                                        aria-label="نشان کردن"><i class="fi-heart"></i></button>
+                                            </div>
+                                            <img src="../../static/img/real-estate/catalog/03.jpg" alt="Image">
+                                        </div>
+                                        <div class="card-body position-relative pb-3">
+                                            <h4 class="mb-1 fs-xs fw-normal text-uppercase text-primary">اجاره</h4>
+                                            <h3 class="h6 mb-2 fs-base"><a class="nav-link stretched-link"
+                                                                           href="real-estate-single-v1.html">اقامتگاه
+                                                ویلایی | 200 متر مربع</a></h3>
+                                            <p class="mb-2 fs-sm text-muted">ایران، تهران ، خیابان آزادی</p>
+                                            <div class="fw-bold"><i
+                                                    class="fi-cash mt-n1 me-2 lead align-middle opacity-70"></i>133000
+                                                تومان
+                                            </div>
+                                        </div>
+                                        <div class="card-footer d-flex align-items-center justify-content-center mx-3 pt-3 text-nowrap">
+                                            <span class="d-inline-block mx-1 px-2 fs-sm">1<i
+                                                    class="fi-bed me-1 mt-n1 fs-lg text-muted"></i></span><span
+                                                class="d-inline-block mx-1 px-2 fs-sm">1<i
+                                                class="fi-bath me-1 mt-n1 fs-lg text-muted"></i></span><span
+                                                class="d-inline-block mx-1 px-2 fs-sm">1<i
+                                                class="fi-car me-1 mt-n1 fs-lg text-muted"></i></span></div>
+                                    </div>
+                                </div>
+                                <div class="col tns-item tns-slide-cloned" aria-hidden="true" tabindex="-1">
+                                    <div class="card shadow-sm card-hover border-0 h-100">
+                                        <div class="card-img-top card-img-hover"><a class="img-overlay"
+                                                                                    href="real-estate-single-v1.html"></a>
+                                            <div class="position-absolute start-0 top-0 pt-3 pe-3"><span
+                                                    class="d-table badge bg-success mb-1">تایید</span><span
+                                                    class="d-table badge bg-info">جدید</span></div>
+                                            <div class="content-overlay end-0 top-0 pt-3 ps-3">
+                                                <button class="btn btn-icon btn-light btn-xs text-primary rounded-circle"
+                                                        type="button" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                        title="" data-bs-original-title="نشان کردن"
+                                                        aria-label="نشان کردن"><i class="fi-heart"></i></button>
+                                            </div>
+                                            <img src="../../static/img/real-estate/catalog/04.jpg" alt="Image">
+                                        </div>
+                                        <div class="card-body position-relative pb-3">
+                                            <h4 class="mb-1 fs-xs fw-normal text-uppercase text-primary">فروش</h4>
+                                            <h3 class="h6 mb-2 fs-base"><a class="nav-link stretched-link"
+                                                                           href="real-estate-single-v1.html">ویلا بلوک
+                                                آبشار | 250 متر مربع</a></h3>
+                                            <p class="mb-2 fs-sm text-muted">ایران، تهران ، خیابان آزادی</p>
+                                            <div class="fw-bold"><i
+                                                    class="fi-cash mt-n1 me-2 lead align-middle opacity-70"></i>658000
+                                                تومان
+                                            </div>
+                                        </div>
+                                        <div class="card-footer d-flex align-items-center justify-content-center mx-3 pt-3 text-nowrap">
+                                            <span class="d-inline-block mx-1 px-2 fs-sm">1<i
+                                                    class="fi-bed me-1 mt-n1 fs-lg text-muted"></i></span><span
+                                                class="d-inline-block mx-1 px-2 fs-sm">1<i
+                                                class="fi-bath me-1 mt-n1 fs-lg text-muted"></i></span><span
+                                                class="d-inline-block mx-1 px-2 fs-sm">2<i
+                                                class="fi-car me-1 mt-n1 fs-lg text-muted"></i></span></div>
+                                    </div>
+                                </div>
+                                <div class="col tns-item tns-slide-cloned" aria-hidden="true" tabindex="-1">
+                                    <div class="card shadow-sm card-hover border-0 h-100">
+                                        <div class="card-img-top card-img-hover"><a class="img-overlay"
+                                                                                    href="real-estate-single-v1.html"></a>
+                                            <div class="position-absolute start-0 top-0 pt-3 pe-3"><span
+                                                    class="d-table badge bg-success mb-1">تایید</span></div>
+                                            <div class="content-overlay end-0 top-0 pt-3 ps-3">
+                                                <button class="btn btn-icon btn-light btn-xs text-primary rounded-circle"
+                                                        type="button" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                        title="" data-bs-original-title="نشان کردن"
+                                                        aria-label="نشان کردن"><i class="fi-heart"></i></button>
+                                            </div>
+                                            <img src="../../static/img/real-estate/catalog/05.jpg" alt="Image">
+                                        </div>
+                                        <div class="card-body position-relative pb-3">
+                                            <h4 class="mb-1 fs-xs fw-normal text-uppercase text-primary">فروش</h4>
+                                            <h3 class="h6 mb-2 fs-base"><a class="nav-link stretched-link"
+                                                                           href="real-estate-single-v1.html">ویلا بلوک
+                                                آبشار | 140 متر مربع</a></h3>
+                                            <p class="mb-2 fs-sm text-muted">ایران، تهران ، خیابان آزادی</p>
+                                            <div class="fw-bold"><i
+                                                    class="fi-cash mt-n1 me-2 lead align-middle opacity-70"></i>187000
+                                                تومان
+                                            </div>
+                                        </div>
+                                        <div class="card-footer d-flex align-items-center justify-content-center mx-3 pt-3 text-nowrap">
+                                            <span class="d-inline-block mx-1 px-2 fs-sm">4<i
+                                                    class="fi-bed me-1 mt-n1 fs-lg text-muted"></i></span><span
+                                                class="d-inline-block mx-1 px-2 fs-sm">2<i
+                                                class="fi-bath me-1 mt-n1 fs-lg text-muted"></i></span><span
+                                                class="d-inline-block mx-1 px-2 fs-sm">1<i
+                                                class="fi-car me-1 mt-n1 fs-lg text-muted"></i></span></div>
+                                    </div>
+                                </div>
+                                <!-- Item-->
+                                <div class="col tns-item tns-slide-active" id="tns1-item0">
+                                    <div class="card shadow-sm card-hover border-0 h-100">
+                                        <div class="card-img-top card-img-hover"><a class="img-overlay"
+                                                                                    href="real-estate-single-v1.html"></a>
+                                            <div class="position-absolute start-0 top-0 pt-3 pe-3"><span
+                                                    class="d-table badge bg-success mb-1">تایید</span><span
+                                                    class="d-table badge bg-info">جدید</span></div>
+                                            <div class="content-overlay end-0 top-0 pt-3 ps-3">
+                                                <button class="btn btn-icon btn-light btn-xs text-primary rounded-circle"
+                                                        type="button" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                        title="" data-bs-original-title="نشان کردن"
+                                                        aria-label="نشان کردن"><i class="fi-heart"></i></button>
+                                            </div>
+                                            <img src="../../static/img/real-estate/catalog/01.jpg" alt="Image">
+                                        </div>
+                                        <div class="card-body position-relative pb-3">
+                                            <h4 class="mb-1 fs-xs fw-normal text-uppercase text-primary">اجاره</h4>
+                                            <h3 class="h6 mb-2 fs-base"><a class="nav-link stretched-link"
+                                                                           href="real-estate-single-v1.html">ویلا بلوک
+                                                آبشار | 140 متر مربع</a></h3>
+                                            <p class="mb-2 fs-sm text-muted">ایران، تهران ، خیابان آزادی</p>
+                                            <div class="fw-bold"><i
+                                                    class="fi-cash mt-n1 me-2 lead align-middle opacity-70"></i>2560000
+                                                تومان
+                                            </div>
+                                        </div>
+                                        <div class="card-footer d-flex align-items-center justify-content-center mx-3 pt-3 text-nowrap">
+                                            <span class="d-inline-block mx-1 px-2 fs-sm">3<i
+                                                    class="fi-bed me-1 mt-n1 fs-lg text-muted"></i></span><span
+                                                class="d-inline-block mx-1 px-2 fs-sm">2<i
+                                                class="fi-bath me-1 mt-n1 fs-lg text-muted"></i></span><span
+                                                class="d-inline-block mx-1 px-2 fs-sm">2<i
+                                                class="fi-car me-1 mt-n1 fs-lg text-muted"></i></span></div>
+                                    </div>
+                                </div>
+                                <!-- Item-->
+                                <div class="col tns-item tns-slide-active" id="tns1-item1">
+                                    <div class="card shadow-sm card-hover border-0 h-100">
+                                        <div class="card-img-top card-img-hover"><a class="img-overlay"
+                                                                                    href="real-estate-single-v1.html"></a>
+                                            <div class="position-absolute start-0 top-0 pt-3 pe-3"><span
+                                                    class="d-table badge bg-success mb-1">تایید</span><span
+                                                    class="d-table badge bg-danger">ویژه</span></div>
+                                            <div class="content-overlay end-0 top-0 pt-3 ps-3">
+                                                <button class="btn btn-icon btn-light btn-xs text-primary rounded-circle"
+                                                        type="button" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                        title="" data-bs-original-title="نشان کردن"
+                                                        aria-label="نشان کردن"><i class="fi-heart"></i></button>
+                                            </div>
+                                            <img src="../../static/img/real-estate/catalog/02.jpg" alt="Image">
+                                        </div>
+                                        <div class="card-body position-relative pb-3">
+                                            <h4 class="mb-1 fs-xs fw-normal text-uppercase text-primary">فروش</h4>
+                                            <h3 class="h6 mb-2 fs-base"><a class="nav-link stretched-link"
+                                                                           href="real-estate-single-v1.html">آپارتمان 2
+                                                خواب | 85 متر مربع</a></h3>
+                                            <p class="mb-2 fs-sm text-muted">ایران، تهران ، خیابان آزادی</p>
+                                            <div class="fw-bold"><i
+                                                    class="fi-cash mt-n1 me-2 lead align-middle opacity-70"></i>854000
+                                                تومان
+                                            </div>
+                                        </div>
+                                        <div class="card-footer d-flex align-items-center justify-content-center mx-3 pt-3 text-nowrap">
+                                            <span class="d-inline-block mx-1 px-2 fs-sm">4<i
+                                                    class="fi-bed me-1 mt-n1 fs-lg text-muted"></i></span><span
+                                                class="d-inline-block mx-1 px-2 fs-sm">2<i
+                                                class="fi-bath me-1 mt-n1 fs-lg text-muted"></i></span><span
+                                                class="d-inline-block mx-1 px-2 fs-sm">2<i
+                                                class="fi-car me-1 mt-n1 fs-lg text-muted"></i></span></div>
+                                    </div>
+                                </div>
+                                <!-- Item-->
+                                <div class="col tns-item tns-slide-active" id="tns1-item2">
+                                    <div class="card shadow-sm card-hover border-0 h-100">
+                                        <div class="card-img-top card-img-hover"><a class="img-overlay"
+                                                                                    href="real-estate-single-v1.html"></a>
+                                            <div class="position-absolute start-0 top-0 pt-3 pe-3"><span
+                                                    class="d-table badge bg-success">تایید</span></div>
+                                            <div class="content-overlay end-0 top-0 pt-3 ps-3">
+                                                <button class="btn btn-icon btn-light btn-xs text-primary rounded-circle"
+                                                        type="button" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                        title="" data-bs-original-title="نشان کردن"
+                                                        aria-label="نشان کردن"><i class="fi-heart"></i></button>
+                                            </div>
+                                            <img src="../../static/img/real-estate/catalog/03.jpg" alt="Image">
+                                        </div>
+                                        <div class="card-body position-relative pb-3">
+                                            <h4 class="mb-1 fs-xs fw-normal text-uppercase text-primary">اجاره</h4>
+                                            <h3 class="h6 mb-2 fs-base"><a class="nav-link stretched-link"
+                                                                           href="real-estate-single-v1.html">اقامتگاه
+                                                ویلایی | 200 متر مربع</a></h3>
+                                            <p class="mb-2 fs-sm text-muted">ایران، تهران ، خیابان آزادی</p>
+                                            <div class="fw-bold"><i
+                                                    class="fi-cash mt-n1 me-2 lead align-middle opacity-70"></i>133000
+                                                تومان
+                                            </div>
+                                        </div>
+                                        <div class="card-footer d-flex align-items-center justify-content-center mx-3 pt-3 text-nowrap">
+                                            <span class="d-inline-block mx-1 px-2 fs-sm">1<i
+                                                    class="fi-bed me-1 mt-n1 fs-lg text-muted"></i></span><span
+                                                class="d-inline-block mx-1 px-2 fs-sm">1<i
+                                                class="fi-bath me-1 mt-n1 fs-lg text-muted"></i></span><span
+                                                class="d-inline-block mx-1 px-2 fs-sm">1<i
+                                                class="fi-car me-1 mt-n1 fs-lg text-muted"></i></span></div>
+                                    </div>
+                                </div>
+                                <!-- Item-->
+                                <div class="col tns-item tns-slide-active" id="tns1-item3">
+                                    <div class="card shadow-sm card-hover border-0 h-100">
+                                        <div class="card-img-top card-img-hover"><a class="img-overlay"
+                                                                                    href="real-estate-single-v1.html"></a>
+                                            <div class="position-absolute start-0 top-0 pt-3 pe-3"><span
+                                                    class="d-table badge bg-success mb-1">تایید</span><span
+                                                    class="d-table badge bg-info">جدید</span></div>
+                                            <div class="content-overlay end-0 top-0 pt-3 ps-3">
+                                                <button class="btn btn-icon btn-light btn-xs text-primary rounded-circle"
+                                                        type="button" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                        title="" data-bs-original-title="نشان کردن"
+                                                        aria-label="نشان کردن"><i class="fi-heart"></i></button>
+                                            </div>
+                                            <img src="../../static/img/real-estate/catalog/04.jpg" alt="Image">
+                                        </div>
+                                        <div class="card-body position-relative pb-3">
+                                            <h4 class="mb-1 fs-xs fw-normal text-uppercase text-primary">فروش</h4>
+                                            <h3 class="h6 mb-2 fs-base"><a class="nav-link stretched-link"
+                                                                           href="real-estate-single-v1.html">ویلا بلوک
+                                                آبشار | 250 متر مربع</a></h3>
+                                            <p class="mb-2 fs-sm text-muted">ایران، تهران ، خیابان آزادی</p>
+                                            <div class="fw-bold"><i
+                                                    class="fi-cash mt-n1 me-2 lead align-middle opacity-70"></i>658000
+                                                تومان
+                                            </div>
+                                        </div>
+                                        <div class="card-footer d-flex align-items-center justify-content-center mx-3 pt-3 text-nowrap">
+                                            <span class="d-inline-block mx-1 px-2 fs-sm">1<i
+                                                    class="fi-bed me-1 mt-n1 fs-lg text-muted"></i></span><span
+                                                class="d-inline-block mx-1 px-2 fs-sm">1<i
+                                                class="fi-bath me-1 mt-n1 fs-lg text-muted"></i></span><span
+                                                class="d-inline-block mx-1 px-2 fs-sm">2<i
+                                                class="fi-car me-1 mt-n1 fs-lg text-muted"></i></span></div>
+                                    </div>
+                                </div>
+                                <!-- Item-->
+                                <div class="col tns-item" id="tns1-item4" aria-hidden="true" tabindex="-1">
+                                    <div class="card shadow-sm card-hover border-0 h-100">
+                                        <div class="card-img-top card-img-hover"><a class="img-overlay"
+                                                                                    href="real-estate-single-v1.html"></a>
+                                            <div class="position-absolute start-0 top-0 pt-3 pe-3"><span
+                                                    class="d-table badge bg-success mb-1">تایید</span></div>
+                                            <div class="content-overlay end-0 top-0 pt-3 ps-3">
+                                                <button class="btn btn-icon btn-light btn-xs text-primary rounded-circle"
+                                                        type="button" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                        title="" data-bs-original-title="نشان کردن"
+                                                        aria-label="نشان کردن"><i class="fi-heart"></i></button>
+                                            </div>
+                                            <img src="../../static/img/real-estate/catalog/05.jpg" alt="Image">
+                                        </div>
+                                        <div class="card-body position-relative pb-3">
+                                            <h4 class="mb-1 fs-xs fw-normal text-uppercase text-primary">فروش</h4>
+                                            <h3 class="h6 mb-2 fs-base"><a class="nav-link stretched-link"
+                                                                           href="real-estate-single-v1.html">ویلا بلوک
+                                                آبشار | 140 متر مربع</a></h3>
+                                            <p class="mb-2 fs-sm text-muted">ایران، تهران ، خیابان آزادی</p>
+                                            <div class="fw-bold"><i
+                                                    class="fi-cash mt-n1 me-2 lead align-middle opacity-70"></i>187000
+                                                تومان
+                                            </div>
+                                        </div>
+                                        <div class="card-footer d-flex align-items-center justify-content-center mx-3 pt-3 text-nowrap">
+                                            <span class="d-inline-block mx-1 px-2 fs-sm">4<i
+                                                    class="fi-bed me-1 mt-n1 fs-lg text-muted"></i></span><span
+                                                class="d-inline-block mx-1 px-2 fs-sm">2<i
+                                                class="fi-bath me-1 mt-n1 fs-lg text-muted"></i></span><span
+                                                class="d-inline-block mx-1 px-2 fs-sm">1<i
+                                                class="fi-car me-1 mt-n1 fs-lg text-muted"></i></span></div>
+                                    </div>
+                                </div>
+                                <div class="col tns-item tns-slide-cloned" aria-hidden="true" tabindex="-1">
+                                    <div class="card shadow-sm card-hover border-0 h-100">
+                                        <div class="card-img-top card-img-hover"><a class="img-overlay"
+                                                                                    href="real-estate-single-v1.html"></a>
+                                            <div class="position-absolute start-0 top-0 pt-3 pe-3"><span
+                                                    class="d-table badge bg-success mb-1">تایید</span><span
+                                                    class="d-table badge bg-info">جدید</span></div>
+                                            <div class="content-overlay end-0 top-0 pt-3 ps-3">
+                                                <button class="btn btn-icon btn-light btn-xs text-primary rounded-circle"
+                                                        type="button" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                        title="" data-bs-original-title="نشان کردن"
+                                                        aria-label="نشان کردن"><i class="fi-heart"></i></button>
+                                            </div>
+                                            <img src="../../static/img/real-estate/catalog/01.jpg" alt="Image">
+                                        </div>
+                                        <div class="card-body position-relative pb-3">
+                                            <h4 class="mb-1 fs-xs fw-normal text-uppercase text-primary">اجاره</h4>
+                                            <h3 class="h6 mb-2 fs-base"><a class="nav-link stretched-link"
+                                                                           href="real-estate-single-v1.html">ویلا بلوک
+                                                آبشار | 140 متر مربع</a></h3>
+                                            <p class="mb-2 fs-sm text-muted">ایران، تهران ، خیابان آزادی</p>
+                                            <div class="fw-bold"><i
+                                                    class="fi-cash mt-n1 me-2 lead align-middle opacity-70"></i>2560000
+                                                تومان
+                                            </div>
+                                        </div>
+                                        <div class="card-footer d-flex align-items-center justify-content-center mx-3 pt-3 text-nowrap">
+                                            <span class="d-inline-block mx-1 px-2 fs-sm">3<i
+                                                    class="fi-bed me-1 mt-n1 fs-lg text-muted"></i></span><span
+                                                class="d-inline-block mx-1 px-2 fs-sm">2<i
+                                                class="fi-bath me-1 mt-n1 fs-lg text-muted"></i></span><span
+                                                class="d-inline-block mx-1 px-2 fs-sm">2<i
+                                                class="fi-car me-1 mt-n1 fs-lg text-muted"></i></span></div>
+                                    </div>
+                                </div>
+                                <div class="col tns-item tns-slide-cloned" aria-hidden="true" tabindex="-1">
+                                    <div class="card shadow-sm card-hover border-0 h-100">
+                                        <div class="card-img-top card-img-hover"><a class="img-overlay"
+                                                                                    href="real-estate-single-v1.html"></a>
+                                            <div class="position-absolute start-0 top-0 pt-3 pe-3"><span
+                                                    class="d-table badge bg-success mb-1">تایید</span><span
+                                                    class="d-table badge bg-danger">ویژه</span></div>
+                                            <div class="content-overlay end-0 top-0 pt-3 ps-3">
+                                                <button class="btn btn-icon btn-light btn-xs text-primary rounded-circle"
+                                                        type="button" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                        title="" data-bs-original-title="نشان کردن"
+                                                        aria-label="نشان کردن"><i class="fi-heart"></i></button>
+                                            </div>
+                                            <img src="../../static/img/real-estate/catalog/02.jpg" alt="Image">
+                                        </div>
+                                        <div class="card-body position-relative pb-3">
+                                            <h4 class="mb-1 fs-xs fw-normal text-uppercase text-primary">فروش</h4>
+                                            <h3 class="h6 mb-2 fs-base"><a class="nav-link stretched-link"
+                                                                           href="real-estate-single-v1.html">آپارتمان 2
+                                                خواب | 85 متر مربع</a></h3>
+                                            <p class="mb-2 fs-sm text-muted">ایران، تهران ، خیابان آزادی</p>
+                                            <div class="fw-bold"><i
+                                                    class="fi-cash mt-n1 me-2 lead align-middle opacity-70"></i>854000
+                                                تومان
+                                            </div>
+                                        </div>
+                                        <div class="card-footer d-flex align-items-center justify-content-center mx-3 pt-3 text-nowrap">
+                                            <span class="d-inline-block mx-1 px-2 fs-sm">4<i
+                                                    class="fi-bed me-1 mt-n1 fs-lg text-muted"></i></span><span
+                                                class="d-inline-block mx-1 px-2 fs-sm">2<i
+                                                class="fi-bath me-1 mt-n1 fs-lg text-muted"></i></span><span
+                                                class="d-inline-block mx-1 px-2 fs-sm">2<i
+                                                class="fi-car me-1 mt-n1 fs-lg text-muted"></i></span></div>
+                                    </div>
+                                </div>
+                                <div class="col tns-item tns-slide-cloned" aria-hidden="true" tabindex="-1">
+                                    <div class="card shadow-sm card-hover border-0 h-100">
+                                        <div class="card-img-top card-img-hover"><a class="img-overlay"
+                                                                                    href="real-estate-single-v1.html"></a>
+                                            <div class="position-absolute start-0 top-0 pt-3 pe-3"><span
+                                                    class="d-table badge bg-success">تایید</span></div>
+                                            <div class="content-overlay end-0 top-0 pt-3 ps-3">
+                                                <button class="btn btn-icon btn-light btn-xs text-primary rounded-circle"
+                                                        type="button" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                        title="" data-bs-original-title="نشان کردن"
+                                                        aria-label="نشان کردن"><i class="fi-heart"></i></button>
+                                            </div>
+                                            <img src="../../static/img/real-estate/catalog/03.jpg" alt="Image">
+                                        </div>
+                                        <div class="card-body position-relative pb-3">
+                                            <h4 class="mb-1 fs-xs fw-normal text-uppercase text-primary">اجاره</h4>
+                                            <h3 class="h6 mb-2 fs-base"><a class="nav-link stretched-link"
+                                                                           href="real-estate-single-v1.html">اقامتگاه
+                                                ویلایی | 200 متر مربع</a></h3>
+                                            <p class="mb-2 fs-sm text-muted">ایران، تهران ، خیابان آزادی</p>
+                                            <div class="fw-bold"><i
+                                                    class="fi-cash mt-n1 me-2 lead align-middle opacity-70"></i>133000
+                                                تومان
+                                            </div>
+                                        </div>
+                                        <div class="card-footer d-flex align-items-center justify-content-center mx-3 pt-3 text-nowrap">
+                                            <span class="d-inline-block mx-1 px-2 fs-sm">1<i
+                                                    class="fi-bed me-1 mt-n1 fs-lg text-muted"></i></span><span
+                                                class="d-inline-block mx-1 px-2 fs-sm">1<i
+                                                class="fi-bath me-1 mt-n1 fs-lg text-muted"></i></span><span
+                                                class="d-inline-block mx-1 px-2 fs-sm">1<i
+                                                class="fi-car me-1 mt-n1 fs-lg text-muted"></i></span></div>
+                                    </div>
+                                </div>
+                                <div class="col tns-item tns-slide-cloned" aria-hidden="true" tabindex="-1">
+                                    <div class="card shadow-sm card-hover border-0 h-100">
+                                        <div class="card-img-top card-img-hover"><a class="img-overlay"
+                                                                                    href="real-estate-single-v1.html"></a>
+                                            <div class="position-absolute start-0 top-0 pt-3 pe-3"><span
+                                                    class="d-table badge bg-success mb-1">تایید</span><span
+                                                    class="d-table badge bg-info">جدید</span></div>
+                                            <div class="content-overlay end-0 top-0 pt-3 ps-3">
+                                                <button class="btn btn-icon btn-light btn-xs text-primary rounded-circle"
+                                                        type="button" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                        title="" data-bs-original-title="نشان کردن"
+                                                        aria-label="نشان کردن"><i class="fi-heart"></i></button>
+                                            </div>
+                                            <img src="../../static/img/real-estate/catalog/04.jpg" alt="Image">
+                                        </div>
+                                        <div class="card-body position-relative pb-3">
+                                            <h4 class="mb-1 fs-xs fw-normal text-uppercase text-primary">فروش</h4>
+                                            <h3 class="h6 mb-2 fs-base"><a class="nav-link stretched-link"
+                                                                           href="real-estate-single-v1.html">ویلا بلوک
+                                                آبشار | 250 متر مربع</a></h3>
+                                            <p class="mb-2 fs-sm text-muted">ایران، تهران ، خیابان آزادی</p>
+                                            <div class="fw-bold"><i
+                                                    class="fi-cash mt-n1 me-2 lead align-middle opacity-70"></i>658000
+                                                تومان
+                                            </div>
+                                        </div>
+                                        <div class="card-footer d-flex align-items-center justify-content-center mx-3 pt-3 text-nowrap">
+                                            <span class="d-inline-block mx-1 px-2 fs-sm">1<i
+                                                    class="fi-bed me-1 mt-n1 fs-lg text-muted"></i></span><span
+                                                class="d-inline-block mx-1 px-2 fs-sm">1<i
+                                                class="fi-bath me-1 mt-n1 fs-lg text-muted"></i></span><span
+                                                class="d-inline-block mx-1 px-2 fs-sm">2<i
+                                                class="fi-car me-1 mt-n1 fs-lg text-muted"></i></span></div>
+                                    </div>
+                                </div>
+                                <div class="col tns-item tns-slide-cloned" aria-hidden="true" tabindex="-1">
+                                    <div class="card shadow-sm card-hover border-0 h-100">
+                                        <div class="card-img-top card-img-hover"><a class="img-overlay"
+                                                                                    href="real-estate-single-v1.html"></a>
+                                            <div class="position-absolute start-0 top-0 pt-3 pe-3"><span
+                                                    class="d-table badge bg-success mb-1">تایید</span></div>
+                                            <div class="content-overlay end-0 top-0 pt-3 ps-3">
+                                                <button class="btn btn-icon btn-light btn-xs text-primary rounded-circle"
+                                                        type="button" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                        title="" data-bs-original-title="نشان کردن"
+                                                        aria-label="نشان کردن"><i class="fi-heart"></i></button>
+                                            </div>
+                                            <img src="../../static/img/real-estate/catalog/05.jpg" alt="Image">
+                                        </div>
+                                        <div class="card-body position-relative pb-3">
+                                            <h4 class="mb-1 fs-xs fw-normal text-uppercase text-primary">فروش</h4>
+                                            <h3 class="h6 mb-2 fs-base"><a class="nav-link stretched-link"
+                                                                           href="real-estate-single-v1.html">ویلا بلوک
+                                                آبشار | 140 متر مربع</a></h3>
+                                            <p class="mb-2 fs-sm text-muted">ایران، تهران ، خیابان آزادی</p>
+                                            <div class="fw-bold"><i
+                                                    class="fi-cash mt-n1 me-2 lead align-middle opacity-70"></i>187000
+                                                تومان
+                                            </div>
+                                        </div>
+                                        <div class="card-footer d-flex align-items-center justify-content-center mx-3 pt-3 text-nowrap">
+                                            <span class="d-inline-block mx-1 px-2 fs-sm">4<i
+                                                    class="fi-bed me-1 mt-n1 fs-lg text-muted"></i></span><span
+                                                class="d-inline-block mx-1 px-2 fs-sm">2<i
+                                                class="fi-bath me-1 mt-n1 fs-lg text-muted"></i></span><span
+                                                class="d-inline-block mx-1 px-2 fs-sm">1<i
+                                                class="fi-car me-1 mt-n1 fs-lg text-muted"></i></span></div>
+                                    </div>
+                                </div>
+                                <div class="col tns-item tns-slide-cloned" aria-hidden="true" tabindex="-1">
+                                    <div class="card shadow-sm card-hover border-0 h-100">
+                                        <div class="card-img-top card-img-hover"><a class="img-overlay"
+                                                                                    href="real-estate-single-v1.html"></a>
+                                            <div class="position-absolute start-0 top-0 pt-3 pe-3"><span
+                                                    class="d-table badge bg-success mb-1">تایید</span><span
+                                                    class="d-table badge bg-info">جدید</span></div>
+                                            <div class="content-overlay end-0 top-0 pt-3 ps-3">
+                                                <button class="btn btn-icon btn-light btn-xs text-primary rounded-circle"
+                                                        type="button" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                        title="" data-bs-original-title="نشان کردن"
+                                                        aria-label="نشان کردن"><i class="fi-heart"></i></button>
+                                            </div>
+                                            <img src="../../static/img/real-estate/catalog/01.jpg" alt="Image">
+                                        </div>
+                                        <div class="card-body position-relative pb-3">
+                                            <h4 class="mb-1 fs-xs fw-normal text-uppercase text-primary">اجاره</h4>
+                                            <h3 class="h6 mb-2 fs-base"><a class="nav-link stretched-link"
+                                                                           href="real-estate-single-v1.html">ویلا بلوک
+                                                آبشار | 140 متر مربع</a></h3>
+                                            <p class="mb-2 fs-sm text-muted">ایران، تهران ، خیابان آزادی</p>
+                                            <div class="fw-bold"><i
+                                                    class="fi-cash mt-n1 me-2 lead align-middle opacity-70"></i>2560000
+                                                تومان
+                                            </div>
+                                        </div>
+                                        <div class="card-footer d-flex align-items-center justify-content-center mx-3 pt-3 text-nowrap">
+                                            <span class="d-inline-block mx-1 px-2 fs-sm">3<i
+                                                    class="fi-bed me-1 mt-n1 fs-lg text-muted"></i></span><span
+                                                class="d-inline-block mx-1 px-2 fs-sm">2<i
+                                                class="fi-bath me-1 mt-n1 fs-lg text-muted"></i></span><span
+                                                class="d-inline-block mx-1 px-2 fs-sm">2<i
+                                                class="fi-car me-1 mt-n1 fs-lg text-muted"></i></span></div>
+                                    </div>
+                                </div>
+                                <div class="col tns-item tns-slide-cloned" aria-hidden="true" tabindex="-1">
+                                    <div class="card shadow-sm card-hover border-0 h-100">
+                                        <div class="card-img-top card-img-hover"><a class="img-overlay"
+                                                                                    href="real-estate-single-v1.html"></a>
+                                            <div class="position-absolute start-0 top-0 pt-3 pe-3"><span
+                                                    class="d-table badge bg-success mb-1">تایید</span><span
+                                                    class="d-table badge bg-danger">ویژه</span></div>
+                                            <div class="content-overlay end-0 top-0 pt-3 ps-3">
+                                                <button class="btn btn-icon btn-light btn-xs text-primary rounded-circle"
+                                                        type="button" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                        title="" data-bs-original-title="نشان کردن"
+                                                        aria-label="نشان کردن"><i class="fi-heart"></i></button>
+                                            </div>
+                                            <img src="../../static/img/real-estate/catalog/02.jpg" alt="Image">
+                                        </div>
+                                        <div class="card-body position-relative pb-3">
+                                            <h4 class="mb-1 fs-xs fw-normal text-uppercase text-primary">فروش</h4>
+                                            <h3 class="h6 mb-2 fs-base"><a class="nav-link stretched-link"
+                                                                           href="real-estate-single-v1.html">آپارتمان 2
+                                                خواب | 85 متر مربع</a></h3>
+                                            <p class="mb-2 fs-sm text-muted">ایران، تهران ، خیابان آزادی</p>
+                                            <div class="fw-bold"><i
+                                                    class="fi-cash mt-n1 me-2 lead align-middle opacity-70"></i>854000
+                                                تومان
+                                            </div>
+                                        </div>
+                                        <div class="card-footer d-flex align-items-center justify-content-center mx-3 pt-3 text-nowrap">
+                                            <span class="d-inline-block mx-1 px-2 fs-sm">4<i
+                                                    class="fi-bed me-1 mt-n1 fs-lg text-muted"></i></span><span
+                                                class="d-inline-block mx-1 px-2 fs-sm">2<i
+                                                class="fi-bath me-1 mt-n1 fs-lg text-muted"></i></span><span
+                                                class="d-inline-block mx-1 px-2 fs-sm">2<i
+                                                class="fi-car me-1 mt-n1 fs-lg text-muted"></i></span></div>
+                                    </div>
+                                </div>
+                                <div class="col tns-item tns-slide-cloned" aria-hidden="true" tabindex="-1">
+                                    <div class="card shadow-sm card-hover border-0 h-100">
+                                        <div class="card-img-top card-img-hover"><a class="img-overlay"
+                                                                                    href="real-estate-single-v1.html"></a>
+                                            <div class="position-absolute start-0 top-0 pt-3 pe-3"><span
+                                                    class="d-table badge bg-success">تایید</span></div>
+                                            <div class="content-overlay end-0 top-0 pt-3 ps-3">
+                                                <button class="btn btn-icon btn-light btn-xs text-primary rounded-circle"
+                                                        type="button" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                        title="" data-bs-original-title="نشان کردن"
+                                                        aria-label="نشان کردن"><i class="fi-heart"></i></button>
+                                            </div>
+                                            <img src="../../static/img/real-estate/catalog/03.jpg" alt="Image">
+                                        </div>
+                                        <div class="card-body position-relative pb-3">
+                                            <h4 class="mb-1 fs-xs fw-normal text-uppercase text-primary">اجاره</h4>
+                                            <h3 class="h6 mb-2 fs-base"><a class="nav-link stretched-link"
+                                                                           href="real-estate-single-v1.html">اقامتگاه
+                                                ویلایی | 200 متر مربع</a></h3>
+                                            <p class="mb-2 fs-sm text-muted">ایران، تهران ، خیابان آزادی</p>
+                                            <div class="fw-bold"><i
+                                                    class="fi-cash mt-n1 me-2 lead align-middle opacity-70"></i>133000
+                                                تومان
+                                            </div>
+                                        </div>
+                                        <div class="card-footer d-flex align-items-center justify-content-center mx-3 pt-3 text-nowrap">
+                                            <span class="d-inline-block mx-1 px-2 fs-sm">1<i
+                                                    class="fi-bed me-1 mt-n1 fs-lg text-muted"></i></span><span
+                                                class="d-inline-block mx-1 px-2 fs-sm">1<i
+                                                class="fi-bath me-1 mt-n1 fs-lg text-muted"></i></span><span
+                                                class="d-inline-block mx-1 px-2 fs-sm">1<i
+                                                class="fi-car me-1 mt-n1 fs-lg text-muted"></i></span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tns-nav" aria-label="Carousel Pagination">
+                        <button type="button" data-nav="0" aria-controls="tns1" style=""
+                                aria-label="Carousel Page 1 (Current Slide)" class="tns-nav-active"></button>
+                        <button type="button" data-nav="1" tabindex="-1" aria-controls="tns1" style=""
+                                aria-label="Carousel Page 2"></button>
+                        <button type="button" data-nav="2" tabindex="-1" aria-controls="tns1" style="display:none"
+                                aria-label="Carousel Page 3"></button>
+                        <button type="button" data-nav="3" tabindex="-1" aria-controls="tns1" style="display:none"
+                                aria-label="Carousel Page 4"></button>
+                        <button type="button" data-nav="4" tabindex="-1" aria-controls="tns1" style="display:none"
+                                aria-label="Carousel Page 5"></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+{% endblock %}
+</body>
+</html>

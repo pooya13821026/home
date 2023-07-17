@@ -1,0 +1,43 @@
+{% extends 'shared/_main.html' %}
+{% load render_partial %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% block title %}داشبورد{% endblock %}
+</head>
+<body>
+{% block main %}
+    <main class="page-wrapper">
+        <div class="container pt-5 pb-lg-4 mt-5 mb-sm-2">
+            <nav class="mb-4 pt-md-3" aria-label="Breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'home' %}">خانه</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">حساب کاربری</li>
+                </ol>
+            </nav>
+            <div class="row">
+                <aside class="col-lg-4 col-md-5 pe-xl-4 mb-5">
+                    <div class="card card-body border-0 shadow-sm pb-1 me-lg-1">
+                        <a class="btn btn-primary btn-lg w-100 mb-3" href="{% url 'new_home' %}"><i
+                                class="fi-plus me-2"></i> ثبت ملک</a><a
+                            class="btn btn-outline-secondary d-block d-md-none w-100 mb-3" href="#account-nav"
+                            data-bs-toggle="collapse"><i class="fi-align-justify me-2"></i>منو</a>
+                        <div class="collapse d-md-block mt-3" id="account-nav">
+                            {% render_partial 'dashbord.views.dashbord_component' %}
+                        </div>
+                    </div>
+                </aside>
+                <div class="col-lg-8 col-md-7 mb-5 account">
+                    <h1 class="h2">اطلاعات حساب کاربری</h1>
+                    <div class="progress mb-4" style="height: .25rem;">
+                        <div class="progress-bar bg-warning" role="progressbar" style="width: 100%" aria-valuenow="50"
+                             aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
+</body>
+</html>

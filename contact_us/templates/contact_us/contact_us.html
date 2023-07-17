@@ -1,0 +1,98 @@
+{% extends 'shared/_main.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% block title %} تماس با ما{% endblock %}
+</head>
+<body>
+{% block main %}
+    <main class="page-wrapper">
+        <div class="container mt-5 mb-md-4 pt-5">
+            <nav class="mb-3 pt-md-3" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'home' %}">خانه</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">تماس با ما</li>
+                </ol>
+            </nav>
+        </div>
+        <section class="container mb-5 pb-2 pb-md-4 pb-lg-5">
+            <div class="row align-items-md-start align-items-center gy-4">
+                <div class="col-lg-5 col-md-6">
+                    <div class="mx-md-0 mx-auto mb-md-5 mb-4 pb-md-4 text-md-start text-center"
+                         style="max-width: 416px;">
+                        <h1 class="mb-4 ">با ما در ارتباط باشید!</h1>
+                        <p class="mb-0 fs-lg text-muted">فرم را تکمیل کنید و تیم ما سعی می کند در مدت 24 ساعت با شما
+                            تماس بگیرد.</p>
+                    </div>
+                    <img class="d-block mx-auto rotate-img" src="../../static/img/real-estate/illustrations/contact.svg"
+                         alt="Illustration">
+                </div>
+                <div class="col-md-6 offset-lg-1">
+                    <div class="card border-0 bg-secondary p-sm-3 p-2">
+                        <div class="card-body m-1">
+                            <h2>ارسال پیام</h2><br>
+                            <form action="{% url 'contact_us' %}" class="needs-validation" novalidate="" method="post">
+                                {% csrf_token %}
+                                <div class="mb-3">
+                                    {{ form.full_name.lable_tag }}
+                                    {{ form.full_name }}
+                                    {{ form.full_name.errors }}
+                                </div>
+                                <div class="mb-3">
+                                    {{ form.email.lable_tag }}
+                                    {{ form.email }}
+                                    {{ form.email.errors }}
+                                </div>
+                                <div class="mb-3">
+                                    {{ form.mobile.lable_tag }}
+                                    {{ form.mobile }}
+                                    {{ form.mobile.errors }}
+                                </div>
+                                <div class="mb-3">
+                                    {{ form.message.lable_tag }}
+                                    {{ form.message }}
+                                    {{ form.message.errors }}
+                                </div>
+                                <div class="pt-sm-2 pt-1">
+                                    <button class="btn btn-lg btn-primary w-sm-auto w-100" type="submit">ارسال فرم
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="container mb-5 pb-2 pb-md-4 pb-lg-5">
+            <div class="row g-4">
+                <div class="col-md-4"><a class="icon-box card card-hover h-100" href="mailto:{{ site.email }}">
+                    <div class="card-body">
+                        <div class="icon-box-media text-primary rounded-circle shadow-sm mb-3"><i class="fi-mail"></i>
+                        </div>
+                        <span class="d-block mb-1 text-body">ارسال ایمیل</span>
+                        <h3 class="h5 icon-box-title mb-0 opacity-90">{{ site.email }}</h3>
+                    </div>
+                </a></div>
+                <div class="col-md-4"><a class="icon-box card card-hover h-100" href="tel:{{ site.phone }}">
+                    <div class="card-body">
+                        <div class="icon-box-media text-primary rounded-circle shadow-sm mb-3"><i
+                                class="fi-device-mobile"></i></div>
+                        <span class="d-block mb-1 text-body">تماس در 7 روز هفته (24/7)</span>
+                        <h3 class="h5 icon-box-title mb-0 opacity-90 ltr">{{ site.phone }}</h3>
+                    </div>
+                </a></div>
+                <div class="col-md-4"><a class="icon-box card card-hover h-100" href="{{ site.instagram_url }}">
+                    <div class="card-body">
+                        <div class="icon-box-media text-primary rounded-circle shadow-sm mb-3"><i
+                                class="fi-instagram"></i></div>
+                        <span class="d-block mb-1 text-body">ما را دنبال کنید</span>
+                        <h3 class="h5 icon-box-title mb-0 opacity-90 ltr">{{ site.instagram_url }}</h3>
+                    </div>
+                </a></div>
+            </div>
+        </section>
+    </main>
+{% endblock %}
+</body>
+</html>

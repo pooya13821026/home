@@ -1,0 +1,19 @@
+{% comment %}
+{% for property in property_types %}
+    <div class="form-check">
+        <a href="{% url 'property_type' propertyy=property.url_title %}">
+                                    {{ property.types }}</a>
+        <input class="form-check-input"
+               id="house">
+        <label class="form-check-label fs-sm"
+               for="house">{{ property.types }}</label>
+    </div>
+{% endfor %}{% endcomment %}
+
+{% for property in property_types %}
+    <li>
+        <div class="sidebar-widget-list-left">
+            <a href="{% url 'property_type' pro=property.url_title %}">{{ property.types }}</a>
+        </div>
+    </li>
+{% endfor %}

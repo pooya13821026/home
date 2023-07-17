@@ -1,0 +1,6 @@
+{% for categris in estate_categris %}
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'category' cat=categris.url_title %}">
+            <i class="fi-home fs-base me-2"></i>برای {{ categris.categorys }}</a>
+    </li>
+{% endfor %}

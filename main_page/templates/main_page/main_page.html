@@ -1,0 +1,361 @@
+{% extends 'shared/_main.html' %}
+{% load thumbnail %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% block title %}صفحه اصلی{% endblock %}
+</head>
+<body>
+{% block main %}
+    <main class="page-wrapper">
+        <section class="container pt-5 my-5 pb-lg-4">
+            <div class="row pt-0 pt-md-2 pt-lg-0">
+                <div class="col-xl-7 col-lg-6 col-md-5 order-md-2 mb-4 mb-lg-3">
+                    {% thumbnail home_baner.img "1492x1228" crop="center" as im %}
+                        <img src="{{ im.url }}"
+                             alt="{{ home_baner.title }}">
+                    {% endthumbnail %}
+                </div>
+                <div class="col-xl-5 col-lg-6 col-md-7 order-md-1 pt-xl-5 pe-lg-0 mb-3 text-md-start text-center">
+                    <h1 class="display-4 mt-lg-5 mb-md-4 mb-3 pt-md-4 pb-lg-2">{{ home_baner.title }}</h1>
+                    <p class="position-relative lead ms-lg-n5 fs-5">{{ home_baner.des }}</p>
+                </div>
+
+            </div>
+        </section>
+        <hr class="mt-n1 mb-5 d-md-none">
+        <section class="container mb-5 pb-md-4">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+                <h2 class="h3 mb-0 ">خانه های ویژه ما</h2><a class="btn btn-link fw-normal p-0"
+                                                             href="{% url 'estate_list' %}">مشاهده همه <i
+                    class="fi-arrow-long-left ms-2"></i></a>
+            </div>
+            <div class="tns-carousel-wrapper tns-controls-outside-xxl tns-nav-outside tns-nav-outside-flush mx-n2"
+                 dir="ltr">
+                <div class="tns-outer" id="tns2-ow">
+                    <div class="tns-controls" aria-label="Carousel Navigation" tabindex="0">
+                        <button type="button" data-controls="prev" tabindex="-1" aria-controls="tns2"><i
+                                class="fi-chevron-right"></i></button>
+                        <button type="button" data-controls="next" tabindex="-1" aria-controls="tns2"><i
+                                class="fi-chevron-left"></i></button>
+                    </div>
+                    <div class="tns-liveregion tns-visually-hidden" aria-live="polite" aria-atomic="true">slide <span
+                            class="current">9 to 11</span> of 5
+                    </div>
+                    <div id="tns2-mw" class="tns-ovh">
+                        <div class="tns-inner" id="tns2-iw">
+                            <div class="tns-carousel-inner row gx-4 mx-0 pt-3 pb-4  tns-slider tns-carousel tns-subpixel tns-calc tns-horizontal"
+                                 data-carousel-options="{&quot;items&quot;: 4, &quot;responsive&quot;: {&quot;0&quot;:{&quot;items&quot;:1},&quot;500&quot;:{&quot;items&quot;:2},&quot;768&quot;:{&quot;items&quot;:3},&quot;992&quot;:{&quot;items&quot;:4}}}"
+                                 id="tns2"
+                                 style="transition-duration: 0s; transform: translate3d(-38.0952%, 0px, 0px);">
+                                {% for specials in special %}
+                                    <div class="col tns-item tns-slide-active" aria-hidden="true" tabindex="-1">
+                                        <div class="card shadow-sm card-hover border-0 h-100">
+                                            <div class="card-img-top card-img-hover"><a class="img-overlay"
+                                                                                        href="{{ specials.get_absolute_url }}"></a>
+                                                <div class="position-absolute start-0 top-0 pt-3 pe-3"><span
+                                                        class="d-table badge bg-success mb-1">ویژه</span></div>
+                                                <div class="content-overlay end-0 top-0 pt-3 ps-3">
+                                                    <button class="btn btn-icon btn-light btn-xs text-primary rounded-circle"
+                                                            type="button" data-bs-toggle="tooltip"
+                                                            data-bs-placement="right"
+                                                            title="" data-bs-original-title="Add to Wishlist"
+                                                            aria-label="Add to Wishlist"><i class="fi-heart"></i>
+                                                    </button>
+                                                </div>
+                                                {% thumbnail specials.image "310x165" crop="center" as im %}
+                                                    <img src="{{ im.url }}"
+                                                         alt="{{ specials.title }}">
+                                                {% endthumbnail %}
+                                            </div>
+                                            <div class="card-body position-relative pb-3">
+                                                <h4 class="mb-1 fs-sm fw-normal text-uppercase text-primary">{{ specials.category }}</h4>
+                                                <h3 class="h6 mb-2 fs-base"><a class="nav-link stretched-link"
+                                                                               href="{{ specials.get_absolute_url }}">{{ specials.title }}
+                                                    | {{ specials.Meterage }} متر</a></h3>
+                                                <p class="mb-2 fs-sm text-muted">{{ specials.state }},{{ specials.address }}</p>
+                                                <div><i class="fi-cash mt-n1 ms-2 lead align-middle opacity-70"></i>
+                                                    {{ specials.price }}
+                                                    ت
+                                                </div>
+                                            </div>
+                                            <div class="card-footer d-flex align-items-center justify-content-center mx-3 pt-3 text-nowrap">
+                                        <span class="d-inline-block mx-1 px-2 fs-sm">3<i
+                                                class="fi-bed me-1 mt-n1 fs-lg text-muted"></i></span><span
+                                                    class="d-inline-block mx-1 px-2 fs-sm">2<i
+                                                    class="fi-bath me-1 mt-n1 fs-lg text-muted"></i></span><span
+                                                    class="d-inline-block mx-1 px-2 fs-sm">2<i
+                                                    class="fi-car me-1 mt-n1 fs-lg text-muted"></i></span></div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="container pb-4 pt-1 mb-5">
+            <div class="d-flex align-items-end align-items-lg-center justify-content-between mb-4 pb-md-2">
+                <div class="d-flex w-100 align-items-center justify-content-between justify-content-lg-start">
+                    <h2 class="h3 mb-0 ms-md-4 ">ملک های جدید اضافه شده</h2>
+                    <div class="dropdown d-md-none" data-bs-toggle="select">
+                        <button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button"
+                                data-bs-toggle="dropdown"><span class="dropdown-toggle-label">خانه</span></button>
+                        <input type="hidden">
+                        <div class="dropdown-menu"><a class="dropdown-item" href="#"><span class="dropdown-item-label">آپارتمان</span></a><a
+                                class="dropdown-item" href="#"><span class="dropdown-item-label">خانه</span></a><a
+                                class="dropdown-item" href="#"><span class="dropdown-item-label">Rooms</span></a><a
+                                class="dropdown-item" href="#"><span class="dropdown-item-label">Commercial</span></a>
+                        </div>
+                    </div>
+                </div>
+                <a class="btn btn-link fw-normal d-none d-lg-block p-0" href="{% url 'estate_list' %}">مشاهده همه
+                    <i
+                            class="fi-arrow-long-left me-2"></i></a>
+            </div>
+            <div class="row g-4">
+                {% for new in new_estate %}
+                    <div class="col-md-6">
+
+                        <div class="card bg-size-cover bg-position-center border-0 overflow-hidden mb-4"
+                             style="background-image: url({{ new.image.url }});"><span
+                                class="img-gradient-overlay"></span>
+                            <div class="card-body content-overlay pb-0"><span class="badge bg-info fs-sm">جدید</span>
+                            </div>
+                            <div class="card-footer content-overlay border-0 pt-0 pb-4">
+                                <div class="d-sm-flex justify-content-between align-items-end pt-5 mt-2 mt-sm-5"><a
+                                        class="text-decoration-none text-light pe-2" href="{{ new.get_absolute_url }}">
+                                    <div class="fs-sm text-uppercase pt-2 mb-1">{{ new.category }}</div>
+                                    <h3 class="h5 text-light mb-1">{{ new.title }}</h3>
+                                    <div class="fs-sm opacity-70"><i
+                                            class="fi-map-pin ms-1"></i> {{ new.state }}، {{ new.address }}
+                                    </div>
+                                </a>
+                                    <div class="btn-group ms-n2 ms-sm-0 mt-3"><a class="btn btn-primary px-3"
+                                                                                 href="{{ new.get_absolute_url }}"
+                                                                                 style="height: 2.75rem;"> قیمت
+                                        {{ new.Meterage }} ت</a>
+                                        <button class="btn btn-primary btn-icon border-end-0 border-top-0 border-bottom-0 border-light fs-sm"
+                                                type="button"><i class="fi-heart"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+        <section class="container mb-5 pb-2 pb-lg-4">
+            <h2 class="h3 mb-4 pb-3 text-right  text-md-start">برترین مشاوران املاک</h2>
+            <div class="tns-carousel-wrapper">
+                <div class="tns-outer" id="tns5-ow">
+                    <div class="tns-liveregion tns-visually-hidden" aria-live="polite" aria-atomic="true">slide <span
+                            class="current">1</span> of 3
+                    </div>
+                    <div class="tns-inner" id="tns5-iw">
+                        <div class="tns-carousel-inner tns-slider tns-gallery tns-subpixel tns-calc tns-horizontal"
+                             data-carousel-options="{&quot;items&quot;: 1, &quot;mode&quot;: &quot;gallery&quot;, &quot;controlsContainer&quot;: &quot;#agents-carousel-controls&quot;, &quot;nav&quot;: false}"
+                             id="tns5">
+                            <div class="tns-item tns-fadeIn tns-slide-active" id="tns5-item0" style="left: 0%;">
+                                <div class="row align-items-center">
+                                    <div class="col-xl-4 d-none d-xl-block"><img class="rounded-3"
+                                                                                 src="../../static/img/real-estate/agents/01.jpg"
+                                                                                 alt="Agent picture"></div>
+                                    <div class="col-xl-4 col-md-5 col-sm-4"><img class="rounded-3"
+                                                                                 src="../../static/img/real-estate/agents/02.jpg"
+                                                                                 alt="Agent picture"></div>
+                                    <div class="col-xl-4 col-md-7 col-sm-8 px-4 px-sm-3 px-md-0 ms-md-n4 mt-n5 mt-sm-0 py-3">
+                                        <div class="card border-0 shadow-sm ms-sm-n5">
+                                            <blockquote class="blockquote card-body">
+                                                <h4 style="max-width: 22rem;font-family:vazir-bold">"من بهترین اقامتگاه
+                                                    را
+                                                    برای شما انتخاب می کنم"</h4>
+                                                <p class="d-sm-none d-lg-block">لورم ایپسوم ساختار چاپ و متن را در بر می
+                                                    گیرد. لورم ایپسوم استاندارد صنعت بوده است. لورم ایپسوم ساختار چاپ و
+                                                    متن
+                                                    را در بر می گیرد. لورم ایپسوم استاندارد صنعت بوده است.</p>
+                                                <footer class="d-flex justify-content-between">
+                                                    <div class="ps-3"><a class="text-decoration-none"
+                                                                         href="real-estate-vendor-properties.html">
+                                                        <h6 class="mb-0">فلوید مایلز</h6>
+                                                        <div class="text-muted fw-normal fs-sm mb-3">نماینده گروه
+                                                            امپراتوری
+                                                            املاک
+                                                        </div>
+                                                    </a><a class="btn btn-icon btn-light-primary btn-xs shadow-sm rounded-circle me-2 mb-2"
+                                                           href="#"><i class="fi-facebook"></i></a><a
+                                                            class="btn btn-icon btn-light-primary btn-xs shadow-sm rounded-circle me-2 mb-2"
+                                                            href="#"><i class="fi-twitter"></i></a><a
+                                                            class="btn btn-icon btn-light-primary btn-xs shadow-sm rounded-circle me-2 mb-2"
+                                                            href="#"><i class="fi-linkedin"></i></a></div>
+                                                    <div><span class="star-rating"><i
+                                                            class="star-rating-icon fi-star-filled active"></i><i
+                                                            class="star-rating-icon fi-star-filled active"></i><i
+                                                            class="star-rating-icon fi-star-filled active"></i><i
+                                                            class="star-rating-icon fi-star-filled active"></i><i
+                                                            class="star-rating-icon fi-star-filled active"></i></span>
+                                                        <div class="text-muted fs-sm mt-1">45 نظر</div>
+                                                    </div>
+                                                </footer>
+                                            </blockquote>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tns-item tns-normal" id="tns5-item1" aria-hidden="true" tabindex="-1">
+                                <div class="row align-items-center">
+                                    <div class="col-xl-4 d-none d-xl-block"><img class="rounded-3"
+                                                                                 src="../../static/img/real-estate/agents/02.jpg"
+                                                                                 alt="Agent picture"></div>
+                                    <div class="col-xl-4 col-md-5 col-sm-4"><img class="rounded-3"
+                                                                                 src="../../static/img/real-estate/agents/03.jpg"
+                                                                                 alt="Agent picture"></div>
+                                    <div class="col-xl-4 col-md-7 col-sm-8 px-4 px-sm-3 px-md-0 ms-md-n4 mt-n5 mt-sm-0 py-3">
+                                        <div class="card border-0 shadow-sm ms-sm-n5">
+                                            <blockquote class="blockquote card-body">
+                                                <h4 style="max-width: 22rem;font-family:vazir-bold">"بیش از 10 سال تجربه
+                                                    به
+                                                    عنوان مشاور املاک"</h4>
+                                                <p class="d-sm-none d-lg-block">لورم ایپسوم ساختار چاپ و متن را در بر می
+                                                    گیرد. لورم ایپسوم استاندارد صنعت بوده است. لورم ایپسوم ساختار چاپ و
+                                                    متن
+                                                    را در بر می گیرد. لورم ایپسوم استاندارد صنعت بوده است.</p>
+                                                <footer class="d-flex justify-content-between">
+                                                    <div class="ps-3"><a class="text-decoration-none"
+                                                                         href="real-estate-vendor-properties.html">
+                                                        <h6 class="mb-0">کریستین واتسون</h6>
+                                                        <div class="text-muted fw-normal fs-sm mb-3">نماینده گروه
+                                                            امپراتوری
+                                                            املاک
+                                                        </div>
+                                                    </a><a class="btn btn-icon btn-light-primary btn-xs shadow-sm rounded-circle me-2 mb-2"
+                                                           href="#"><i class="fi-facebook"></i></a><a
+                                                            class="btn btn-icon btn-light-primary btn-xs shadow-sm rounded-circle me-2 mb-2"
+                                                            href="#"><i class="fi-twitter"></i></a><a
+                                                            class="btn btn-icon btn-light-primary btn-xs shadow-sm rounded-circle me-2 mb-2"
+                                                            href="#"><i class="fi-linkedin"></i></a></div>
+                                                    <div><span class="star-rating"><i
+                                                            class="star-rating-icon fi-star-filled active"></i><i
+                                                            class="star-rating-icon fi-star-filled active"></i><i
+                                                            class="star-rating-icon fi-star-filled active"></i><i
+                                                            class="star-rating-icon fi-star-filled active"></i><i
+                                                            class="star-rating-icon fi-star-filled active"></i></span>
+                                                        <div class="text-muted fs-sm mt-1">24 نظر</div>
+                                                    </div>
+                                                </footer>
+                                            </blockquote>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tns-item tns-normal" id="tns5-item2" aria-hidden="true" tabindex="-1">
+                                <div class="row align-items-center">
+                                    <div class="col-xl-4 d-none d-xl-block"><img class="rounded-3"
+                                                                                 src="../../static/img/real-estate/agents/03.jpg"
+                                                                                 alt="Agent picture"></div>
+                                    <div class="col-xl-4 col-md-5 col-sm-4"><img class="rounded-3"
+                                                                                 src="../../static/img/real-estate/agents/01.jpg"
+                                                                                 alt="Agent picture"></div>
+                                    <div class="col-xl-4 col-md-7 col-sm-8 px-4 px-sm-3 px-md-0 ms-md-n4 mt-n5 mt-sm-0 py-3">
+                                        <div class="card border-0 shadow-sm ms-sm-n5">
+                                            <blockquote class="blockquote card-body">
+                                                <h4 style="max-width: 22rem;font-family:vazir-bold">"من نه نمی گویم ، من
+                                                    فقط
+                                                    راهی برای کار کردن پیدا کردم"</h4>
+                                                <p class="d-sm-none d-lg-block">لورم ایپسوم ساختار چاپ و متن را در بر می
+                                                    گیرد. لورم ایپسوم استاندارد صنعت بوده است. لورم ایپسوم ساختار چاپ و
+                                                    متن
+                                                    را در بر می گیرد. لورم ایپسوم استاندارد صنعت بوده است.</p>
+                                                <footer class="d-flex justify-content-between">
+                                                    <div class="ps-3"><a class="text-decoration-none"
+                                                                         href="real-estate-vendor-properties.html">
+                                                        <h6 class="mb-0">گای هاوکینز</h6>
+                                                        <div class="text-muted fw-normal fs-sm mb-3">نماینده گروه
+                                                            امپراتوری
+                                                            املاک
+                                                        </div>
+                                                    </a><a class="btn btn-icon btn-light-primary btn-xs shadow-sm rounded-circle me-2 mb-2"
+                                                           href="#"><i class="fi-facebook"></i></a><a
+                                                            class="btn btn-icon btn-light-primary btn-xs shadow-sm rounded-circle me-2 mb-2"
+                                                            href="#"><i class="fi-twitter"></i></a><a
+                                                            class="btn btn-icon btn-light-primary btn-xs shadow-sm rounded-circle me-2 mb-2"
+                                                            href="#"><i class="fi-linkedin"></i></a></div>
+                                                    <div><span class="star-rating"><i
+                                                            class="star-rating-icon fi-star-filled active"></i><i
+                                                            class="star-rating-icon fi-star-filled active"></i><i
+                                                            class="star-rating-icon fi-star-filled active"></i><i
+                                                            class="star-rating-icon fi-star-filled active"></i><i
+                                                            class="star-rating-icon fi-star-filled active"></i></span>
+                                                        <div class="text-muted fs-sm mt-1">16 نظر</div>
+                                                    </div>
+                                                </footer>
+                                            </blockquote>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tns-item tns-normal tns-slide-cloned" aria-hidden="true" tabindex="-1">
+                                <div class="row align-items-center">
+                                    <div class="col-xl-4 d-none d-xl-block"><img class="rounded-3"
+                                                                                 src="../../static/img/real-estate/agents/01.jpg"
+                                                                                 alt="Agent picture"></div>
+                                    <div class="col-xl-4 col-md-5 col-sm-4"><img class="rounded-3"
+                                                                                 src="../../static/img/real-estate/agents/02.jpg"
+                                                                                 alt="Agent picture"></div>
+                                    <div class="col-xl-4 col-md-7 col-sm-8 px-4 px-sm-3 px-md-0 ms-md-n4 mt-n5 mt-sm-0 py-3">
+                                        <div class="card border-0 shadow-sm ms-sm-n5">
+                                            <blockquote class="blockquote card-body">
+                                                <h4 style="max-width: 22rem;font-family:vazir-bold">"من بهترین اقامتگاه
+                                                    را
+                                                    برای شما انتخاب می کنم"</h4>
+                                                <p class="d-sm-none d-lg-block">لورم ایپسوم ساختار چاپ و متن را در بر می
+                                                    گیرد. لورم ایپسوم استاندارد صنعت بوده است. لورم ایپسوم ساختار چاپ و
+                                                    متن
+                                                    را در بر می گیرد. لورم ایپسوم استاندارد صنعت بوده است.</p>
+                                                <footer class="d-flex justify-content-between">
+                                                    <div class="ps-3"><a class="text-decoration-none"
+                                                                         href="real-estate-vendor-properties.html">
+                                                        <h6 class="mb-0">فلوید مایلز</h6>
+                                                        <div class="text-muted fw-normal fs-sm mb-3">نماینده گروه
+                                                            امپراتوری
+                                                            املاک
+                                                        </div>
+                                                    </a><a class="btn btn-icon btn-light-primary btn-xs shadow-sm rounded-circle me-2 mb-2"
+                                                           href="#"><i class="fi-facebook"></i></a><a
+                                                            class="btn btn-icon btn-light-primary btn-xs shadow-sm rounded-circle me-2 mb-2"
+                                                            href="#"><i class="fi-twitter"></i></a><a
+                                                            class="btn btn-icon btn-light-primary btn-xs shadow-sm rounded-circle me-2 mb-2"
+                                                            href="#"><i class="fi-linkedin"></i></a></div>
+                                                    <div><span class="star-rating"><i
+                                                            class="star-rating-icon fi-star-filled active"></i><i
+                                                            class="star-rating-icon fi-star-filled active"></i><i
+                                                            class="star-rating-icon fi-star-filled active"></i><i
+                                                            class="star-rating-icon fi-star-filled active"></i><i
+                                                            class="star-rating-icon fi-star-filled active"></i></span>
+                                                        <div class="text-muted fs-sm mt-1">45 نظر</div>
+                                                    </div>
+                                                </footer>
+                                            </blockquote>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tns-carousel-controls justify-content-center justify-content-md-start my-2 mt-md-4"
+                 id="agents-carousel-controls" aria-label="Carousel Navigation" tabindex="0">
+                <button class="mx-2" type="button" aria-controls="tns5" tabindex="-1" data-controls="prev"><i
+                        class="fi-chevron-left"></i></button>
+                <button class="mx-2" type="button" aria-controls="tns5" tabindex="-1" data-controls="next"><i
+                        class="fi-chevron-right"></i></button>
+            </div>
+        </section>
+    </main>
+{% endblock %}
+</body>
+</html>

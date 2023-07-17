@@ -1,0 +1,123 @@
+{% extends 'shared/_main.html' %}
+{% load thumbnail %}
+{% load poll_extars %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% block title %}جزییات وبلاگ{% endblock %}
+</head>
+<body>
+{% block main %}
+    <main class="page-wrapper">
+        <div class="container mt-5 mb-md-4 py-5">
+            <nav class="mb-3 pt-md-3" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'home' %}">خانه</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'blog_list' %}">وبلاگ</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">جزییات وبلاگ</li>
+                </ol>
+            </nav>
+            <h1 class="h2 mb-4 font-vazir">{{ blog.title }}</h1>
+            <div class="mb-4 pb-1">
+                <ul class="list-unstyled d-flex flex-wrap mb-0 text-nowrap">
+                    <li class="me-3"><i
+                            class="fi-calendar-alt me-2 mt-n1 opacity-60"></i>{{ blog.create_time | persian_deta }}</li>
+                    <li class="me-3 border-end"></li>
+                    <li class="me-3 border-end"></li>
+                    <li class="me-3"><a class="nav-link-muted"><i
+                            class="fi-chat-circle me-2 mt-n1 opacity-60"></i>{{ comments.count }} کامنت</a></li>
+                </ul>
+            </div>
+            <div class="mb-4 pb-md-3">
+                {% thumbnail blog.img "2592x1200" crop="center" as im %}
+                    <img class="rounded-3" src="{{ im.url }}"
+                         alt="{{ blog.title }}">
+                {% endthumbnail %}
+            </div>
+            <div class="row">
+                <div class="col-lg-2 col-md-1 mb-md-0 mb-4 mt-md-n5">
+                </div>
+                <div class="col-lg-8 col-md-10">
+                    <div class="mb-4 pb-md-3"><a class="d-flex align-items-center text-body text-decoration-none"
+                                                 href="#"><img class="rounded-circle"
+                                                               src="../../static/img/avatars/32.jpg"
+                                                               width="80" alt="Kristin Watson">
+                        <div class="pe-3">
+                            <h2 class="h6 mb-1">{{ blog.author }}</h2>
+                        </div>
+                    </a></div>
+                    <h6 class="font-vazir">{{ blog.subject1 }}</h6>
+                    <p class="line-h18 text-justify">{{ blog.subtext1 }}</p>
+                    <blockquote class="blockquote font-vazir">
+                        <p>{{ blog.subject2 }}</p>
+                    </blockquote>
+                    <p class="line-h18 text-justify">{{ blog.subtext2 }}</p><br>
+                    <div class="mb-4 mb-md-5">
+                        <h3 class="mb-4 pb-2 font-vazir">{{ comments.count }} نظر ثبت شده</h3>
+                        {% for comment in comments %}
+                            <div class="border-bottom pb-4 mb-4" id="comment-pointer">
+                                <p>{{ comment.comment_text }}</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center pe-2"><img class="rounded-circle me-1"
+                                                                                     src="{{ comment.user.avatar.url }}"
+                                                                                     width="48"
+                                                                                     alt="{{ comment.user }}">
+                                        <div class="pe-2">
+                                            <h6 class="fs-base mb-0">{{ comment.user }}</h6><span
+                                                class="text-muted fs-sm">{{ comment.create_date | persian_deta }}</span>
+                                        </div>
+                                    </div>
+                                    <a onclick="replyComment({{ comment.id }})" class="btn btn-link btn-sm">
+                                        <i class="fi-reply fs-lg me-2"></i><span class="fw-normal">پاسخ</span></a>
+                                </div>
+                                <!-- Reply to comment-->
+                                {% for reply in comment.blogcomment_set.all %}
+                                    <div class="border-start border-4 pe-4 me-4 mt-4" id="comment-pointer">
+                                        <p>{{ reply.comment_text }}</p>
+                                        <div class="d-flex align-items-center pe-2"><img class="rounded-circle me-1"
+                                                                                         src="{{ reply.user.avatar.url }}"
+                                                                                         width="48"
+                                                                                         alt="{{ reply.user }}">
+                                            <div class="pe-2">
+                                                <h6 class="fs-base mb-0">{{ reply.user }}</h6>
+                                                <span
+                                                        class="text-muted fs-sm">{{ reply.create_date | persian_deta }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <!-- Comment form-->
+            {% if request.user.is_authenticated %}
+                <div class="card py-md-4 py-3 shadow-sm">
+                    <div class="card-body col-lg-8 col-md-10 mx-auto px-md-0 px-4">
+                        <h3 class="mb-4 pb-sm-2 font-vazir">ثبت نظر شما</h3>
+                        <form class="needs-validation row gy-md-4 gy-3" action="#">
+                            <input value="" type="hidden" id="parent_id">
+                            <div class="col-12">
+                                <label class="form-label">پیام</label>
+                                <textarea class="form-control form-control-lg" id="comment" rows="3"
+                                          placeholder="ثبت نظر" required=""></textarea>
+                                <div class="invalid-feedback">نظر خود را تایپ کنید</div>
+                            </div>
+                            <div class="col-12 py-2">
+                                <a class="btn btn-lg btn-primary" onclick="sendComment({{ blog.id }})">ارسال</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            {% else %}
+                <div class="mr-6">
+                    <p>برای درج نظر ابتدا وارد <a href="#">حساب کاربری</a> شوید.</p>
+                </div>
+            {% endif %}
+        </div>
+    </main>
+{% endblock %}
+</body>
+</html>

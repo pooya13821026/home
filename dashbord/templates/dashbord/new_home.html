@@ -1,0 +1,351 @@
+{% extends 'shared/_main.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% block title %}ثبت ملک{% endblock %}
+</head>
+<body>
+{% block main %}
+    <main class="page-wrapper">
+        <div class="container mt-5 mb-md-4 py-5">
+            <div class="row">
+                <div class="col-lg-12 add-property">
+                    <nav class="mb-3 pt-md-3" aria-label="Breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'home' %}">خانه</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">ثبت ملک</li>
+                        </ol>
+                    </nav>
+                    <div class="mb-4">
+                        <h1 class="h2 mb-0">ثبت ملک جدید</h1>
+                        <div class="d-lg-none pt-3 mb-2">65% اطلاعات تکمیل شده است.</div>
+                        <div class="progress d-lg-none mb-4" style="height: .25rem;">
+                            <div class="progress-bar bg-warning" role="progressbar" style="width: 65%"
+                                 aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                    <section class="card card-body border-0 shadow-sm p-4 mb-4" id="basic-info">
+                        <h2 class="h5 mb-4"><i class="fi-info-circle text-primary fs-5 mt-n1 me-2"></i>اطلاعات پایه</h2>
+                        <div class="mb-3">
+                            <label class="form-label" for="ap-title">نام ملک <span class="text-danger">*</span></label>
+                            <input class="form-control" type="text" id="ap-title" placeholder="نام ملک"
+                                   value="اقامتگاه ویلایی" required=""><span
+                                class="form-text">48 کاراکتر باقی مانده است </span>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 mb-3">
+                                <label class="form-label" for="ap-category">دسته بندی <span class="text-danger">*</span></label>
+                                <select class="form-select" id="ap-category" required="">
+                                    <option value="" disabled="" hidden="">انتخاب دسته بندی</option>
+                                    <option value="Rent">اجاره</option>
+                                    <option value="Sell">فروش</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-6 mb-3">
+                                <label class="form-label" for="ap-type">نوع ملک <span
+                                        class="text-danger">*</span></label>
+                                <select class="form-select" id="ap-type" required="">
+                                    <option value="" disabled="" hidden="">انتخاب نوع ملک</option>
+                                    <option value="Apartment">آپارتمان</option>
+                                    <option value="House">خانه</option>
+                                    <option value="Commercial">اداری</option>
+                                    <option value="Commercial">سوئیت</option>
+                                    <option value="New building">آپارتمان نوساز</option>
+                                </select>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="card card-body border-0 shadow-sm p-4 mb-4" id="location">
+                        <h2 class="h5 mb-4"><i class="fi-map-pin text-primary fs-5 mt-n1 me-2"></i>موقعیت مکانی</h2>
+                        <div class="row">
+                            <div class="col-sm-6 mb-3">
+                                <label class="form-label" for="ap-country">کشور / استان <span
+                                        class="text-danger">*</span></label>
+                                <select class="form-select" id="ap-country" required="">
+                                    <option value="" disabled="">انتخاب کشور</option>
+                                    <option value="Australia">استرالیا</option>
+                                    <option value="Belgium">فرانسه</option>
+                                    <option value="Canada">کانادا</option>
+                                    <option value="Germany">آلمان</option>
+                                    <option value="United States" selected="">ایالات متحده آمریکا</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-6 mb-3">
+                                <label class="form-label" for="ap-city">شهر <span class="text-danger">*</span></label>
+                                <select class="form-select" id="ap-city" required="">
+                                    <option value="" disabled="">انتخاب شهر</option>
+                                    <option value="Chicago">شیکاگو</option>
+                                    <option value="Dallas">دهلی</option>
+                                    <option value="Los Angeles">لوس آنجلس</option>
+                                    <option value="New York" selected="">نیویورک</option>
+                                    <option value="San Diego">سن فرانسیسکو</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-8 mb-3">
+                                <label class="form-label" for="ap-district">منطقه <span
+                                        class="text-danger">*</span></label>
+                                <select class="form-select" id="ap-district" required="">
+                                    <option value="" disabled="">انتخاب منطقه</option>
+                                    <option value="Brooklyn">منطقه 1</option>
+                                    <option value="Manhattan">منطقه 2</option>
+                                    <option value="Staten Island">منطقه 3</option>
+                                    <option value="The Bronx">منطقه 4</option>
+                                    <option value="Queens" selected="">منطقه 5</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-4 mb-3">
+                                <label class="form-label" for="ap-zip">کد پستی <span
+                                        class="text-danger">*</span></label>
+                                <input class="form-control" type="text" id="ap-zip" placeholder="Enter Zip code"
+                                       value="67234" required="">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="ap-address">آدرس <span class="text-danger">*</span></label>
+                            <input class="form-control" type="text" id="ap-address"
+                                   value="خیابان قائم مقام فراهانی پلاک 210" required="">
+                        </div>
+                    </section>
+                    <section class="card card-body border-0 shadow-sm p-4 mb-4" id="details">
+                        <h2 class="h5 mb-4"><i class="fi-edit text-primary fs-5 mt-n1 me-2"></i>جزئیات ملک</h2>
+                        <div class="mb-4" style="max-width: 25rem;">
+                            <label class="form-label" for="ap-area">مساحت کل بر اساس متر مربع</label>
+                            <input class="form-control" type="number" id="ap-area" min="20"
+                                   placeholder="متراژ را وارد کنید" value="120" required="">
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label d-block fw-bold mb-2 pb-1">تعداد اتاق خواب</label>
+                            <div class="btn-group btn-group-sm" role="group" aria-label="Choose number of bedrooms">
+                                <input class="btn-check" type="radio" id="studio" name="bedrooms">
+                                <label class="btn btn-outline-secondary fw-normal" for="studio">0</label>
+                                <input class="btn-check" type="radio" id="bedrooms-1" name="bedrooms">
+                                <label class="btn btn-outline-secondary fw-normal" for="bedrooms-1">1</label>
+                                <input class="btn-check" type="radio" id="bedrooms-2" name="bedrooms">
+                                <label class="btn btn-outline-secondary fw-normal" for="bedrooms-2">2</label>
+                                <input class="btn-check" type="radio" id="bedrooms-3" name="bedrooms">
+                                <label class="btn btn-outline-secondary fw-normal" for="bedrooms-3">3</label>
+                                <input class="btn-check" type="radio" id="bedrooms-4" name="bedrooms" checked="">
+                                <label class="btn btn-outline-secondary fw-normal" for="bedrooms-4">4</label>
+                                <input class="btn-check" type="radio" id="bedrooms-5" name="bedrooms">
+                                <label class="btn btn-outline-secondary fw-normal" for="bedrooms-5">5+</label>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label d-block fw-bold mb-2 pb-1">تعداد سرویس بهداشتی</label>
+                            <div class="btn-group btn-group-sm" role="group" aria-label="Choose number of bathrooms">
+                                <input class="btn-check" type="radio" id="bathrooms-1" name="bathrooms">
+                                <label class="btn btn-outline-secondary fw-normal" for="bathrooms-1">1</label>
+                                <input class="btn-check" type="radio" id="bathrooms-2" name="bathrooms" checked="">
+                                <label class="btn btn-outline-secondary fw-normal" for="bathrooms-2">2</label>
+                                <input class="btn-check" type="radio" id="bathrooms-3" name="bathrooms">
+                                <label class="btn btn-outline-secondary fw-normal" for="bathrooms-3">3</label>
+                                <input class="btn-check" type="radio" id="bathrooms-4" name="bathrooms">
+                                <label class="btn btn-outline-secondary fw-normal" for="bathrooms-4">4</label>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label d-block fw-bold mb-2 pb-1">تعداد پارکینگ</label>
+                            <div class="btn-group btn-group-sm" role="group"
+                                 aria-label="Choose number of parking spots">
+                                <input class="btn-check" type="radio" id="parking-1" name="parking">
+                                <label class="btn btn-outline-secondary fw-normal" for="parking-1">1</label>
+                                <input class="btn-check" type="radio" id="parking-2" name="parking" checked="">
+                                <label class="btn btn-outline-secondary fw-normal" for="parking-2">2</label>
+                                <input class="btn-check" type="radio" id="parking-3" name="parking">
+                                <label class="btn btn-outline-secondary fw-normal" for="parking-3">3</label>
+                                <input class="btn-check" type="radio" id="parking-4" name="parking">
+                                <label class="btn btn-outline-secondary fw-normal" for="parking-4">4</label>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label d-block fw-bold mb-2 pb-1">امکانات رفاهی</label>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="wifi" checked="">
+                                        <label class="form-check-label" for="wifi">وای فای</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="air-condition" checked="">
+                                        <label class="form-check-label" for="air-condition">تهویه هوا</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="balcony">
+                                        <label class="form-check-label" for="balcony">بالکن</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="garage">
+                                        <label class="form-check-label" for="garage">گاراژ</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="gym">
+                                        <label class="form-check-label" for="gym">باشگاه بدنسازی</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="free-parking" checked="">
+                                        <label class="form-check-label" for="free-parking">پارکینگ رایگان</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="pets-friendly">
+                                        <label class="form-check-label" for="pets-friendly">نگهداری حیوانات
+                                            خانگی</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="pool">
+                                        <label class="form-check-label" for="pool">استخر</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="bar">
+                                        <label class="form-check-label" for="bar">دسترسی به مترو</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="tv" checked="">
+                                        <label class="form-check-label" for="tv">تلویزیون</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="linens" checked="">
+                                        <label class="form-check-label" for="linens">تراس</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="heating" checked="">
+                                        <label class="form-check-label" for="heating">سیستم گرمایشی</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="dishwasher">
+                                        <label class="form-check-label" for="dishwasher">ماشین لباسشویی</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="iron" checked="">
+                                        <label class="form-check-label" for="iron">گاز رومیزی</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="hair-dryer" checked="">
+                                        <label class="form-check-label" for="hair-dryer">آسانسور</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="kitchen" checked="">
+                                        <label class="form-check-label" for="kitchen">آشپزخانه</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="breakfast">
+                                        <label class="form-check-label" for="breakfast">صبحانه</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="security-cameras">
+                                        <label class="form-check-label" for="security-cameras">دوربین مداربسته</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <label class="form-label" for="ap-description">توضیحات </label>
+                        <textarea class="form-control" id="ap-description" rows="5"
+                                  placeholder="ملک خود را شرح دهید"></textarea>
+                    </section>
+                    <section class="card card-body border-0 shadow-sm p-4 mb-4" id="price">
+                        <h2 class="h5 mb-4"><i class="fi-cash text-primary fs-5 mt-n1 me-2"></i>قیمت</h2>
+                        <label class="form-label" for="ap-price">قیمت <span class="text-danger">*</span></label>
+                        <div class="d-sm-flex">
+                            <input class="form-control w-100 me-2 mb-2" type="number" id="ap-price" min="200" step="50"
+                                   required="">
+                            <span class="form-select w-25 me-2 mb-2">تومان</span>
+
+                        </div>
+                    </section>
+                    <section class="card card-body border-0 shadow-sm p-4 mb-4" id="photos">
+                        <h2 class="h5 mb-4"><i class="fi-image text-primary fs-5 mt-n1 me-2"></i>عکس / ویدئو</h2>
+                        <div class="alert alert-info mb-4" role="alert">
+                            <div class="d-flex"><i class="fi-alert-circle me-2 me-sm-3"></i>
+                                <p class="fs-sm mb-1">حداکثر حجم عکس 8 مگابایت است. فرمت ها: jpeg ، jpg ، png. ابتدا
+                                    تصویر اصلی را قرار دهید.<br>حداکثر حجم فیلم 10 مگابایت است. فرمت ها: mp4 ، mov.</p>
+                            </div>
+                        </div>
+                        <div class="filepond--root file-uploader file-uploader-grid filepond--hopper"
+                             data-style-button-remove-item-position="left"
+                             data-style-button-process-item-position="right" data-style-load-indicator-position="right"
+                             data-style-progress-indicator-position="right" data-style-button-remove-item-align="false"
+                             style="height: 160px;"><input class="filepond--browser" type="file"
+                                                           id="filepond--browser-logwb2wug" name="filepond"
+                                                           aria-controls="filepond--assistant-logwb2wug"
+                                                           aria-labelledby="filepond--drop-label-logwb2wug"
+                                                           accept="image/png,image/jpeg,video/mp4,video/mov"
+                                                           multiple=""><a class="filepond--credits" aria-hidden="true"
+                                                                          href="https://pqina.nl/" target="_blank"
+                                                                          rel="noopener noreferrer"
+                                                                          style="transform: translateY(152px);">Powered
+                            by PQINA</a>
+                            <div class="filepond--drop-label"
+                                 style="transform: translate3d(0px, 0px, 0px); opacity: 1;"><label
+                                    for="filepond--browser-logwb2wug" id="filepond--drop-label-logwb2wug"
+                                    aria-hidden="true">
+                                <div class="btn btn-primary mb-3"> آپلود عکس / ویدئو <i
+                                        class="fi-cloud-upload ms-1"></i></div>
+                                <br>یا آن را به این قسمت بکشید</label></div>
+                            <div class="filepond--list-scroller" style="transform: translate3d(0px, 144px, 0px);">
+                                <ul class="filepond--list" role="list"></ul>
+                            </div>
+                            <div class="filepond--panel filepond--panel-root" data-scalable="true">
+                                <div class="filepond--panel-top filepond--panel-root"></div>
+                                <div class="filepond--panel-center filepond--panel-root"
+                                     style="transform: translate3d(0px, 8px, 0px) scale3d(1, 1.44, 1);"></div>
+                                <div class="filepond--panel-bottom filepond--panel-root"
+                                     style="transform: translate3d(0px, 152px, 0px);"></div>
+                            </div>
+                            <span class="filepond--assistant" id="filepond--assistant-logwb2wug" role="status"
+                                  aria-live="polite" aria-relevant="additions"></span>
+                            <div class="filepond--drip"></div>
+                            <fieldset class="filepond--data"></fieldset>
+                        </div>
+                    </section>
+                    <section class="card card-body border-0 shadow-sm p-4 mb-4" id="contacts">
+                        <h2 class="h5 mb-4"><i class="fi-phone text-primary fs-5 mt-n1 me-2"></i>تماس با ما</h2>
+                        <div class="row">
+                            <div class="col-sm-6 mb-3">
+                                <label class="form-label" for="ap-fn">نام <span class="text-danger">*</span></label>
+                                <input class="form-control" type="text" id="ap-fn" value="آنت"
+                                       placeholder="نام خود را وارد کنید" required="">
+                            </div>
+                            <div class="col-sm-6 mb-3">
+                                <label class="form-label" for="ap-sn">نام خانوادگی <span
+                                        class="text-danger">*</span></label>
+                                <input class="form-control" type="text" id="ap-sn" value="بلک"
+                                       placeholder="نام خانوادگی خود را وارد کنید" required="">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 mb-3">
+                                <label class="form-label" for="ap-email">پست الکترونیکی<span
+                                        class="text-danger">*</span></label>
+                                <input class="form-control" type="text" id="ap-email" value="annette_black@email.com"
+                                       placeholder="ایمیل خود را وارد کنید">
+                            </div>
+                            <div class="col-sm-6 mb-3">
+                                <label class="form-label" for="ap-phone">شماره تماس <span
+                                        class="text-danger">*</span></label>
+                                <input class="form-control" type="tel" id="ap-phone" data-format="custom"
+                                       data-delimiter="-" data-blocks="3 3 4" value="302-555-0107"
+                                       placeholder="000-000-0000">
+                            </div>
+                        </div>
+                        <label class="form-label" for="ap-company-name">نام شرکت</label>
+                        <input class="form-control" type="text" id="ap-company-name"
+                               placeholder="نام شرکت را وارد کنید">
+                    </section>
+                    <section class="d-sm-flex justify-content-between pt-2">
+                        <a class="btn btn-primary btn-lg d-block mb-2" href="real-estate-property-promotion.html">ذخیره
+                            و ادامه</a>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
+</body>
+</html>

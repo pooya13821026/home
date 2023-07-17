@@ -1,0 +1,44 @@
+{% load thumbnail %}
+<header class="navbar navbar-expand-lg navbar-light bg-light fixed-top" data-scroll-header="">
+    <div class="container"><a class="navbar-brand ms-3 ms-xl-4 logo">
+        {% thumbnail settings.logo "116x32" crop="center" as im %}
+            <img class="d-block"
+                 src="{{ im.url }}" width="116"
+                 alt="{{ settings.title }}">
+        {% endthumbnail %}</a>
+        <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span
+                class="navbar-toggler-icon"></span></button>
+        {% if request.user.is_authenticated %}
+            <a class="btn btn-sm text-primary d-none d-lg-block order-lg-3" href="{% url 'dashbord' %}"><i
+                    class="fi-user me-2"></i>ورود به حساب کاربری</a>
+        {% else %}
+            <a class="btn btn-sm text-primary d-none d-lg-block order-lg-3" href="#"><i
+                    class="fi-user me-2"></i>ورود</a>
+            <a class="btn btn-sm text-primary d-none d-lg-block order-lg-3" href="#"><i
+                    class="fi-user me-2"></i>ثبت نام</a>
+        {% endif %}
+        <a class="btn btn-primary btn-sm ms-2 order-lg-3" href="{% url 'new_home' %}">
+            <i class="fi-plus me-2"></i>ثبت<span class="d-none d-sm-inline"> ملک</span></a>
+        <div class="collapse navbar-collapse order-lg-2" id="navbarNav">
+            <ul class="navbar-nav navbar-nav-scroll" style="max-height: 35rem;">
+                <li class="active"><a class="nav-link" href="{% url 'home' %}" aria-expanded="false">خانه</a></li>
+                <li><a class="nav-link" href="{% url 'estate_list' %}" aria-expanded="false">املاک</a>
+                </li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'blog_list' %}" aria-expanded="false">وبلاگ</a>
+                </li>
+                <li><a class="nav-link" href="{% url 'about' %}" aria-expanded="false">درباره ما</a></li>
+                <li><a class="nav-link" href="{% url 'contact_us' %}" aria-expanded="false">تماس با ما</a></li>
+                <li class="nav-item d-lg-none"><a class="nav-link" href="{% url 'dashbord' %}" data-bs-toggle="modal"><i
+                        class="fi-user me-2"></i>ورود به حساب کاربری</a></li>
+            </ul>
+            <div class="col">
+                <div class="header-search header-search-extended header-search-visible">
+                    <form action="{% url 'search' %}" method="get">
+                        {{ form }}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

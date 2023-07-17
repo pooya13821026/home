@@ -1,0 +1,78 @@
+{% load thumbnail %}
+{% load poll_extars %}
+<footer class="footer bg-secondary pt-5">
+    <div class="container pt-lg-4 pb-4">
+        <div class="row mb-5 pb-md-3 pb-lg-4">
+            <div class="col-lg-6 mb-lg-0 mb-4">
+                <div class="d-flex flex-sm-row flex-column justify-content-between mx-n2">
+                    <div class="mb-sm-0 mb-4 px-2"><a class="d-inline-block mb-4">
+                        {% thumbnail settings.logo "116x32" crop="center" as im %}
+                            <img src="{{ im.url }}" width="116"
+                                 alt="{{ settings.title }}">
+                        {% endthumbnail %}</a>
+                        <ul class="nav flex-column mb-sm-4 mb-2">
+                            <li class="nav-item mb-2">
+                                <a class="nav-link p-0 fw-normal" href="mailto:{{ settings.email }}">
+                                    <i class="fi-mail mt-n1 me-2 align-middle opacity-70"></i>{{ settings.email }}</a>
+                            </li>
+                            <li class="nav-item"><a class="nav-link p-0 fw-normal" href="tel:{{ settings.phone }}"><i
+                                    class="fi-device-mobile mt-n1 me-2 align-middle opacity-70"></i>{{ settings.phone }}
+                            </a></li>
+                            <li class="nav-item"><a class="nav-link p-0 fw-normal"><i
+                                    class="fi-apartment mt-n1 me-2 align-middle opacity-70"></i>{{ settings.address }}
+                            </a></li>
+                        </ul>
+                        <div class="pt-2">
+                            <a class="btn btn-icon btn-light-primary btn-xs shadow-sm rounded-circle me-2 mb-2"
+                               href="{{ settings.facebook_url }}"><i class="fi-facebook"></i></a>
+                            <a class="btn btn-icon btn-light-primary btn-xs shadow-sm rounded-circle me-2 mb-2"
+                               href="{{ settings.aparat_url }}"><i class="fi-twitch"></i></a>
+                            <a class="btn btn-icon btn-light-primary btn-xs shadow-sm rounded-circle me-2 mb-2"
+                               href="{{ settings.whatsapp_url }}"><i class="fi-whatsapp"></i></a>
+                            <a class="btn btn-icon btn-light-primary btn-xs shadow-sm rounded-circle me-2 mb-2"
+                               href="{{ settings.telegram_url }}"><i class="fi-telegram"></i></a>
+                            <a class="btn btn-icon btn-light-primary btn-xs shadow-sm rounded-circle me-2 mb-2"
+                               href="{{ settings.instagram_url }}"><i class="fi-instagram"></i></a>
+                        </div>
+                    </div>
+                    {% for footer_link_title in footer_link_titles %}
+                        <div class="mb-sm-0 mb-4 px-2">
+                            <h4 class="h5">{{ footer_link_title.title }}</h4>
+                            <ul class="nav flex-column">
+                                {% for link in footer_link_title.footerlink_set.all %}
+                                    <li class="nav-item mb-2"><a class="nav-link p-0 fw-normal"
+                                                                 href="{{ link.url_title }}">{{ link.title }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-xl-5 col-lg-6 offset-xl-1">
+                <h4 class="h5">بلاگ های اخیر</h4>
+                {% for blogs in blog %}
+                    <article class="d-flex align-items-start" style="max-width: 640px;"><a
+                            class="d-none d-sm-block flex-shrink-0 me-sm-4 mb-sm-0 mb-3"
+                            href="{{ blogs.get_absolute_url }}">
+                        {% thumbnail blogs.img "200x200" crop="center" as im %}
+                            <img class="rounded-3" src="{{ im.url }}" width="100"
+                                 alt="{{ blogs.title }}">
+                        {% endthumbnail %}</a>
+                        <div>
+                            <h5 class="mb-2 fs-base"><a class="nav-link"
+                                                        href="{{ blogs.get_absolute_url }}">{{ blogs.title }}</a></h5>
+                            <p class="mb-2 fs-sm">{{ blogs.short_description }}</p><a
+                                class="nav-link nav-link-muted d-inline-block me-3 p-0 fs-xs fw-normal"
+                                href="#"><i
+                                class="fi-calendar mt-n1 ms-1 fs-sm align-middle opacity-70"></i>{{ blogs.create_time | persian_deta }}
+                        </a>
+                        </div>
+                    </article>
+                    <hr class="text-dark opacity-10 my-4">
+                {% endfor %}
+            </div>
+        </div>
+        <div class="text-center fs-sm pt-4 mt-3 pb-2">© تمام حقوق این سایت محفوظ است .<a
+                class="d-inline-block nav-link p-0" rel="noopener"></a></div>
+    </div>
+</footer>
