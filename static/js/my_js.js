@@ -1,6 +1,6 @@
 function sendComment(blogId) {
-    var comment = $('#comment').val();
-    var parentId = $('#parent_id').val();
+    const comment = $('#comment').val();
+    const parentId = $('#parent_id').val();
     $.get('/blog/send-comment', {
         blog_comment: comment,
         blog_id: blogId,

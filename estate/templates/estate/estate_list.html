@@ -43,70 +43,6 @@
                                     <option value="Queens">5</option>
                                 </select>
                             </div>
-                            {% comment %}<div class="pb-4 mb-2">
-                                <h3 class="h6">نوع ملک</h3>
-                                <div class="overflow-auto" data-simplebar="init" data-simplebar-auto-hide="false"
-                                     data-simplebar-direction="rtl" style="height: 11rem;">
-                                    <div class="simplebar-wrapper" style="margin: 0px;">
-                                        <div class="simplebar-height-auto-observer-wrapper">
-                                            <div class="simplebar-height-auto-observer"></div>
-                                        </div>
-                                        <div class="simplebar-mask">
-                                            <div class="simplebar-offset" style="bottom: 0px;">
-                                                <div class="simplebar-content-wrapper"
-                                                     style="height: 100%; overflow: hidden scroll;">
-                                                    <div class="simplebar-content" style="padding: 0px;">
-                                                        {% render_partial 'estate.views.property_type' %}
-                                                        {% include 'estate/component/property_types.html' %}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="simplebar-placeholder" style="width: auto; height: 270px;"></div>
-                                    </div>
-                                    <div class="simplebar-track simplebar-horizontal" style="visibility: hidden;">
-                                        <div class="simplebar-scrollbar simplebar-visible"
-                                             style="width: 0px; display: none;"></div>
-                                    </div>
-                                    <div class="simplebar-track simplebar-vertical" style="visibility: visible;">
-                                        <div class="simplebar-scrollbar simplebar-visible"
-                                             style="height: 114px; transform: translate3d(0px, 0px, 0px); display: block;"></div>
-                                    </div>
-                                </div>
-                                <div class="overflow-auto" data-simplebar="init" data-simplebar-auto-hide="false"
-                                     data-simplebar-direction="rtl" style="height: 11rem;">
-                                    <div class="simplebar-wrapper" style="margin: 0px;">
-                                        <div class="simplebar-height-auto-observer-wrapper">
-                                            <div class="simplebar-height-auto-observer"></div>
-                                        </div>
-                                        <div class="simplebar-mask">
-                                            <div class="simplebar-offset" style="bottom: 0px;">
-                                                <div class="simplebar-content-wrapper"
-                                                     style="height: 100%; overflow: hidden scroll;">
-                                                    <div class="simplebar-content" style="padding: 0px;">
-                                                        {% for property in property_types %}
-                                                            <div class="form-check">
-                                                                <label class="form-check-label fs-sm"
-                                                                       for="house">{{ property.types }}</label>
-                                                            </div>
-                                                        {% endfor %}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="simplebar-placeholder" style="width: auto; height: 270px;"></div>
-                                    </div>
-                                    <div class="simplebar-track simplebar-horizontal" style="visibility: hidden;">
-                                        <div class="simplebar-scrollbar simplebar-visible"
-                                             style="width: 0px; display: none;"></div>
-                                    </div>
-                                    <div class="simplebar-track simplebar-vertical" style="visibility: visible;">
-                                        <div class="simplebar-scrollbar simplebar-visible"
-                                             style="height: 114px; transform: translate3d(0px, 0px, 0px); display: block;"></div>
-                                    </div>
-                                </div>
-
-                            </div>{% endcomment %}
                             <div class="sidebar-widget mt-30">
                                 <h4 class="pro-sidebar-title">نوع ملک</h4>
                                 <div class="sidebar-widget-list">
@@ -333,7 +269,7 @@
                         </div>
                     </div>
                     <div class="row g-4 py-4">
-                        {% for estate in estate_list %}
+                        {% for estate in object_list %}
                             <div class="col-sm-6 col-xl-4">
                                 <div class="card shadow-sm card-hover border-0 h-100">
                                     <div class="tns-carousel-wrapper card-img-top card-img-hover"><a class="img-overlay"

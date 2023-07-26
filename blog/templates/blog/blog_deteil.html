@@ -97,12 +97,13 @@
                 <div class="card py-md-4 py-3 shadow-sm">
                     <div class="card-body col-lg-8 col-md-10 mx-auto px-md-0 px-4">
                         <h3 class="mb-4 pb-sm-2 font-vazir">ثبت نظر شما</h3>
-                        <form class="needs-validation row gy-md-4 gy-3" action="#">
+                        <form class="needs-validation row gy-md-4 gy-3" action="" method="post">
+                            {% csrf_token %}
                             <input value="" type="hidden" id="parent_id">
                             <div class="col-12">
                                 <label class="form-label">پیام</label>
                                 <textarea class="form-control form-control-lg" id="comment" rows="3"
-                                          placeholder="ثبت نظر" required=""></textarea>
+                                          placeholder="ثبت نظر" name="comment_text" required=""></textarea>
                                 <div class="invalid-feedback">نظر خود را تایپ کنید</div>
                             </div>
                             <div class="col-12 py-2">

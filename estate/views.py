@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 
 from estate.forms import SearchForm
 from estate.models import *
@@ -39,9 +39,10 @@ def property_types(request):
     return render(request, 'estate/component/property_types.html', context)
 
 
-class EstateDeteilView(ListView):
+class EstateDeteilView(DetailView):
     model = Estate
     template_name = 'estate/estate_deteil.html'
+    context_object_name = 'estates'
 
 
 def search(request):

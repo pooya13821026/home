@@ -39,7 +39,7 @@
                 {% for blog in blog_list %}
                     <article class="col pb-2 pb-md-1"><a class="d-block position-relative mb-3"
                                                          href="{{ blog.get_absolute_url }}">
-                        {% thumbnail blog.img "434x205" crop="center" as im %}
+                        {% thumbnail blog.img "1272x600" crop="center" as im %}
                             <img class="d-block rounded-3" src="{{ im.url }}"
                                  alt="{{ blog.title }}">
                         {% endthumbnail %}</a>

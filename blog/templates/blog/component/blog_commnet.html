@@ -1,25 +1,25 @@
 {% load poll_extars %}
 <div class="mb-4 mb-md-5">
     <h3 class="mb-4 pb-2 font-vazir">{{ comments.count }} نظر ثبت شده</h3>
-    {% for comment in comments %}
+    {% for item in comments %}
         <div class="border-bottom pb-4 mb-4" id="comment-pointer">
-            <p>{{ comment.comment_text }}</p>
+            <p>{{ item.comment_text }}</p>
             <div class="d-flex justify-content-between align-items-center">
                 <div class="d-flex align-items-center pe-2"><img class="rounded-circle me-1"
-                                                                 src="{{ comment.user.avatar.url }}"
+                                                                 src="{{ item.user.avatar.url }}"
                                                                  width="48"
-                                                                 alt="{{ comment.user }}">
+                                                                 alt="{{ item.user }}">
                     <div class="pe-2">
-                        <h6 class="fs-base mb-0">{{ comment.user }}</h6><span
-                            class="text-muted fs-sm">{{ comment.create_date | persian_deta }}</span>
+                        <h6 class="fs-base mb-0">{{ item.user }}</h6><span
+                            class="text-muted fs-sm">{{ item.create_date | persian_deta }}</span>
                     </div>
                 </div>
-                <button onclick="replyComment({{ comment.id }})" class="btn btn-link btn-sm"
+                <button onclick="replyComment({{ item.id }})" class="btn btn-link btn-sm"
                         type="button">
                     <i class="fi-reply fs-lg me-2"></i><span class="fw-normal">پاسخ</span></button>
             </div>
             <!-- Reply to comment-->
-            {% for reply in comment.blogcomment_set.all %}
+            {% for reply in item.blogcomment_set.all %}
                 <div class="border-start border-4 pe-4 me-4 mt-4" id="comment-pointer">
                     <p>{{ reply.comment_text }}</p>
                     <div class="d-flex align-items-center pe-2"><img class="rounded-circle me-1"
