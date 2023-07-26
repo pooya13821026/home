@@ -4,8 +4,8 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import View
 from django.views.generic import TemplateView
-
 from dashbord.forms import EditProfileForm, ChangePasswordForm
+from estate.models import *
 
 
 class Dashbord(TemplateView):
@@ -63,5 +63,19 @@ class ChangePass(View):
         return render(request, 'dashbord/changepassword.html', context)
 
 
-def new_home(request):
-    return render(request, 'dashbord/new_home.html')
+class NewHome(View):
+    def get(self, request):
+        property_type = PropertyType.objects.all()
+        category = Category.objects.all()
+        state = State.objects.all()
+        welfare_amenities = WelfareAmenities.objects.all()
+        context = {
+            'property_type': property_type,
+            'category': category,
+            'state': state,
+            'welfare_amenities': welfare_amenities,
+        }
+        return render(request, 'dashbord/new_home.html', context)
+
+    def post(self, request):
+        pass

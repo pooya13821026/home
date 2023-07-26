@@ -14,6 +14,10 @@ class StateAdmin(admin.ModelAdmin):
     list_display = ['state']
 
 
+class WelfareAmenitiesAdmin(admin.ModelAdmin):
+    list_display = ['title']
+
+
 class EstateAdmin(admin.ModelAdmin):
     list_display = ['title', 'category', 'price', 'special']
     prepopulated_fields = {'slug': ('title',)}
@@ -23,3 +27,4 @@ admin.site.register(Estate, EstateAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(PropertyType, PropertyTypeAdmin)
 admin.site.register(State, StateAdmin)
+admin.site.register(WelfareAmenities, WelfareAmenitiesAdmin)

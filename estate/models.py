@@ -67,3 +67,14 @@ class Estate(models.Model):
         if not self.slug:
             self.slug = slugify(self.title)
         return super().save(*args, **kwargs)
+
+
+class WelfareAmenities(models.Model):
+    title = models.CharField(max_length=15, verbose_name='امکانات رفاهی')
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'امکانات'
+        verbose_name_plural = 'امکانات رفاهی'
