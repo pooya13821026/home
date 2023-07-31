@@ -82,3 +82,18 @@ class WelfareAmenities(models.Model):
     class Meta:
         verbose_name = 'امکانات'
         verbose_name_plural = 'امکانات رفاهی'
+
+
+class SendVisit(models.Model):
+    estate = models.ForeignKey(Estate, on_delete=models.CASCADE, verbose_name='ملک')
+    full_name = models.CharField(max_length=20, verbose_name='نام و نام خوانوادگی')
+    phone = models.PositiveIntegerField(max_length=11, verbose_name='شماره')
+    email = models.EmailField(verbose_name='ایمیل', null=True, blank=True)
+    message = models.TextField(verbose_name='پیام', blank=True, null=True)
+
+    class Meta:
+        verbose_name = 'درخواست'
+        verbose_name_plural = 'درخواست ها'
+
+    def __str__(self):
+        return self.estate

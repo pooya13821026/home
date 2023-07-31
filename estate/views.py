@@ -46,7 +46,7 @@ class EstateDeteilView(DetailView):
 
 
 def search(request):
-    estate = Estate.objects.all()
+    estate = Estate.objects.filter(is_active=True)
     form = SearchForm()
     if 'search' in request.GET:
         form = SearchForm(request.GET)
