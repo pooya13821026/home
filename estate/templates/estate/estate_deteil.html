@@ -160,9 +160,9 @@
                             <li>نوع ملک: {{ estates.property_type }}</li>
                             <li>متراژ (مترمربع): {{ estates.Meterage }} مترمربع</li>
                             <li>سال ساخت: {{ estates.year_of_construction }}</li>
-                            <li>تعداد اتاق: 4</li>
-                            <li>سرویس بهداشتی: 2</li>
-                            <li>پارکینگ: دارد</li>
+                            <li>تعداد اتاق: {{ estates.room }}</li>
+                            <li>سرویس بهداشتی: {{ estates.wc }}</li>
+                            <li>پارکینگ: {{ estates.parking }}</li>
                         </ul>
                     </div>
                     <div class="mb-sm-3">

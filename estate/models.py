@@ -39,19 +39,23 @@ class State(models.Model):
 
 
 class Estate(models.Model):
-    title = models.CharField(max_length=30, verbose_name='عنوان')
+    title = models.CharField(max_length=30, verbose_name='عنوان', db_index=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='دسته بندی')
     property_type = models.ForeignKey(PropertyType, on_delete=models.CASCADE, verbose_name='نوع ملک')
     state = models.ForeignKey(State, on_delete=models.CASCADE, verbose_name='استان')
     year_of_construction = models.PositiveIntegerField(verbose_name='سال ساخت')
     address = models.CharField(max_length=100, verbose_name='ادرس ملک')
     Meterage = models.PositiveIntegerField(verbose_name='متراژ')
+    room = models.PositiveIntegerField(default=0, verbose_name='تعداد اتاق')
+    wc = models.PositiveIntegerField(default=1, verbose_name='تعداد سرویس بهداشتی')
+    parking = models.BooleanField(default=False, verbose_name='پارکینگ')
     image = models.ImageField(upload_to='estate', verbose_name='عکس', null=True, blank=True)
     description = models.TextField(verbose_name='توضیحات', null=True, blank=True)
     price = models.PositiveIntegerField(verbose_name='قیمت کل')
     create_time = models.DateTimeField(auto_now=True, verbose_name='تاریخ ثبت', editable=False)
-    slug = models.SlugField(verbose_name='عنوان در url', max_length=200, allow_unicode=True)
+    slug = models.SlugField(verbose_name='عنوان در url', max_length=200, allow_unicode=True, db_index=True)
     special = models.BooleanField(verbose_name='ویژه', default=False)
+    is_active = models.BooleanField(default=False, verbose_name='فعال')
 
     class Meta:
         verbose_name = 'ملک'

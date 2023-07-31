@@ -11,7 +11,7 @@ class EstateListView(ListView):
 
     def get_queryset(self):
         query = super(EstateListView, self).get_queryset()
-        deta = query.all()
+        deta = query.filter(is_active=True)
         category = self.kwargs.get('cat')
         if category is not None:
             deta = query.filter(category__url_title__iexact=category)

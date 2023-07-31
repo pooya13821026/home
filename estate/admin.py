@@ -19,7 +19,7 @@ class WelfareAmenitiesAdmin(admin.ModelAdmin):
 
 
 class EstateAdmin(admin.ModelAdmin):
-    list_display = ['title', 'category', 'price', 'special']
+    list_display = ['title', 'category', 'price', 'special', 'is_active']
     prepopulated_fields = {'slug': ('title',)}
 
 
