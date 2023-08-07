@@ -1,5 +1,5 @@
 from django import forms
-from estate.models import SendVisit
+from estate.models import SendVisit, Estate
 
 
 class SearchForm(forms.Form):
@@ -29,3 +29,9 @@ class SendVisitForm(forms.ModelForm):
                 'rows': 4
             }),
         }
+
+
+class EstateForm(forms.ModelForm):
+    class Meta:
+        model = Estate
+        fields = ['title', 'category', 'property_type', 'state', 'year_of_construction', 'address']

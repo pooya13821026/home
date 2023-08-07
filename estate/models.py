@@ -6,7 +6,7 @@ from django.utils.text import slugify
 class Category(models.Model):
     categorys = models.CharField(max_length=10, verbose_name='دسته بندی')
     url_title = models.SlugField(max_length=200, db_index=True, verbose_name='url')
-
+    icon = models.ImageField
     class Meta:
         verbose_name = 'دسته بندی'
         verbose_name_plural = 'دسته بندی ها'
@@ -45,7 +45,7 @@ class Estate(models.Model):
     state = models.ForeignKey(State, on_delete=models.CASCADE, verbose_name='استان')
     year_of_construction = models.PositiveIntegerField(verbose_name='سال ساخت')
     address = models.CharField(max_length=100, verbose_name='ادرس ملک')
-    Meterage = models.PositiveIntegerField(verbose_name='متراژ')
+    meterage = models.PositiveIntegerField(verbose_name='متراژ')
     room = models.PositiveIntegerField(default=0, verbose_name='تعداد اتاق')
     wc = models.PositiveIntegerField(default=1, verbose_name='تعداد سرویس بهداشتی')
     parking = models.BooleanField(default=False, verbose_name='پارکینگ')

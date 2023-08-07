@@ -6,6 +6,7 @@ from django.views import View
 from django.views.generic import TemplateView
 from dashbord.forms import EditProfileForm, ChangePasswordForm
 from estate.models import *
+from estate.forms import EstateForm
 
 
 class Dashbord(TemplateView):
@@ -78,4 +79,19 @@ class NewHome(View):
         return render(request, 'dashbord/new_home.html', context)
 
     def post(self, request):
-        pass
+        form = EstateForm(request.POST)
+        if form.is_valid():
+            print(form)
+        else:
+            print('form is not valid')
+        property_type = PropertyType.objects.all()
+        category = Category.objects.all()
+        state = State.objects.all()
+        welfare_amenities = WelfareAmenities.objects.all()
+        context = {
+            'property_type': property_type,
+            'category': category,
+            'state': state,
+            'welfare_amenities': welfare_amenities,
+        }
+        return render(request, 'dashbord/new_home.html', context)
