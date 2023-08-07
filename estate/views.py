@@ -1,7 +1,7 @@
 from django.shortcuts import render
+from django.views import View
 from django.views.generic import ListView, DetailView
-
-from estate.forms import SearchForm
+from estate.forms import SearchForm, EstateForm
 from estate.models import *
 
 
@@ -54,3 +54,39 @@ def search(request):
             cd = form.cleaned_data['search']
             estate = estate.filter(title__icontains=cd)
     return render(request, 'estate/estate_list.html', {'form': form, 'estate_list': estate})
+
+
+class CreateEstate(View):
+    def get(self, request):
+        property_type = PropertyType.objects.all()
+        category = Category.objects.all()
+        state = State.objects.all()
+        welfare_amenities = WelfareAmenities.objects.all()
+        context = {
+            'property_type': property_type,
+            'category': category,
+            'state': state,
+            'welfare_amenities': welfare_amenities,
+        }
+        return render(request, 'estate/create_estate.html', context)
+
+    def post(self, request):
+        if request.method == 'POST':
+            form = EstateForm(request.POST)
+            print(form)
+            if form.is_valid():
+                print(form)
+            else:
+                print(form.errors.as_data())
+                print('form is not valid')
+        property_type = PropertyType.objects.all()
+        category = Category.objects.all()
+        state = State.objects.all()
+        welfare_amenities = WelfareAmenities.objects.all()
+        context = {
+            'property_type': property_type,
+            'category': category,
+            'state': state,
+            'welfare_amenities': welfare_amenities,
+        }
+        return render(request, 'estate/create_estate.html', context)

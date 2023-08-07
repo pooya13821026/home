@@ -62,36 +62,3 @@ class ChangePass(View):
             'change_pass_form': change_pass_form,
         }
         return render(request, 'dashbord/changepassword.html', context)
-
-
-class NewHome(View):
-    def get(self, request):
-        property_type = PropertyType.objects.all()
-        category = Category.objects.all()
-        state = State.objects.all()
-        welfare_amenities = WelfareAmenities.objects.all()
-        context = {
-            'property_type': property_type,
-            'category': category,
-            'state': state,
-            'welfare_amenities': welfare_amenities,
-        }
-        return render(request, 'dashbord/new_home.html', context)
-
-    def post(self, request):
-        form = EstateForm(request.POST)
-        if form.is_valid():
-            print(form)
-        else:
-            print('form is not valid')
-        property_type = PropertyType.objects.all()
-        category = Category.objects.all()
-        state = State.objects.all()
-        welfare_amenities = WelfareAmenities.objects.all()
-        context = {
-            'property_type': property_type,
-            'category': category,
-            'state': state,
-            'welfare_amenities': welfare_amenities,
-        }
-        return render(request, 'dashbord/new_home.html', context)

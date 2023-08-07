@@ -34,4 +34,4 @@ class SendVisitForm(forms.ModelForm):
 class EstateForm(forms.ModelForm):
     class Meta:
         model = Estate
-        fields = ['title', 'category', 'property_type', 'state', 'year_of_construction', 'address']
+        fields = ['title', 'address', 'meterage', 'description', 'price']

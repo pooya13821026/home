@@ -6,7 +6,7 @@ from django.utils.text import slugify
 class Category(models.Model):
     categorys = models.CharField(max_length=10, verbose_name='دسته بندی')
     url_title = models.SlugField(max_length=200, db_index=True, verbose_name='url')
-    icon = models.ImageField
+
     class Meta:
         verbose_name = 'دسته بندی'
         verbose_name_plural = 'دسته بندی ها'

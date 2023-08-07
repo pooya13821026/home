@@ -7,4 +7,5 @@ urlpatterns = [
     path('property-type/<pro>', views.EstateListView.as_view(), name='property_type'),
     path('category/<cat>', views.EstateListView.as_view(), name='category'),
     path('search/', views.search, name='search'),
+    path('create-estate/', views.CreateEstate.as_view(), name='create_estate'),
 ]
