@@ -1,5 +1,5 @@
 from django import forms
-from estate.models import SendVisit, Estate
+from estate.models import *
 
 
 class SearchForm(forms.Form):

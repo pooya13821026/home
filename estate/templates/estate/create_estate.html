@@ -38,24 +38,24 @@
                                        value="" required="">
                             </div>
                             <div class="row">
-{#                                <div class="col-sm-6 mb-3">#}
-{#                                    <label class="form-label" for="ap-category">دسته بندی <span#}
-{#                                            class="text-danger">*</span></label>#}
-{#                                    <select class="form-select" name="category" id="ap-category" required="">#}
-{#                                        <option value="" disabled="" hidden="">انتخاب دسته بندی</option>#}
-{#                                        {% for cat in category %}#}
-{#                                            <option>{{ cat.categorys }}</option>#}
-{#                                        {% endfor %}#}
-{#                                    </select>#}
-{#                                </div>#}
+                                <div class="col-sm-6 mb-3">
+                                    <label class="form-label" for="ap-category">دسته بندی <span
+                                            class="text-danger">*</span></label>
+                                    <select class="form-select" name="category" id="ap-category" required="">
+                                        <option name="category" value="" disabled="" hidden="">انتخاب دسته بندی</option>
+                                        {% for cat in category %}
+                                            <option value="{{ cat.categorys }}">{{ cat.categorys }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
 {#                                <div class="col-sm-6 mb-3">#}
 {#                                    <label class="form-label" for="ap-type">نوع ملک <span#}
 {#                                            class="text-danger">*</span></label>#}
 {#                                    <select class="form-select" name="property_type" id="ap-type" required="">#}
-{#                                        <option value="" disabled="" hidden="">انتخاب نوع ملک#}
+{#                                        <option name="property_type" value="" disabled="" hidden="">انتخاب نوع ملک#}
 {#                                        </option>#}
 {#                                        {% for property in property_type %}#}
-{#                                            <option>{{ property.types }}</option>#}
+{#                                            <option name="property_type">{{ property.types }}</option>#}
 {#                                        {% endfor %}#}
 {#                                    </select>#}
 {#                                </div>#}
@@ -97,7 +97,7 @@
                                 <div class="col-sm-4 mb-3">
                                     <label class="form-label" for="ap-zip">کد پستی <span
                                             class="text-danger">*</span></label>
-                                    <input class="form-control" type="text" id="ap-zip"
+                                    <input class="form-control" type="number" id="ap-zip"
                                            placeholder="کد پستی را وارد کنید" required="">
                                 </div>
                             </div>
