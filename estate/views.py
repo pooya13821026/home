@@ -2,7 +2,7 @@ from django.http import HttpRequest
 from django.shortcuts import render
 from django.views import View
 from django.views.generic import ListView, DetailView
-from estate.forms import SearchForm, EstateForm
+from estate.forms import SearchForm
 from estate.models import *
 
 
@@ -73,15 +73,22 @@ class CreateEstate(View):
 
     def post(self, request: HttpRequest):
         if request.method == 'POST':
-            print(request.POST)
-            form = EstateForm(request.POST)
-            print(form.data)
-            if form.is_valid():
-                print(form.data)
-            else:
-                print(form.errors.as_data())
-                print(form.errors)
-                print('form is not valid')
+            # form = EstateForm(request.POST)
+            # print(form.data)
+            # if form.is_valid():
+            #     print(form.data)
+            # else:
+            #     print(form.errors.as_data())
+            #     print(form.errors)
+            #     print('form is not valid')
+            title = request.POST.get('title')
+            address = request.POST.get('address')
+            meterage = request.POST.get('meterage')
+            category = request.POST.get('category')
+            property_type = request.POST.get('property_type')
+            state = request.POST.get('state')
+            description = request.POST.get('description')
+            price = request.POST.get('price')
         property_type = PropertyType.objects.all()
         category = Category.objects.all()
         state = State.objects.all()
