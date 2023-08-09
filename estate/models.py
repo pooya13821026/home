@@ -29,7 +29,6 @@ class PropertyType(models.Model):
 
 class State(models.Model):
     state = models.CharField(max_length=20, verbose_name='استان')
-
     class Meta:
         verbose_name = 'استان'
         verbose_name_plural = 'استان ها'

@@ -31,6 +31,11 @@ class SendVisitForm(forms.ModelForm):
         }
 
 
+class FilterForm(forms.ModelForm):
+    class Meta:
+        model = Estate
+        fields = ['state']
+
 class EstateForm(forms.ModelForm):
     class Meta:
         model = Estate
