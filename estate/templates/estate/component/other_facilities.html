@@ -1,5 +1,5 @@
 {% for facility in facilities  %}
-<div class="form-check">
+<div class="form-check" name="other-facilities">
     <input class="form-check-input" type="checkbox"
         id="{{facility.title}}" name="{{facility.title}}">
     <label class="form-check-label fs-sm" for="{{facility.title}}">{{facility.title}}</label>

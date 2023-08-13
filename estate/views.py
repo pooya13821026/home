@@ -1,52 +1,65 @@
+from typing import Any
 from django.shortcuts import render
 from django.views import View
 from django.views.generic import ListView, DetailView
 from estate.forms import SearchForm, EstateForm
 from estate.models import *
 
-def estate_list_view(request):
-    qs = Estate.objects.all().filter(is_active=True)
-    category = request.GET.get('category')  
-    if category:
-        qs = qs.filter(category__url_title__iexact=category)
-    if request.method == "POST":
-        print(request.POST)
-        state = request.POST.get('state')
-        if state:
-            qs = qs.filter(state__state=state)
-        
-        property_type = request.POST.get('property_type')
-        print(property_type) 
-        if property_type:
-            qs = qs.filter(property_type__types=property_type)
-        
-        min_meterage = request.POST.get('min-meterage') or None
-        max_meterage = request.POST.get('max-meterage') or None
-        if min_meterage:
-            qs = qs.filter(meterage__gte=min_meterage)
-        if max_meterage:
-            qs = qs.filter(meterage__lte=max_meterage)
-    context = {
-        'estates' : qs,
-    }
-    return render(request, 'estate/estate_list_copy.html', context)  
-
 class EstateListView(ListView):
-    model = Estate
+    context_object_name = "estate_list"
     template_name = 'estate/estate_list.html'
-
+    paginate_by = 10
     def get_queryset(self):
-        query = super(EstateListView, self).get_queryset()
-        deta = query.filter(is_active=True)
-        category = self.kwargs.get('cat')
-        if category is not None:
-            deta = query.filter(category__url_title__iexact=category)
-            return deta
-        property_types = self.kwargs.get('pro')
-        if property_types is not None:
-            deta = query.filter(property_type__url_title__iexact=property_types)
-            return deta
-        return deta
+        queryset = Estate.objects.filter(is_active=True)
+        request = self.request.GET
+        category = self.kwargs.get('category', 'real-estate')
+        print(category)
+        if category != 'real-estate':
+            queryset = queryset.filter(category__url_title__iexact=category)
+
+        search = request.get('search') or None 
+        if search is not None:
+            queryset = queryset.filter(title__icontains=search)
+        
+        state = request.get('state') or None
+        if state:
+            queryset = queryset.filter(state__state=state)
+
+        property_type = request.get('property_type') or None
+        if property_type:
+            queryset = queryset.filter(property_type__types=property_type)
+        
+        min_price = request.get('min-price') or None
+        if min_price:
+            queryset = queryset.filter(price__gte=min_price)
+
+        max_price = request.get('max-price') or None
+        if max_price:
+            queryset = queryset.filter(price__lte=max_price)
+        
+        min_meterage = request.get('min-meterage') or None
+        if min_meterage:
+            queryset = queryset.filter(meterage__gte=min_meterage)
+    
+        max_meterage = request.get('max-meterage') or None
+        if max_meterage:
+            queryset = queryset.filter(meterage__lte=max_meterage)
+        
+        bedrooms = request.get('bedrooms')
+        if bedrooms:
+            if bedrooms == '4':
+                queryset = queryset.filter(room__gte=int(bedrooms))
+            else:
+                queryset = queryset.filter(room=int(bedrooms))
+        
+        bathrooms = request.get('bathrooms')
+        if bathrooms:
+            if bathrooms == '4':
+                queryset = queryset.filter(wc__gte=int(bathrooms))
+            else:            
+                queryset = queryset.filter(wc=int(bathrooms))
+
+        return queryset      
 
 
 def estate_categorys(request):
@@ -78,21 +91,23 @@ def other_facilities(request):
     return render(request, 'estate/component/other_facilities.html', context)
 
 
-class EstateDeteilView(DetailView):
+class EstateDetailView(DetailView):
     model = Estate
-    template_name = 'estate/estate_deteil.html'
+    template_name = 'estate/estate_detail.html'
     context_object_name = 'estates'
 
 
-def search(request):
-    estate = Estate.objects.filter(is_active=True)
-    form = SearchForm()
-    if 'search' in request.GET:
-        form = SearchForm(request.GET)
-        if form.is_valid():
-            cd = form.cleaned_data['search']
-            estate = estate.filter(title__icontains=cd)
-    return render(request, 'estate/estate_list.html', {'form': form, 'estate_list': estate})
+# def search(request):
+#     estate_list = Estate.objects.filter(is_active=True)
+#     form = SearchForm()
+#     if 'search' in request.GET:
+#         form = SearchForm(request.GET)
+#         if form.is_valid():
+#             search = form.cleaned_data['search']
+#             estate_list = estate_list.filter(title__icontains=search)
+#             print(search, estate_list)
+#     return render(request, 'estate/estate_list.html', {'form': form, 'estate_list': estate_list})
+
 
 
 class CreateEstate(View):

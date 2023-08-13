@@ -1,5 +1,6 @@
 {% extends 'shared/_main.html' %}
 {% load render_partial %}
+{% load humanize %}
 {% load thumbnail %}
 <!DOCTYPE html>
 <html lang="en">
@@ -14,222 +15,146 @@
             <div class="row g-0 mt-n3">
                 <aside class="col-lg-4 col-xl-3 border-top-lg border-end-lg shadow-sm px-3 px-xl-4 px-xxl-5 pt-lg-2">
                     <div class="offcanvas offcanvas-start offcanvas-collapse" id="filters-sidebar">
-                        <div class="offcanvas-header d-flex d-lg-none align-items-center">
+                        <!-- <div class="offcanvas-header d-flex d-lg-none align-items-center">
                             <h2 class="h5 mb-0">فیلتر جستجو</h2>
                             <button class="btn-close" type="button" data-bs-dismiss="offcanvas"></button>
-                        </div>
+                        </div> -->
+                        <!-- show categorys -->
                         <div class="offcanvas-header d-block border-bottom pt-0 pt-lg-4 px-lg-0">
                             <ul class="nav nav-tabs mb-0">
-                                {% render_partial 'estate.views.estate_categris' %}
+                                {% render_partial 'estate.views.estate_categorys' %}
                             </ul>
                         </div>
-                        <div class="offcanvas-body py-lg-4">
-                            <div class="pb-4 mb-2">
-                                <h3 class="h6">موقعیت مکانی</h3>
-                                <select class="form-select mb-2">
-                                    <option value="" disabled="">انتخاب شهر</option>
-                                    <option value="Chicago">شیکاگو</option>
-                                    <option value="Dallas">پاریس</option>
-                                    <option value="Los Angeles">لوس آنجلس</option>
-                                    <option value="New York" selected="">نیویورک</option>
-                                    <option value="San Diego">سن فرانسیسکو</option>
-                                </select>
-                                <select class="form-select">
-                                    <option value="" selected="" disabled="">انتخاب منطقه</option>
-                                    <option value="Brooklyn">1</option>
-                                    <option value="Manhattan">2</option>
-                                    <option value="Staten Island">3</option>
-                                    <option value="The Bronx">4</option>
-                                    <option value="Queens">5</option>
-                                </select>
-                            </div>
-                            <div class="sidebar-widget mt-30">
-                                <h4 class="pro-sidebar-title">نوع ملک</h4>
-                                <div class="sidebar-widget-list">
-                                    <ul>
-                                        {% render_partial 'estate.views.property_types' %}
-                                    </ul>
+                        <form action="" method="get">
+                            
+                            <div class="offcanvas-body py-lg-4">
+                                <!-- location -->
+                                <div class="sidebar-widget mt-30">
+                                    <div class="sidebar-widget-list">
+                                        <ul>
+                                            {% render_partial 'estate.views.states' %}
+                                        </ul>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="pb-4 mb-2">
-                                <h3 class="h6">قیمت خرید</h3>
-                                <div class="range-slider" data-start-min="1500" data-start-max="3000" data-min="200"
-                                     data-max="5000" data-step="100">
-                                    <div class="range-slider-ui noUi-target noUi-rtl noUi-horizontal noUi-txt-dir-rtl">
-                                        <!-- <div class="noUi-base">
-                                            <div class="noUi-connects">
-                                                <div class="noUi-connect"
-                                                     style="transform: translate(41.6667%, 0px) scale(0.3125, 1);"></div>
-                                            </div>
-                                            <div class="noUi-origin"
-                                                 style="transform: translate(-270.833%, 0px); z-index: 5;">
-                                                <div class="noUi-handle noUi-handle-lower" data-handle="0" tabindex="0"
-                                                     role="slider" aria-orientation="horizontal" aria-valuemin="200.0"
-                                                     aria-valuemax="3000.0" aria-valuenow="1500.0"
-                                                     aria-valuetext="1500 تومان">
-                                                    <div class="noUi-touch-area"></div>
-                                                    <div class="noUi-tooltip">1500 تومان</div>
-                                                </div>
-                                            </div>
-                                            <div class="noUi-origin"
-                                                 style="transform: translate(-583.333%, 0px); z-index: 4;">
-                                                <div class="noUi-handle noUi-handle-upper" data-handle="1" tabindex="0"
-                                                     role="slider" aria-orientation="horizontal" aria-valuemin="1500.0"
-                                                     aria-valuemax="5000.0" aria-valuenow="3000.0"
-                                                     aria-valuetext="3000 تومان">
-                                                    <div class="noUi-touch-area"></div>
-                                                    <div class="noUi-tooltip">3000 تومان</div>
-                                                </div>
-                                            </div>
+                                <!-- property type -->
+                                <div class="sidebar-widget mt-30">
+                                    <div class="sidebar-widget-list">
+                                        <ul>
+                                            {% render_partial 'estate.views.property_types' %}
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- price -->
+                                <div class="pb-4 mb-2">
+                                    <h3 class="h6">قیمت خرید</h3>
+                                    <div class="range-slider" data-start-min="1500" data-start-max="3000" data-min="200"
+                                        data-max="5000" data-step="100">
+                                        <!-- <div class="range-slider-ui noUi-target noUi-rtl noUi-horizontal noUi-txt-dir-rtl">
                                         </div> -->
+                                        <div class="align-items-center w-150">
+                                            <div class="p-2">
+                                                <div class="input-group flex-row-reverse"><span
+                                                        class="input-group-text fs-base">تومان</span>
+                                                    <input class="form-control range-slider-value-min" name="min-price" placeholder="از" type="number">
+                                                </div>
+                                            </div>
+                                            <!-- <div class="text-muted">—</div> -->
+                                            <div class="p-2">
+                                                <div class="input-group flex-row-reverse"><span
+                                                        class="input-group-text fs-base">تومان</span>
+                                                    <input class="form-control range-slider-value-max" name="max-price" placeholder="تا" type="number">
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
+                                </div>
+                                <!-- rooms/bathrooms -->
+                                <div class="pb-4 mb-2">
+                                    <h3 class="h6 pt-1">تعداد اتاق خواب و سرویس بهداشتی</h3>
+                                    <label class="d-block fs-sm mb-1">تعداد اتاق</label>
+                                    <div class="btn-group btn-group-sm" role="group" aria-label="Choose number of bedrooms">
+                                        <input class="btn-check" type="radio" id="bedrooms-all" value="" name="bedrooms" checked="">
+                                        <label class="btn btn-outline-secondary fw-normal" for="bedrooms-all">همه</label>
+                                        <input class="btn-check" type="radio" id="bedrooms-1" value="1" name="bedrooms">
+                                        <label class="btn btn-outline-secondary fw-normal" for="bedrooms-1">1</label>
+                                        <input class="btn-check" type="radio" id="bedrooms-2" value="2" name="bedrooms">
+                                        <label class="btn btn-outline-secondary fw-normal" for="bedrooms-2">2</label>
+                                        <input class="btn-check" type="radio" id="bedrooms-3" value="3" name="bedrooms">
+                                        <label class="btn btn-outline-secondary fw-normal" for="bedrooms-3">3</label>
+                                        <input class="btn-check" type="radio" id="bedrooms-4" value="4" name="bedrooms">
+                                        <label class="btn btn-outline-secondary fw-normal" for="bedrooms-4">4+</label>
+                                    </div>
+                                    <label class="d-block fs-sm pt-2 my-1">سرویس بهداشتی</label>
+                                    <div class="btn-group btn-group-sm" role="group"
+                                        aria-label="Choose number of bathrooms">
+                                        <input class="btn-check" type="radio" id="bathrooms-all" value="" name="bathrooms" checked="">
+                                        <label class="btn btn-outline-secondary fw-normal" for="bathrooms-all">همه</label>
+                                        <input class="btn-check" type="radio" id="bathrooms-1" value="1" name="bathrooms">
+                                        <label class="btn btn-outline-secondary fw-normal" for="bathrooms-1">1</label>
+                                        <input class="btn-check" type="radio" id="bathrooms-2" value="2" name="bathrooms">
+                                        <label class="btn btn-outline-secondary fw-normal" for="bathrooms-2">2</label>
+                                        <input class="btn-check" type="radio" id="bathrooms-3" value="3" name="bathrooms">
+                                        <label class="btn btn-outline-secondary fw-normal" for="bathrooms-3">3</label>
+                                        <input class="btn-check" type="radio" id="bathrooms-4" value="4" name="bathrooms">
+                                        <label class="btn btn-outline-secondary fw-normal" for="bathrooms-4">+4</label>
+                                    </div>
+                                </div>
+                                <!-- meterage -->
+                                <div class="pb-4 mb-2">
+                                    <h3 class="h6 pt-1">متراژ (مترمربع)</h3>
                                     <div class="d-flex align-items-center">
-                                        <div class="w-50 pe-2">
-                                            <div class="input-group flex-row-reverse"><span
-                                                    class="input-group-text fs-base">ت</span>
-                                                <input class="form-control range-slider-value-min" type="text">
-                                            </div>
-                                        </div>
-                                        <div class="text-muted">—</div>
-                                        <div class="w-50 ps-2">
-                                            <div class="input-group flex-row-reverse"><span
-                                                    class="input-group-text fs-base">ت</span>
-                                                <input class="form-control range-slider-value-max" type="text">
-                                            </div>
-                                        </div>
+                                        <input class="form-control w-100" type="number" name="min-meterage" min="20" max="500" step="10"
+                                            placeholder="از">
+                                        <div class="mx-2">—</div>
+                                        <input class="form-control w-100" type="number" name="max-meterage" min="20" max="500" step="10"
+                                            placeholder="تا">
                                     </div>
                                 </div>
-                            </div>
-                            <div class="pb-4 mb-2">
-                                <h3 class="h6 pt-1">تعداد اتاق خواب و سرویس بهداشتی</h3>
-                                <label class="d-block fs-sm mb-1">تعداد اتاق</label>
-                                <div class="btn-group btn-group-sm" role="group" aria-label="Choose number of bedrooms">
-                                    <input class="btn-check" type="radio" id="studio" name="bedrooms">
-                                    <label class="btn btn-outline-secondary fw-normal" for="studio">0</label>
-                                    <input class="btn-check" type="radio" id="bedrooms-1" name="bedrooms" checked="">
-                                    <label class="btn btn-outline-secondary fw-normal" for="bedrooms-1">1</label>
-                                    <input class="btn-check" type="radio" id="bedrooms-2" name="bedrooms">
-                                    <label class="btn btn-outline-secondary fw-normal" for="bedrooms-2">2</label>
-                                    <input class="btn-check" type="radio" id="bedrooms-3" name="bedrooms">
-                                    <label class="btn btn-outline-secondary fw-normal" for="bedrooms-3">3</label>
-                                    <input class="btn-check" type="radio" id="bedrooms-4" name="bedrooms">
-                                    <label class="btn btn-outline-secondary fw-normal" for="bedrooms-4">4+</label>
-                                </div>
-                                <label class="d-block fs-sm pt-2 my-1">سرویس بهداشتی</label>
-                                <div class="btn-group btn-group-sm" role="group"
-                                     aria-label="Choose number of bathrooms">
-                                    <input class="btn-check" type="radio" id="bathrooms-1" name="bathrooms">
-                                    <label class="btn btn-outline-secondary fw-normal" for="bathrooms-1">1</label>
-                                    <input class="btn-check" type="radio" id="bathrooms-2" name="bathrooms">
-                                    <label class="btn btn-outline-secondary fw-normal" for="bathrooms-2">2</label>
-                                    <input class="btn-check" type="radio" id="bathrooms-3" name="bathrooms">
-                                    <label class="btn btn-outline-secondary fw-normal" for="bathrooms-3">3</label>
-                                    <input class="btn-check" type="radio" id="bathrooms-4" name="bathrooms">
-                                    <label class="btn btn-outline-secondary fw-normal" for="bathrooms-4">4</label>
-                                </div>
-                            </div>
-                            <div class="pb-4 mb-2">
-                                <h3 class="h6 pt-1">متراژ (مترمربع)</h3>
-                                <div class="d-flex align-items-center">
-                                    <input class="form-control w-100" type="number" min="20" max="500" step="10"
-                                           placeholder="حداقل">
-                                    <div class="mx-2">—</div>
-                                    <input class="form-control w-100" type="number" min="20" max="500" step="10"
-                                           placeholder="حداکثر">
-                                </div>
-                            </div>
-                            <div class="pb-4 mb-2">
-                                <h3 class="h6">امکانات رفاهی</h3>
-                                <div class="overflow-auto" data-simplebar="init" data-simplebar-auto-hide="false"
-                                     data-simplebar-direction="rtl" style="height: 11rem;">
-                                    <div class="simplebar-wrapper" style="margin: 0px;">
-                                        <div class="simplebar-height-auto-observer-wrapper">
-                                            <div class="simplebar-height-auto-observer"></div>
-                                        </div>
-                                        <div class="simplebar-mask">
-                                            <div class="simplebar-offset" style="bottom: 0px;">
-                                                <div class="simplebar-content-wrapper"
-                                                     style="height: 100%; overflow: hidden scroll;">
-                                                    <div class="simplebar-content" style="padding: 0px;">
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox"
-                                                                   id="air-condition" checked="">
-                                                            <label class="form-check-label fs-sm" for="air-condition">تهویه
-                                                                هوا</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox"
-                                                                   id="balcony">
-                                                            <label class="form-check-label fs-sm"
-                                                                   for="balcony">بالکن</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" id="garage"
-                                                                   checked="">
-                                                            <label class="form-check-label fs-sm"
-                                                                   for="garage">انباری</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" id="gym">
-                                                            <label class="form-check-label fs-sm"
-                                                                   for="gym">باشگاه</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox"
-                                                                   id="parking">
-                                                            <label class="form-check-label fs-sm"
-                                                                   for="parking">پارکینگ</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" id="pool">
-                                                            <label class="form-check-label fs-sm"
-                                                                   for="pool">استخر</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" id="camera">
-                                                            <label class="form-check-label fs-sm" for="camera">دوربین
-                                                                مداربسته</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" id="wifi"
-                                                                   checked="">
-                                                            <label class="form-check-label fs-sm" for="wifi">وای
-                                                                فای</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox"
-                                                                   id="laundry">
-                                                            <label class="form-check-label fs-sm" for="laundry">ماشین
-                                                                لباسشویی</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox"
-                                                                   id="dishwasher">
-                                                            <label class="form-check-label fs-sm" for="dishwasher">ماشین
-                                                                ظرفشویی</label>
+                                <!-- other facilities -->
+                                <div class="pb-4 mb-2">
+                                    <h3 class="h6">امکانات رفاهی</h3>
+                                    <div class="overflow-auto" data-simplebar="init" data-simplebar-auto-hide="false"
+                                        data-simplebar-direction="rtl" style="height: 11rem;">
+                                        <div class="simplebar-wrapper" style="margin: 0px;">
+                                            <div class="simplebar-height-auto-observer-wrapper">
+                                                <div class="simplebar-height-auto-observer"></div>
+                                            </div>
+                                            <div class="simplebar-mask">
+                                                <div class="simplebar-offset" style="bottom: 0px;">
+                                                    <div class="simplebar-content-wrapper"
+                                                        style="height: 100%; overflow: hidden scroll;">
+                                                        <div class="simplebar-content" style="padding: 0px;">
+                                                            {% render_partial 'estate.views.other_facilities' %}
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="simplebar-placeholder" style="width: auto; height: 300px;"></div>
                                         </div>
-                                        <div class="simplebar-placeholder" style="width: auto; height: 300px;"></div>
-                                    </div>
-                                    <div class="simplebar-track simplebar-horizontal" style="visibility: hidden;">
-                                        <div class="simplebar-scrollbar simplebar-visible"
-                                             style="width: 0px; display: none;"></div>
-                                    </div>
-                                    <div class="simplebar-track simplebar-vertical" style="visibility: visible;">
-                                        <div class="simplebar-scrollbar simplebar-visible"
-                                             style="height: 103px; transform: translate3d(0px, 0px, 0px); display: block;"></div>
+                                        <div class="simplebar-track simplebar-horizontal" style="visibility: hidden;">
+                                            <div class="simplebar-scrollbar simplebar-visible"
+                                                style="width: 0px; display: none;"></div>
+                                        </div>
+                                        <div class="simplebar-track simplebar-vertical" style="visibility: visible;">
+                                            <div class="simplebar-scrollbar simplebar-visible"
+                                                style="height: 103px; transform: translate3d(0px, 0px, 0px); display: block;"></div>
+                                        </div>
                                     </div>
                                 </div>
+
+                                <!-- filters button -->
+                                <div class="border-top py-4">
+                                    <button class="btn btn-outline-primary" type="submit"><i class="fi-rotate-right me-2"></i>جستجو
+                                    </button>
+                                </div>
+                                
+                                <!-- remove filters button -->
+                                <div class="border-top py-4">
+                                    <button class="btn btn-outline-primary" type="submit"><i class="fi-rotate-right me-2"></i>حذف فیلتر
+                                    </button>
+                                </div>
                             </div>
-                            <div class="border-top py-4">
-                                <button class="btn btn-outline-primary" type="button"><i
-                                        class="fi-rotate-right me-2"></i>حذف فیلتر
-                                </button>
-                            </div>
-                        </div>
+                        </form>
                     </div>
                 </aside>
                 <div class="col-lg-8 col-xl-9 position-relative overflow-hidden pb-5 pt-4 px-3 px-xl-4 px-xxl-5">
@@ -269,139 +194,144 @@
                         </div>
                     </div>
                     <div class="row g-4 py-4">
-                        
-                        {% comment %}
-                        {% if object_list == <QuerySet []>  %}
-                            <p>هیچ آگهی موجود نیست</p>
-                        {% endif %}                            
-                        {% endcomment %}
-                            
-                        {% for estate in object_list %}
-                            <div class="col-sm-6 col-xl-4">
-                                <div class="card shadow-sm card-hover border-0 h-100">
-                                    <div class="tns-carousel-wrapper card-img-top card-img-hover"><a class="img-overlay"
-                                                                                                     href="{{ estate.get_absolute_url }}"></a>
-                                        {% if estate.special == True %}
-                                            <div class="position-absolute start-0 top-0 pt-3 pe-3"><span
-                                                    class="d-table badge bg-danger">ویژه</span></div>
-                                        {% endif %}
-                                        <div class="content-overlay end-0 top-0 pt-3 ps-3">
-                                            <button class="btn btn-icon btn-light btn-xs text-primary rounded-circle"
-                                                    type="button" data-bs-toggle="tooltip" data-bs-placement="right"
-                                                    title="" data-bs-original-title="نشان کردن" aria-label="نشان کردن">
-                                                <i
-                                                        class="fi-heart"></i></button>
-                                        </div>
-                                        <div class="tns-outer" id="tns7-ow">
-                                            <div class="tns-controls" aria-label="Carousel Navigation" tabindex="0">
-                                                <button type="button" data-controls="prev" tabindex="-1"
-                                                        aria-controls="tns7"><i class="fi-chevron-right"></i></button>
-                                                <button type="button" data-controls="next" tabindex="-1"
-                                                        aria-controls="tns7"><i class="fi-chevron-left"></i></button>
+                        {% if not object_list %}
+                            <p class="justify-content-center">هیچ آگهی مطابق جستجو شما یافت نشد!</p>
+                        {% else %}
+                            {% for estate in page_obj %}
+                                <div class="col-sm-6 col-xl-4">
+                                    <div class="card shadow-sm card-hover border-0 h-100">
+                                        <div class="tns-carousel-wrapper card-img-top card-img-hover">
+                                            <a class="img-overlay" href="{% url 'estate_detail' estate.pk %}"></a>
+                                            {% if estate.special == True %}
+                                                <div class="position-absolute start-0 top-0 pt-3 pe-3"><span
+                                                        class="d-table badge bg-danger">ویژه</span></div>
+                                            {% endif %}
+                                            <div class="content-overlay end-0 top-0 pt-3 ps-3">
+                                                <button class="btn btn-icon btn-light btn-xs text-primary rounded-circle"
+                                                        type="button" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                        title="" data-bs-original-title="نشان کردن" aria-label="نشان کردن">
+                                                    <i class="fi-heart"></i>
+                                                </button>
                                             </div>
-                                            <div class="tns-liveregion tns-visually-hidden" aria-live="polite"
-                                                 aria-atomic="true">slide <span class="current">3</span> of 2
-                                            </div>
-                                            <div id="tns7-mw" class="tns-ovh">
-                                                <div class="tns-inner" id="tns7-iw">
-                                                    <div class="tns-outer" id="tns7-ow">
-                                                        <div class="tns-controls" aria-label="Carousel Navigation"
-                                                             tabindex="0">
-                                                            <button type="button" data-controls="prev" tabindex="-1"
-                                                                    aria-controls="tns7"><i
-                                                                    class="fi-chevron-right"></i>
-                                                            </button>
-                                                            <button type="button" data-controls="next" tabindex="-1"
-                                                                    aria-controls="tns7"><i class="fi-chevron-left"></i>
-                                                            </button>
-                                                        </div>
-                                                        <div class="tns-liveregion tns-visually-hidden"
-                                                             aria-live="polite"
-                                                             aria-atomic="true">slide <span class="current">2</span> of
-                                                            6
-                                                        </div>
-                                                        <div id="tns7-mw" class="tns-ovh">
-                                                            <div class="tns-inner" id="tns7-iw">
-                                                                <div class="tns-carousel-inner  tns-slider tns-carousel tns-subpixel tns-calc tns-horizontal  tns-slider tns-carousel tns-subpixel tns-calc tns-horizontal"
-                                                                     id="tns7"
-                                                                     style="transition-duration: 0s; transform: translate3d(-12.5%, 0px, 0px);">
-                                                                    {% thumbnail estate.image "298x150" crop="center" as im %}
-                                                                        <img class="tns-item tns-slide-cloned"
-                                                                             src="{{ im.url }}"
-                                                                             alt="{{ estate.title }}">
-                                                                    {% endthumbnail %}
+                                            <div class="tns-outer" id="tns7-ow">
+                                                <div class="tns-controls" aria-label="Carousel Navigation" tabindex="0">
+                                                    <button type="button" data-controls="prev" tabindex="-1"
+                                                            aria-controls="tns7"><i class="fi-chevron-right"></i></button>
+                                                    <button type="button" data-controls="next" tabindex="-1"
+                                                            aria-controls="tns7"><i class="fi-chevron-left"></i></button>
+                                                </div>
+                                                <div class="tns-liveregion tns-visually-hidden" aria-live="polite"
+                                                    aria-atomic="true">slide <span class="current">3</span> of 2
+                                                </div>
+                                                <div id="tns7-mw" class="tns-ovh">
+                                                    <div class="tns-inner" id="tns7-iw">
+                                                        <div class="tns-outer" id="tns7-ow">
+                                                            <div class="tns-controls" aria-label="Carousel Navigation"
+                                                                tabindex="0">
+                                                                <button type="button" data-controls="prev" tabindex="-1"
+                                                                        aria-controls="tns7"><i
+                                                                        class="fi-chevron-right"></i>
+                                                                </button>
+                                                                <button type="button" data-controls="next" tabindex="-1"
+                                                                        aria-controls="tns7"><i class="fi-chevron-left"></i>
+                                                                </button>
+                                                            </div>
+                                                            <div class="tns-liveregion tns-visually-hidden"
+                                                                aria-live="polite"
+                                                                aria-atomic="true">slide <span class="current">2</span> of
+                                                                6
+                                                            </div>
+                                                            <div id="tns7-mw" class="tns-ovh">
+                                                                <div class="tns-inner" id="tns7-iw">
+                                                                    <div class="tns-carousel-inner  tns-slider tns-carousel tns-subpixel tns-calc tns-horizontal  tns-slider tns-carousel tns-subpixel tns-calc tns-horizontal"
+                                                                        id="tns7"
+                                                                        style="transition-duration: 0s; transform: translate3d(-12.5%, 0px, 0px);">
+                                                                        {% thumbnail estate.image "298x150" crop="center" as im %}
+                                                                            <img class="tns-item tns-slide-cloned"
+                                                                                src="{{ im.url }}"
+                                                                                alt="{{ estate.title }}">
+                                                                        {% endthumbnail %}
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="tns-nav" aria-label="Carousel Pagination">
-                                                            <button type="button" data-nav="0" aria-controls="tns7"
-                                                                    style=""
-                                                                    aria-label="Carousel Page 1 (Current Slide)"
-                                                                    class="tns-nav-active"></button>
-                                                            <button type="button" data-nav="1" tabindex="-1"
-                                                                    aria-controls="tns7" style=""
-                                                                    aria-label="Carousel Page 2"></button>
-                                                            <button type="button" data-nav="2" tabindex="-1"
-                                                                    aria-controls="tns7" style=""
-                                                                    aria-label="Carousel Page 3"></button>
-                                                            <button type="button" data-nav="3" tabindex="-1"
-                                                                    aria-controls="tns7" style=""
-                                                                    aria-label="Carousel Page 4"></button>
-                                                            <button type="button" data-nav="4" tabindex="-1"
-                                                                    aria-controls="tns7" style=""
-                                                                    aria-label="Carousel Page 5"></button>
-                                                            <button type="button" data-nav="5" tabindex="-1"
-                                                                    aria-controls="tns7" style=""
-                                                                    aria-label="Carousel Page 6"></button>
+                                                            <div class="tns-nav" aria-label="Carousel Pagination">
+                                                                <button type="button" data-nav="0" aria-controls="tns7"
+                                                                        style=""
+                                                                        aria-label="Carousel Page 1 (Current Slide)"
+                                                                        class="tns-nav-active"></button>
+                                                                <button type="button" data-nav="1" tabindex="-1"
+                                                                        aria-controls="tns7" style=""
+                                                                        aria-label="Carousel Page 2"></button>
+                                                                <button type="button" data-nav="2" tabindex="-1"
+                                                                        aria-controls="tns7" style=""
+                                                                        aria-label="Carousel Page 3"></button>
+                                                                <button type="button" data-nav="3" tabindex="-1"
+                                                                        aria-controls="tns7" style=""
+                                                                        aria-label="Carousel Page 4"></button>
+                                                                <button type="button" data-nav="4" tabindex="-1"
+                                                                        aria-controls="tns7" style=""
+                                                                        aria-label="Carousel Page 5"></button>
+                                                                <button type="button" data-nav="5" tabindex="-1"
+                                                                        aria-controls="tns7" style=""
+                                                                        aria-label="Carousel Page 6"></button>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="tns-nav" aria-label="Carousel Pagination">
-                                                <button type="button" data-nav="0" aria-controls="tns7" style=""
-                                                        aria-label="Carousel Page 1 (Current Slide)"
-                                                        class="tns-nav-active"></button>
-                                                <button type="button" data-nav="1" tabindex="-1" aria-controls="tns7"
-                                                        style="" aria-label="Carousel Page 2"></button>
+                                                <div class="tns-nav" aria-label="Carousel Pagination">
+                                                    <button type="button" data-nav="0" aria-controls="tns7" style=""
+                                                            aria-label="Carousel Page 1 (Current Slide)"
+                                                            class="tns-nav-active"></button>
+                                                    <button type="button" data-nav="1" tabindex="-1" aria-controls="tns7"
+                                                            style="" aria-label="Carousel Page 2"></button>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="card-body position-relative pb-3">
-                                        <h4 class="mb-1 fs-xs fw-normal text-uppercase text-primary">{{ estate.property_type }}</h4>
-                                        <h3 class="h6 mb-2 fs-base"><a class="nav-link stretched-link"
-                                                                       href="{{ estate.get_absolute_url }}">{{ estate.title }}
-                                            |
-                                            {{ estate.Meterage }} متر مربع </a></h3>
-                                        <p class="mb-2 fs-sm text-muted">{{ estate.state }} ، خیابان آزادی</p>
-                                        <div class="fw-bold"><i
-                                                class="fi-cash mt-n1 me-2 lead align-middle opacity-70"></i>
-                                            {{ estate.price }} تومان
+                                        <div class="card-body position-relative pb-3">
+                                            <h4 class="mb-1 fs-xs fw-normal text-uppercase text-primary">{{ estate.property_type }}</h4>
+                                            <h3 class="h6 mb-2 fs-base"><a class="nav-link stretched-link"
+                                                                            href="{{ estate.get_absolute_url }}">{{ estate.title }}
+                                                |
+                                                {{ estate.meterage }} متر مربع </a></h3>
+                                            <p class="mb-2 fs-sm text-muted">{{ estate.state }} ، خیابان آزادی</p>
+                                            <div class="fw-bold">
+                                                <i class="fi-cash mt-n1 me-2 lead align-middle opacity-70"></i>
+                                                {{ estate.price|intcomma }}  تومان
+                                            </div>
+                                        </div>
+                                        <div class="card-footer d-flex align-items-center justify-content-center mx-3 pt-3 text-nowrap">
+                                            <span class="d-inline-block mx-1 px-2 fs-sm">{{ estate.room}}
+                                                <i class="fi-bed me-1 mt-n1 fs-lg text-muted"></i>
+                                            </span>
+                                            <span class="d-inline-block mx-1 px-2 fs-sm">{{ estate.wc }}
+                                                <i class="fi-bath me-1 mt-n1 fs-lg text-muted"></i>
+                                            </span>
+                                            <!-- <span class="d-inline-block mx-1 px-2 fs-sm">2
+                                                <i class="fi-car me-1 mt-n1 fs-lg text-muted"></i>
+                                            </span> -->
                                         </div>
                                     </div>
-                                    <div class="card-footer d-flex align-items-center justify-content-center mx-3 pt-3 text-nowrap">
-                                    <span class="d-inline-block mx-1 px-2 fs-sm">3<i
-                                            class="fi-bed me-1 mt-n1 fs-lg text-muted"></i></span><span
-                                            class="d-inline-block mx-1 px-2 fs-sm">2<i
-                                            class="fi-bath me-1 mt-n1 fs-lg text-muted"></i></span><span
-                                            class="d-inline-block mx-1 px-2 fs-sm">2<i
-                                            class="fi-car me-1 mt-n1 fs-lg text-muted"></i></span></div>
                                 </div>
-                            </div>
-                        {% endfor %}
+                            {% endfor %}
+                            <!-- pagination -->
+                            <nav class="border-top pb-md-4 pt-4 mt-2" aria-label="Pagination">
+                                <ul class="pagination mb-1 justify-content-center">
+                                    
+                                    {% if paginator.num_pages != 1 %}
+                                        {% if page_obj.has_previous %}
+                                            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous"><i class="fi-chevron-left"></i>قبلی</a></li>
+                                        {% endif %}
+                                        <li class="page-item active d-sm-block" aria-current="page">
+                                            <span class="page-link">{{ page_obj.number }}<span class="visually-hidden">(صفحه جاری)</span></span>
+                                        </li>   
+                                        {% if page_obj.has_next %}
+                                            <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">بعدی<i class="fi-chevron-right"></i></a></li>
+                                        {% endif %}                                    
+                                    {% endif %}
+                                </ul>
+                            </nav>
+                        {% endif %}                           
                     </div>
-                    <nav class="border-top pb-md-4 pt-4 mt-2" aria-label="Pagination">
-                        <ul class="pagination mb-1">
-                            <li class="page-item d-sm-none"><span class="page-link page-link-static">1 / 5</span></li>
-                            <li class="page-item active d-none d-sm-block" aria-current="page"><span class="page-link">1<span
-                                    class="visually-hidden">(صفحه جاری)</span></span></li>
-                            <li class="page-item d-none d-sm-block"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item d-none d-sm-block"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item d-none d-sm-block">...</li>
-                            <li class="page-item d-none d-sm-block"><a class="page-link" href="#">8</a></li>
-                            <li class="page-item"><a class="page-link" href="#" aria-label="Next"><i
-                                    class="fi-chevron-right"></i></a></li>
-                        </ul>
-                    </nav>
                 </div>
             </div>
         </div>

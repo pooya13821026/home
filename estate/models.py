@@ -65,7 +65,7 @@ class Estate(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('estate_deteil', kwargs={'slug': self.slug})
+        return reverse('estate_detail', kwargs={'pk': self.pk})
 
     def save(self, *args, **kwargs):
         if not self.slug:

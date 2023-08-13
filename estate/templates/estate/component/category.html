@@ -1,6 +1,17 @@
-{% for category in estate_categorys %}
-    <li class="nav-item">
-        <a class="nav-link" href="?category={{category.url_title}}">
-            <i class="fi-home fs-base me-2"></i>برای {{ category.categorys }}</a>
-    </li>
-{% endfor %}
+<h6 class="pro-sidebar-title">دسته‌بندی‌ها</h6>
+<select class="form-select mb-2" name="category" onchange="location = this.value;">
+    <div class="sidebar-widget-list-left">
+        <li>
+            <option value="" selected disabled>انتخاب دسته بندی</option>
+        </li>
+        <li>
+            <option value="real-estate">همه آگهی ‌های فروش</option>
+        </li>
+        {% for category in estate_categorys %}
+            <li>
+                <option value="{{category.url_title}}">{{category.categorys}}</option>
+            </li>
+        {% endfor %}
+    </div>
+</select>
+
