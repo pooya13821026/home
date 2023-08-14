@@ -13,7 +13,6 @@ class EstateListView(ListView):
         queryset = Estate.objects.filter(is_active=True)
         request = self.request.GET
         category = self.kwargs.get('category', 'real-estate')
-        print(category)
         if category != 'real-estate':
             queryset = queryset.filter(category__url_title__iexact=category)
 
