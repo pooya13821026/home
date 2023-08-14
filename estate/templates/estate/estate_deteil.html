@@ -162,7 +162,11 @@
                             <li>سال ساخت: {{ estates.year_of_construction }}</li>
                             <li>تعداد اتاق: {{ estates.room }}</li>
                             <li>سرویس بهداشتی: {{ estates.wc }}</li>
-                            <li>پارکینگ: {{ estates.parking }}</li>
+                            {% if estates.parking == True %}
+                                <li>پارکینگ: دارد</li>
+                            {% else %}
+                                <li>پارکینگ: ندارد</li>
+                            {% endif %}
                         </ul>
                     </div>
                     <div class="mb-sm-3">
