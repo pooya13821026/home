@@ -6,7 +6,6 @@ from django.views import View
 from django.views.generic import TemplateView
 from dashbord.forms import EditProfileForm, ChangePasswordForm
 from estate.models import *
-from estate.forms import EstateForm
 
 
 class Dashbord(TemplateView):

@@ -47,7 +47,7 @@ class Estate(models.Model):
     meterage = models.PositiveIntegerField(verbose_name='متراژ')
     room = models.PositiveIntegerField(default=0, verbose_name='تعداد اتاق')
     wc = models.PositiveIntegerField(default=1, verbose_name='تعداد سرویس بهداشتی')
-    parking = models.BooleanField(default=False, verbose_name='پارکینگ')
+    parking = models.BooleanField(choices=[(True, "دارد"), (False, "ندارد")], verbose_name='پارکینگ')
     welfare_amenities = models.ManyToManyField('WelfareAmenities', verbose_name='امکانات')
     image = models.ImageField(upload_to='estate', verbose_name='عکس', null=True, blank=True)
     description = models.TextField(verbose_name='توضیحات', null=True, blank=True)

@@ -36,6 +36,7 @@ class FilterForm(forms.ModelForm):
         model = Estate
         fields = ['state']
 
+
 class EstateForm(forms.ModelForm):
     class Meta:
         model = Estate
