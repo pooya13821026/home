@@ -1,0 +1,11 @@
+<h6 class="pro-sidebar-title">موقعیت مکانی</h6>
+<select class="form-select mb-2" name="state">
+    <div class="sidebar-widget-list-left">
+        <li><option value="" selected>همه شهرها</option></li>
+        {% for state in states %}
+            <li>
+                <option value="{{state.state}}">{{state.state}}</option>
+            </li>
+        {% endfor %}
+    </div>
+</select>

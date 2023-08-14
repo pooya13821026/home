@@ -1,19 +1,12 @@
-<!-- {% comment %}
-{% for property in property_types %}
-    <div class="form-check">
-        <a href="{% url 'property_type' propertyy=property.url_title %}">
-                                    {{ property.types }}</a>
-        <input class="form-check-input"
-               id="house">
-        <label class="form-check-label fs-sm"
-               for="house">{{ property.types }}</label>
+<h6 class="pro-sidebar-title">نوع ملک</h6>
+<select class="form-select mb-2" name="property_type">
+    <div class="sidebar-widget-list-left">
+        <li><option value="" selected>همه انواع ملک</option></li>
+        {% for property in property_types %}
+            <li>
+                    <option value="{{property.types}}">{{ property.types }}</option>
+            </li>
+        {% endfor %}
     </div>
-{% endfor %}{% endcomment %} -->
 
-{% for property in property_types %}
-    <li>
-        <div class="sidebar-widget-list-left">
-            <a href="{% url 'property_type' pro=property.url_title %}">{{ property.types }}</a>
-        </div>
-    </li>
-{% endfor %}
+</select>

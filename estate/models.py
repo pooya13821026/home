@@ -29,7 +29,6 @@ class PropertyType(models.Model):
 
 class State(models.Model):
     state = models.CharField(max_length=20, verbose_name='استان')
-
     class Meta:
         verbose_name = 'استان'
         verbose_name_plural = 'استان ها'
@@ -66,7 +65,7 @@ class Estate(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('estate_deteil', kwargs={'slug': self.slug})
+        return reverse('estate_detail', kwargs={'pk': self.pk})
 
     def save(self, *args, **kwargs):
         if not self.slug:

@@ -1,5 +1,6 @@
 {% extends 'shared/_main.html' %}
 {% load thumbnail %}
+{% load humanize %}
 {% load poll_extars %}
 <!DOCTYPE html>
 <html lang="en">
@@ -68,17 +69,17 @@
                     <li class="breadcrumb-item active" aria-current="page">جزییات ملک</li>
                 </ol>
             </nav>
-            <h1 class="h2 mb-2 font-vazir">{{ estates.Meterage }} متر مربع | {{ estates.title }}</h1>
+            <h1 class="h2 mb-2 font-vazir">{{ estates.meterage|intcomma }} متر مربع | {{ estates.title }}</h1>
             <p class="mb-2 pb-1 fs-md">{{ estates.state }}، میدان آزادی</p>
             <div class="d-flex justify-content-between align-items-center">
                 <ul class="d-flex mb-4 list-unstyled">
-                    <li class="me-3 ps-3 border-end"><b class="ms-1">4</b><i
+                    <li class="me-3 ps-3 border-end"><b class="ms-1">{{ estates.room }}</b><i
                             class="fi-bed mt-n1 lead align-middle text-muted"></i></li>
-                    <li class="me-3 ps-3 border-end"><b class="ms-1">2</b><i
+                    <li class="me-3 ps-3 border-end"><b class="ms-1">{{ estates.wc }}</b><i
                             class="fi-bath mt-n1 lead align-middle text-muted"></i></li>
-                    <li class="me-3 ps-3 border-end"><b class="ms-1">2</b><i
-                            class="fi-car mt-n1 lead align-middle text-muted"></i></li>
-                    <li><b>{{ estates.Meterage }}</b> مترمربع</li>
+                    <!-- <li class="me-3 ps-3 border-end"><b class="ms-1">2</b><i
+                            class="fi-car mt-n1 lead align-middle text-muted"></i></li> -->
+                    <li><b>{{ estates.meterage|intcomma }}</b> مترمربع</li>
                 </ul>
                 <div class="text-nowrap">
                     <button class="btn btn-icon btn-light-primary btn-xs shadow-sm rounded-circle ms-2 mb-2"
@@ -148,21 +149,23 @@
         <section class="container mb-5 pb-1">
             <div class="row">
                 <div class="col-md-7 mb-md-0 mb-4">
-                    <h2 class="h4 mb-4 pb-4 border-bottom">{{ estates.price }} تومان<span
+                    <h2 class="h4 mb-4 pb-4 border-bottom">قیمت کلی {{ estates.price|intcomma }} تومان<span
                             class="d-inline-block ms-1 fs-base fw-normal text-body"></span></h2>
-                    <div class="mb-4 pb-md-3">
-                        <h3 class="h5">توضیحات</h3>
-                        <p class="mb-1 line-h18">{{ estates.description }}</p>
-                    </div>
                     <div class="mb-4 pb-md-3">
                         <h3 class="h5">مشخصات</h3>
                         <ul class="list-unstyled mb-0">
                             <li>نوع ملک: {{ estates.property_type }}</li>
-                            <li>متراژ (مترمربع): {{ estates.Meterage }} مترمربع</li>
+                            <li>متراژ (مترمربع): {{ estates.meterage }} مترمربع</li>
                             <li>سال ساخت: {{ estates.year_of_construction }}</li>
                             <li>تعداد اتاق: {{ estates.room }}</li>
                             <li>سرویس بهداشتی: {{ estates.wc }}</li>
-                            <li>پارکینگ: {{ estates.parking }}</li>
+                            <li>پارکینگ: 
+                                {% if estates.parking %}
+                                    دارد    
+                                {% else %}
+                                    ندارد
+                                {% endif %}
+                            </li>
                         </ul>
                     </div>
                     <div class="mb-sm-3">
@@ -191,7 +194,11 @@
                             <li class="me-3 ps-3">بازدید: <b>48 نفر</b></li>
                         </ul>
                     </div>
-                    <div class="mb-4 pb-4 border-bottom">
+                    <div class="mb-4 pb-md-3">
+                        <h3 class="h5">توضیحات</h3>
+                        <p class="mb-1 line-h18">{{ estates.description }}</p>
+                    </div>
+                    <!-- <div class="mb-4 pb-4 border-bottom">
                         <h3 class="h5 pb-3 font-vazir"><i
                                 class="fi-star-filled mt-n1 me-2 lead align-middle text-warning"></i>4,9 (32 نظر ثبت
                             شده)</h3>
@@ -211,9 +218,9 @@
                                 </select>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <!-- Review-->
-                    <div class="mb-4 pb-4 border-bottom">
+                    <!-- <div class="mb-4 pb-4 border-bottom">
                         <div class="d-flex justify-content-between mb-3">
                             <div class="d-flex align-items-center pe-2"><img class="rounded-circle ms-1"
                                                                              src="../../static/img/avatars/03.jpg"
@@ -240,9 +247,9 @@
                             <button class="btn-dislike" type="button"><i class="fi-dislike"></i><span>(0)</span>
                             </button>
                         </div>
-                    </div>
+                    </div> -->
                     <!-- Review-->
-                    <div class="mb-4 pb-4 border-bottom">
+                    <!-- <div class="mb-4 pb-4 border-bottom">
                         <div class="d-flex justify-content-between mb-3">
                             <div class="d-flex align-items-center pe-2"><img class="rounded-circle ms-1"
                                                                              src="../../static/img/avatars/13.png"
@@ -267,9 +274,9 @@
                             <button class="btn-dislike" type="button"><i class="fi-dislike"></i><span>(1)</span>
                             </button>
                         </div>
-                    </div>
+                    </div> -->
                     <!-- Review-->
-                    <div class="mb-4 pb-4 border-bottom">
+                    <!-- <div class="mb-4 pb-4 border-bottom">
                         <div class="d-flex justify-content-between mb-3">
                             <div class="d-flex align-items-center pe-2"><img class="rounded-circle ms-1"
                                                                              src="../../static/img/avatars/05.jpg"
@@ -298,9 +305,9 @@
                             <button class="btn-dislike" type="button"><i class="fi-dislike"></i><span>(1)</span>
                             </button>
                         </div>
-                    </div>
+                    </div> -->
                     <!-- Review-->
-                    <div class="mb-4 pb-4 border-bottom">
+                    <!-- <div class="mb-4 pb-4 border-bottom">
                         <div class="d-flex justify-content-between mb-3">
                             <div class="d-flex align-items-center pe-2"><img class="rounded-circle ms-1"
                                                                              src="../../static/img/avatars/04.jpg"
@@ -325,9 +332,9 @@
                             <button class="btn-dislike" type="button"><i class="fi-dislike"></i><span>(0)</span>
                             </button>
                         </div>
-                    </div>
+                    </div> -->
                     <!-- Pagination-->
-                    <nav class="mt-2 mb-4" aria-label="Reviews pagination">
+                    <!-- <nav class="mt-2 mb-4" aria-label="Reviews pagination">
                         <ul class="pagination">
                             <li class="page-item d-sm-none"><span class="page-link page-link-static">1 / 5</span>
                             </li>
@@ -341,7 +348,7 @@
                             <li class="page-item"><a class="page-link" href="#" aria-label="Next"><i
                                     class="fi-chevron-right"></i></a></li>
                         </ul>
-                    </nav>
+                    </nav> -->
                 </div>
                 <!-- Sidebar-->
                 <aside class="col-lg-4 col-md-5 ms-lg-auto pb-1">
